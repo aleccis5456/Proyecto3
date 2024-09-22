@@ -1,0 +1,44 @@
+/* Estilo para el contenedor principal de Select2 */
+.select2-container--default .select2-selection--single {
+    background-color: #f9fafb; /* bg-gray-50 */
+    border: 1px solid #d1d5db; /* border border-gray-300 */
+    color: #111827; /* text-gray-900 */
+    font-size: 0.875rem; /* text-sm */
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 0.75rem 0.75rem; /* Ajustado para mejorar la alineación */
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1); /* focus:ring-blue-500 */
+    transition: border-color 0.2s, box-shadow 0.2s;
+    height: auto; /* Permite que el contenedor se ajuste a la altura del contenido */
+    display: flex;
+    align-items: center; /* Centra verticalmente el contenido */
+}
+
+/* Estilo para el texto dentro del select */
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #111827; /* text-gray-900 */
+    line-height: 1rem; /* Ajusta la altura de línea del texto */
+}
+
+/* Estilo para el dropdown del select */
+.select2-container--default .select2-results__option {
+    background-color: #ffffff; /* bg-white */
+    color: #111827; /* text-gray-900 */
+    padding: 0.50rem 0.50rem; /* Ajusta el padding de las opciones del dropdown */
+}
+
+/* Estilo para el item seleccionado en el dropdown */
+.select2-container--default .select2-results__option--highlighted {
+    background-color: #3b82f6; /* bg-blue-500 */
+    color: #ffffff; /* text-white */
+}
+
+/* Estilo para el borde del select cuando está enfocado */
+.select2-container--default .select2-selection--single:focus-within {
+    border-color: #3b82f6; /* focus:border-blue-500 */
+    box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1); /* focus:ring-blue-500 */
+}
+
+/* Estilo para el placeholder */
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+    color: #9ca3af; /* dark:placeholder-gray-400 */
+}
