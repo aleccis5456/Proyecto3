@@ -21,13 +21,13 @@ class ProductoController extends Controller
     {
         //$productos = Producto::orderByDesc('id')->get();
         $productos = Producto::where('visible', 'si')
-                                ->where('oferta', 0)
-                                ->orderByDesc('id')
-                                ->get()
-                                ->map(function ($producto) {
-                                    $producto->id_encriptado = Crypt::encrypt($producto->id);
-                                    return $producto;
-                                });
+            ->where('oferta', 0)
+            ->orderByDesc('id')
+            ->get()
+            ->map(function ($producto) {
+                $producto->id_encriptado = Crypt::encrypt($producto->id);
+                return $producto;
+            });
 
         return view('home.home', [
             'productos' => $productos,
@@ -235,34 +235,34 @@ class ProductoController extends Controller
         $foto = ProductoFoto::destroy($id);
 
         return back()->with('success', 'La foto se elimino con exito');
-    }    
+    }
 
-public function producto($idEncriptado)
-{
-    try {     
-        $id = Crypt::decrypt($idEncriptado);
-    } catch (\Exception $e) {
-        return back()->with('error', 'Error al procesar el producto.');
-    }    
-    $producto = Producto::findOrFail($id);    
-    $producto->id_encriptado = Crypt::encrypt($producto->id);    
-    $fotos = ProductoFoto::where('producto_id', $id)->get();
-    
-    $similares = Producto::where('id', '!=', $id)
-        ->where('subCategoria_id', $producto->subCategoria_id)
-        ->whereBetween('precio', [$producto->precio - 1500000, $producto->precio + 2000000])
-        ->get()
-        ->map(function ($similar) {
-            $similar->id_encriptado = Crypt::encrypt($similar->id);
-            return $similar;
-        });
+    public function producto($idEncriptado)
+    {
+        try {
+            $id = Crypt::decrypt($idEncriptado);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al procesar el producto.');
+        }
+        $producto = Producto::findOrFail($id);
+        $producto->id_encriptado = Crypt::encrypt($producto->id);
+        $fotos = ProductoFoto::where('producto_id', $id)->get();
 
-    return view('producto.producto', [
-        'producto' => $producto,
-        'fotos' => $fotos,
-        'similares' => $similares,
-    ]);
-}
+        $similares = Producto::where('id', '!=', $id)
+            ->where('subCategoria_id', $producto->subCategoria_id)
+            ->whereBetween('precio', [$producto->precio - 1500000, $producto->precio + 2000000])
+            ->get()
+            ->map(function ($similar) {
+                $similar->id_encriptado = Crypt::encrypt($similar->id);
+                return $similar;
+            });
+
+        return view('producto.producto', [
+            'producto' => $producto,
+            'fotos' => $fotos,
+            'similares' => $similares,
+        ]);
+    }
 
 
     public function busqueda()
@@ -304,9 +304,12 @@ public function producto($idEncriptado)
         ]);
     }
 
-    public function ofertas()
-    {
-        $ofertas = Producto::where('oferta', 1)->get();
+    public function ofertas(){
+        $ofertas = Producto::where('oferta', 1)->get()
+            ->map(function ($oferta) {
+                $oferta->id_encriptado = Crypt::encrypt($oferta->id);
+                return $oferta;
+            });
 
         return view('producto.ofertas', [
             'ofertas' => $ofertas,

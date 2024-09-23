@@ -72,8 +72,8 @@ class CarritoController extends Controller
     }
 
     public function addCuota(Request $request)
-    {
-        $id = $request->producto_id;
+    {        
+        $id = Crypt::decrypt($request->producto_id);        
         $cuota = $request->cuotas;
         $suma = 0;
 
