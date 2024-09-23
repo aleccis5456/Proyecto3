@@ -15,7 +15,7 @@ use App\Http\Middleware\carrito;
 
 //index de la pagina
 Route::get('/home', [ProductoController::class, 'index'])->name('home');
-Route::get('/', [ProductoController::class, 'index'])->name('home');
+Route::get('/', [ProductoController::class, 'index']);
 Route::get('/busqueda', [ProductoController::class, 'busqueda'])->name('home.busqueda');
 
 //reportes y facturas
@@ -24,7 +24,7 @@ Route::get('/factura/pdf/{id}',[PDFController::class, 'factura'])->name('pdf.fac
 
 //producto
 Route::get('/producto/{id}', [ProductoController::class, 'producto'])->name('producto');
-
+;
 //oferta
 //Route::get('/ofertas', [ProductoController::class, 'ofertas'])->name('ofertas');
 Route::get('/ver-todas/ofertas', [ProductoController::class, 'ofertas'])->name('oferta.todos');
