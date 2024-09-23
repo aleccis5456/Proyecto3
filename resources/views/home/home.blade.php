@@ -18,7 +18,7 @@
                 <div
                     class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                     <!-- Imagen del producto -->
-                    <a href="{{ route('producto', ['id' => $producto->id]) }}" class="block relative group">
+                    <a href="{{ route('producto', ['id' => $producto->id_encriptado]) }}" class="block relative group">
                         <img class="w-full h-48 object-contain group-hover:scale-110 transition-transform duration-300"
                             src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                         <div
@@ -35,7 +35,7 @@
                         <h3 class="text-sm font-semibold text-gray-900 dark:text-white">                            
                             {{Str::limit($producto->nombre, 54)}}
                         <div class="mt-4">
-                            <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
+                            <a href="{{ route('carrito.add', ['id' => $producto->id_encriptado]) }}"
                                 class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-4 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
                                 <span
                                     class="text-xl font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}

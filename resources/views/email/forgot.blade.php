@@ -103,9 +103,8 @@
         </div>
 
         <div class="button-container">
-            <a href="{{ route('cambiar.pass', ['id' => $user->id]) }}" class="button">Restablecer Contraseña</a>
+            <a href="{{ route('cambiar.pass', ['id' => Crypt::encrypt($user->id)]) }}" class="button">Restablecer Contraseña</a>
         </div>
-
         <p class="content">Este enlace es válido solo por 60 minutos.</p>
 
         <div class="footer">

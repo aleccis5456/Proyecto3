@@ -123,7 +123,7 @@
 
 
             <div class="mt-5 text-center">
-                <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
+                <a href="{{ route('carrito.add', ['id' => $producto->id_encriptado]) }}"
                     class="flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     <b>AGREGAR AL CARRITO</b>
                 </a>
@@ -133,7 +133,7 @@
             @else
                 <form class="mt-5 text-center" method="POST" action="{{ route('carrito.addCuota') }}">
                     @csrf
-                    <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                    <input type="hidden" name="producto_id" value="{{ $producto->id_encriptado }}">
                     <div class="flex items-center space-x-2">
                         <select id="cuotas" name="cuotas"
                             class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

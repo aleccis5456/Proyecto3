@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Session;
 use App\Utils\Util;
+use Illuminate\Support\Facades\Crypt;
 
 class CarritoController extends Controller
 {
@@ -21,31 +22,38 @@ class CarritoController extends Controller
         return back();
     }
 
-    public function add($id, Request $request)
+
+    public function add($idEncriptado, Request $request)
     {
+        try {
+            // Desencriptar el ID
+            $id = Crypt::decrypt($idEncriptado);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al procesar el producto.');
+        }
+
         $carrito = session('carrito', []);
         $producto = Producto::findOrFail($id);
 
         $contador = 0;
 
-        foreach($carrito as &$item){            
-            if(Util::stats()['total_conteo'] >= 1 and $item['producto_completo']['precio'] != $item['precio']){
+        foreach ($carrito as &$item) {
+            if (Util::stats()['total_conteo'] >= 1 && $item['producto_completo']['precio'] != $item['precio']) {
                 return back();
-            }         
+            }
         }
 
         foreach ($carrito as &$item) {
             if ($item['id_producto'] == $producto->id) {
-                if($item['producto_completo']['precio'] == $item['precio']){
+                if ($item['producto_completo']['precio'] == $item['precio']) {
                     $contador++;
                     $item['cantidad']++;
-                }else{
+                } else {
                     return back();
-                    
                 }
             }
         }
-        //dd(session('carrito'));
+
         if ($contador == 0) {
             $carrito[] = [
                 'id_producto' => $producto->id,
@@ -57,10 +65,10 @@ class CarritoController extends Controller
                 'producto_completo' => $producto,
             ];
         }
-        
+
         session(['carrito' => $carrito]);
-        session(['contador' => $contador]);        
-        return back()->with('info', 'El producto se agrego a tu carrito');
+        session(['contador' => $contador]);
+        return back()->with('info', 'El producto se agregó a tu carrito.');
     }
 
     public function addCuota(Request $request)
@@ -82,17 +90,17 @@ class CarritoController extends Controller
         $carrito = session('carrito', []);
         $producto = Producto::findOrFail($id);
 
-        $contador = 0;        
-        foreach($carrito as &$item){             
-            if(Util::stats()['total_conteo'] >= 1 and $item['producto_completo']['precio'] == $item['precio']){
+        $contador = 0;
+        foreach ($carrito as &$item) {
+            if (Util::stats()['total_conteo'] >= 1 and $item['producto_completo']['precio'] == $item['precio']) {
                 return back();
-            }         
+            }
         }
 
-        foreach($carrito as &$item){            
-            if(Util::stats()['total_conteo'] >= 1 and $item['producto_completo']['precio'] != $item['precio']){
+        foreach ($carrito as &$item) {
+            if (Util::stats()['total_conteo'] >= 1 and $item['producto_completo']['precio'] != $item['precio']) {
                 return back();
-            }         
+            }
         }
 
         foreach ($carrito as &$item) {
@@ -106,18 +114,18 @@ class CarritoController extends Controller
         if ($contador == 0) {
             $carrito[] = [
                 'id_producto' => $producto->id,
-                'precio' => ($producto->precio / $cuota) + $suma,                
+                'precio' => ($producto->precio / $cuota) + $suma,
                 'nombre' => $producto->nombre,
-                'precio_oferta' => 0,                
+                'precio_oferta' => 0,
                 'cuota' => $cuota,
                 'cantidad' => 1,
                 'producto_completo' => $producto,
             ];
         }
 
-        
 
-        session(['carrito' => $carrito]);        
+
+        session(['carrito' => $carrito]);
 
         return back()->with('info', 'El producto se agrego a tu carrito');
     }

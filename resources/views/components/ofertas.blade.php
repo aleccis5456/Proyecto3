@@ -18,7 +18,7 @@
             @foreach ($ofertas as $oferta)
                 <div
                     class="relative bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                    <a href="{{ route('producto', ['id' => $oferta->id]) }}" class="block group">
+                    <a href="{{ route('producto', ['id' => $oferta->id_encriptado]) }}" class="block group">
                         <!-- Imagen del producto -->
                         <div class="relative h-64 w-full bg-gray-200 overflow-hidden">
                             <img src="{{ asset('uploads/productos') }}/{{ $oferta->imagen }}"
@@ -43,7 +43,7 @@
                                     Antes: {{ number_format($oferta->precio, 0, ',', '.') }} Gs.
                                 </p>
                                 <div class="mt-2">
-                                    <a href="{{ route('carrito.add', ['id' => $oferta->id]) }}"
+                                    <a href="{{ route('carrito.add', ['id' => $oferta->id_encriptado]) }}"
                                         class="items-center text-red-600 rounded-lg py-2.5 hover:px-4 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:text-white">
                                         <span class="text-xl font-bold">Ahora:
                                             {{ number_format(round($oferta->precio_oferta, -2), 0, ',', '.') }}

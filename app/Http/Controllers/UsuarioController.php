@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Crypt;
 
 class UsuarioController extends Controller
 {
@@ -172,8 +173,11 @@ class UsuarioController extends Controller
         }
     }
 
-    public function cambiar($id){
+    public function cambiar($id_encriptado){
+
+        $id = Crypt::decrypt($id_encriptado);
         $user = User::findOrFail($id);
+        
         return view('usuario.cambiar', [
             'user' => $user,
         ]);

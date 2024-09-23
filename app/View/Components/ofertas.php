@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Crypt;
 
 class ofertas extends Component
 {
@@ -16,8 +17,12 @@ class ofertas extends Component
     public function __construct()
     {
         $this->ofertas = Producto::where('oferta', 1)
-                                ->orderByDesc('id')
-                                ->get();
+                                ->orderByDesc('id')                                
+                                ->get()
+                                ->map(function ($producto) {
+                                    $producto->id_encriptado = Crypt::encrypt($producto->id);
+                                    return $producto;
+                                });;
     }
 
     /**

@@ -11,17 +11,23 @@ use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 
 
 
 class ProductoController extends Controller
-{   
+{
     public function index()
     {
         //$productos = Producto::orderByDesc('id')->get();
         $productos = Producto::where('visible', 'si')
                                 ->where('oferta', 0)
-                                ->orderByDesc('id')->get();
+                                ->orderByDesc('id')
+                                ->get()
+                                ->map(function ($producto) {
+                                    $producto->id_encriptado = Crypt::encrypt($producto->id);
+                                    return $producto;
+                                });
 
         return view('home.home', [
             'productos' => $productos,
@@ -71,10 +77,10 @@ class ProductoController extends Controller
             $destinationPath = public_path('uploads/productos');
             $image_path->move($destinationPath, $imageName);
         }
-        
+
         $subcategoria = SubCategoria::find($request->subcategoria);
         $categoria = $subcategoria->categoria;
-        
+
         $iniciales = strtolower(substr($categoria->nombre, 0, 1)) . strtolower(substr($subcategoria->nombre, 0, 1));
 
         $letrasNumerosAleatorios = $this->generateRandomCode(4);
@@ -137,7 +143,7 @@ class ProductoController extends Controller
 
     public function editarSave(Request $request)
     {
-        
+
         $request->validate([
             'nombre' => 'nullable',
             'descripcion' => 'nullable',
@@ -150,9 +156,9 @@ class ProductoController extends Controller
             'imagen.image' => 'Carga una imagen'
         ]);
 
-        if($request->oferta == 1){
-            if($request->precio_oferta == 0 ){
-                
+        if ($request->oferta == 1) {
+            if ($request->precio_oferta == 0) {
+
                 return back()->with('warning', 'Te olvidaste de agregar un precio a al oferta');
             }
         }
@@ -200,21 +206,21 @@ class ProductoController extends Controller
     }
 
     public function aggFotos(Request $request)
-    {        
+    {
         $request->validate([
             'fotos.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
         ], [
             'fotos.*.image' => 'Por favor, verifica el formato de la imagen'
         ]);
-        
+
         $contador = '';
 
         if ($request->hasFile('fotos')) {
             foreach ($request->file('fotos') as $file) {
                 $contador++;
-                $imageName = "$contador".time() . '.' . $file->getClientOriginalExtension();
+                $imageName = "$contador" . time() . '.' . $file->getClientOriginalExtension();
                 $destinationPath = public_path('uploads/productos');
-                $file->move($destinationPath, $imageName);                            
+                $file->move($destinationPath, $imageName);
                 $productoFoto = new ProductoFoto;
                 $productoFoto->nombre = $imageName;
                 $productoFoto->producto_id = $request->producto_id;
@@ -229,34 +235,45 @@ class ProductoController extends Controller
         $foto = ProductoFoto::destroy($id);
 
         return back()->with('success', 'La foto se elimino con exito');
-    }
+    }    
 
-    public function producto($id)
+public function producto($idEncriptado)
+{
+    try {     
+        $id = Crypt::decrypt($idEncriptado);
+    } catch (\Exception $e) {
+        return back()->with('error', 'Error al procesar el producto.');
+    }    
+    $producto = Producto::findOrFail($id);    
+    $producto->id_encriptado = Crypt::encrypt($producto->id);    
+    $fotos = ProductoFoto::where('producto_id', $id)->get();
+    
+    $similares = Producto::where('id', '!=', $id)
+        ->where('subCategoria_id', $producto->subCategoria_id)
+        ->whereBetween('precio', [$producto->precio - 1500000, $producto->precio + 2000000])
+        ->get()
+        ->map(function ($similar) {
+            $similar->id_encriptado = Crypt::encrypt($similar->id);
+            return $similar;
+        });
+
+    return view('producto.producto', [
+        'producto' => $producto,
+        'fotos' => $fotos,
+        'similares' => $similares,
+    ]);
+}
+
+
+    public function busqueda()
     {
-        $producto = Producto::findOrFail($id);
-        $fotos = ProductoFoto::where('producto_id', $id)->get();
-        $similares = Producto::where('id', '!=', $id)
-            ->where('subCategoria_id', $producto->subCategoria_id)
-            ->whereBetween('precio', [$producto->precio - 1500000, $producto->precio + 2000000])
-            ->get();
-
-        return view('producto.producto', [
-            'producto' => $producto,
-            'fotos' => $fotos,
-            'similares' => $similares,
-        ]);
-    }
-
-
-    public function busqueda(){
-        if(isset($_GET['b'])){
+        if (isset($_GET['b'])) {
             $b = trim($_GET['b']);
 
-            $productos = Producto::where('nombre', 'like', '%'.$b.'%')
-                                ->where('visible', 'si')                                
-                                ->orderByDesc('id')->get();
-
-        }else{
+            $productos = Producto::where('nombre', 'like', '%' . $b . '%')
+                ->where('visible', 'si')
+                ->orderByDesc('id')->get();
+        } else {
             return back();
         }
 
@@ -265,19 +282,18 @@ class ProductoController extends Controller
             'productos' => $productos,
             'b' => $b
         ]);
-
     }
 
-    public function admBusqueda(){
-        if(isset($_GET['b'])){
+    public function admBusqueda()
+    {
+        if (isset($_GET['b'])) {
             $b = trim($_GET['b']);
 
-            $productos = Producto::where('nombre', 'like', '%'.$b.'%')
-                                ->orWhere('codigo', 'like', '%'.$b.'%')
-                                ->where('visible', 'si')                                
-                                ->orderByDesc('id')->paginate(8);
-
-        }else{
+            $productos = Producto::where('nombre', 'like', '%' . $b . '%')
+                ->orWhere('codigo', 'like', '%' . $b . '%')
+                ->where('visible', 'si')
+                ->orderByDesc('id')->paginate(8);
+        } else {
             return back();
         }
 
@@ -288,13 +304,12 @@ class ProductoController extends Controller
         ]);
     }
 
-    public function ofertas(){
+    public function ofertas()
+    {
         $ofertas = Producto::where('oferta', 1)->get();
 
         return view('producto.ofertas', [
             'ofertas' => $ofertas,
         ]);
     }
-
-
 }
