@@ -18,4 +18,7 @@ class Pedido extends Model
     public function listaPedidos(){
         return $this->hasMany(ListaPedido::class);
     }    
+    public function ventaAsignada(){
+        return $this->hasMany(VentasAsignada::class);
+    }
 }

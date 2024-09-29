@@ -8,18 +8,21 @@ use App\Models\Pedido;
 use App\Models\ListaPedido;
 use App\Models\DatosEnvio;
 use App\Models\Producto;
+use App\Models\Vendedor;
+use App\Models\Departamento;
+use App\Models\VentasAsignada;
+use App\Models\Ciudad;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-use Carbon\Carbon;
-
 class PedidoController extends Controller
-
 {
     public function checkout()
     {
+        $departamentos = Departamento::all();
         if (Auth::user()) {
             $pedido = Pedido::where('user_id', Auth::user()->id)
                 ->orderBy('id', 'desc')
@@ -31,17 +34,22 @@ class PedidoController extends Controller
                 return view('pedido.index', [
                     'pedido' => $pedido,
                     'datos' => $datos,
+                    'departamentos' => $departamentos,
                 ]);
             }else{
-                return view('pedido.index');    
+                return view('pedido.index', [
+                    'departamentos' => $departamentos,
+                ]);    
             }
         } else {
-            return view('pedido.index');
+            return view('pedido.index', [
+                'departamentos' => $departamentos
+            ]);
         }
     }
 
     public function checkoutSave(Request $request)
-    {
+    {        
         $request->validate([
             'ruc' => 'required',
             'celular' => 'required',
@@ -74,7 +82,8 @@ class PedidoController extends Controller
 
         $codigo = $letrasNumerosAleatorios;
         DB::beginTransaction();
-        //try {
+        
+        try {
         $pedido = new Pedido;
         $pedido->user_id = Auth::user()->id ?? 1;
         $pedido->celular = $request->celular;
@@ -125,10 +134,10 @@ class PedidoController extends Controller
 
         DB::commit();
         return redirect()->route('pedido.confirmado', ['id' => $pedido->id]);
-        // } catch (\Exception $e) {
-        //     DB::rollBack();
-        //     return back()->with('error', 'Hubo un error al procesar el pedido.');
-        // }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', 'Hubo un error al procesar el pedido.');
+        }
     }
 
     private function generateRandomCode($length)
@@ -195,12 +204,17 @@ class PedidoController extends Controller
     }
     public function pedidos()
     {
-        $listapedidos = ListaPedido::orderByDesc('id')->get();
+        $listapedidos = ListaPedido::orderByDesc('id')->get();        
         $pedidos = Pedido::orderByDesc('id')->paginate(8);
+        $vendedores = Vendedor::all();
+        $ventasAsignadas = VentasAsignada::all();     
+           
 
         return view('pedido.todos', [
             'listapedidos' => $listapedidos,
             'pedidos' => $pedidos,
+            'vendedores' => $vendedores,
+            'ventasAsignadas' => $ventasAsignadas
         ]);
     }
 

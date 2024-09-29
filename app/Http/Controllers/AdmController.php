@@ -69,8 +69,7 @@ class AdmController extends Controller
         return view('administracion.registro');
     }
 
-    public function 
-    registroSave(Request $request){
+    public function registroSave(Request $request){
         $request->validate([
             'nombre' => 'required',            
             'email' => 'required|email|unique:users,email',

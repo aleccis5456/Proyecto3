@@ -14,7 +14,7 @@
             data-carousel="slide">
             @php
                 $contador = '';
-            @endphp
+            @endphp            
             @foreach ($ofertas as $oferta)
                 <div
                     class="relative bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
@@ -36,7 +36,7 @@
                             <h2 class="text-lg font-bold text-gray-900 dark:text-gray-800 mb-2">{{ $oferta->nombre }}
                             </h2>
                             <p class="text-sm text-gray-600 dark:text-gray-500">
-                                {{ Str::limit($oferta->descripcion, 100) }}
+                                {{ Str::limit($oferta->descripcion, 100) }}                                
                             </p>
                             <div class="mt-4">
                                 <p class="text-sm text-gray-400 line-through">

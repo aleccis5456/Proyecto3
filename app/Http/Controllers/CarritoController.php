@@ -7,6 +7,7 @@ use App\Models\Producto;
 use Illuminate\Support\Facades\Session;
 use App\Utils\Util;
 use Illuminate\Support\Facades\Crypt;
+use Exception;
 
 class CarritoController extends Controller
 {
@@ -25,10 +26,9 @@ class CarritoController extends Controller
 
     public function add($idEncriptado, Request $request)
     {
-        try {
-            // Desencriptar el ID
+        try {            
             $id = Crypt::decrypt($idEncriptado);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', 'Error al procesar el producto.');
         }
 
@@ -122,8 +122,6 @@ class CarritoController extends Controller
                 'producto_completo' => $producto,
             ];
         }
-
-
 
         session(['carrito' => $carrito]);
 

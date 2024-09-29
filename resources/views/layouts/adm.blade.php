@@ -159,7 +159,7 @@
                 </li>
 
                 <li>
-                    <a href=" {{ route('categoria.agregar') }} "
+                    <a href=" {{ route('categoria.agregar') }}" 
                         class="flex items-center space-x-2 flex items-center space-x-2 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
@@ -194,16 +194,6 @@
     @yield('contenidoAdm')
 
     @stack('js')
-
-    {{-- <script>
-        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark')
-        }
-    </script>
-     --}}
 
 </body>
 

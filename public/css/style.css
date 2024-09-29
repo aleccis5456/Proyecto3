@@ -5,10 +5,10 @@
     color: #111827; /* text-gray-900 */
     font-size: 0.875rem; /* text-sm */
     border-radius: 0.5rem; /* rounded-lg */
-    padding: 0.75rem 0.75rem; /* Ajustado para mejorar la alineación */
+    padding: 0.70rem 0.70rem; /* Ajustado para mejorar la alineación */
     box-shadow: 0 0 0 1px rgba(59, 130, 246, 0.1); /* focus:ring-blue-500 */
     transition: border-color 0.2s, box-shadow 0.2s;
-    height: auto; /* Permite que el contenedor se ajuste a la altura del contenido */
+    height: 43px; /* Permite que el contenedor se ajuste a la altura del contenido */
     display: flex;
     align-items: center; /* Centra verticalmente el contenido */
 }

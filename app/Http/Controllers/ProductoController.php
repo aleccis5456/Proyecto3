@@ -81,7 +81,8 @@ class ProductoController extends Controller
         $subcategoria = SubCategoria::find($request->subcategoria);
         $categoria = $subcategoria->categoria;
 
-        $iniciales = strtolower(substr($categoria->nombre, 0, 1)) . strtolower(substr($subcategoria->nombre, 0, 1));
+        $iniciales = strtolower(substr($categoria->nombre, 0, 1)) 
+                    . strtolower(substr($subcategoria->nombre, 0, 1));
 
         $letrasNumerosAleatorios = $this->generateRandomCode(4);
 
@@ -181,8 +182,7 @@ class ProductoController extends Controller
         $producto->precio_oferta = $request->precio_oferta ?? $producto->precio_oferta;
         $producto->visible = $request->visible ?? 'si';
         $producto->ventas = $request->ventas ?? $producto->ventas;
-        $producto->subCategoria_id = $request->subcategoria ?? $producto->subCategoria_id;
-        $producto->reg_por_adm_id = session('adm')->id;
+        $producto->subCategoria_id = $request->subcategoria ?? $producto->subCategoria_id;        
         $producto->mod_fecha = Carbon::now();
         $producto->modificado_por_adm_id = session('adm')->id;
 

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* <uniquifier>: Use a unique and descriptive class name
+<weight>: Use a value from 300 to 900 */
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+

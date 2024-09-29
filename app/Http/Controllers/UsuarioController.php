@@ -172,7 +172,7 @@ class UsuarioController extends Controller
             return back()->with('info', 'Te hemos enviado un correo');
         }
     }
-
+    
     public function cambiar($id_encriptado){
 
         $id = Crypt::decrypt($id_encriptado);

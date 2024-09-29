@@ -20,7 +20,7 @@
                 </div>
                 <input type="search" id="default-search" name="b" value="{{ $b ?? '' }}"
                     class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Busca por código o por usuario..."  />
+                    placeholder="Busca por código o por usuario..." />
             </div>
         </form>
 
@@ -33,6 +33,7 @@
                     <th scope="col" class="px-6 py-3">registro</th>
                     <th scope="col" class="px-6 py-3">Total</th>
                     <th scope="col" class="px-6 py-3">Estado</th>
+                    <th scope="col" class="px-6 py-3">Asignar Vendedor</th>
                     <th scope="col" class="px-6 py-3">Detalle</th>
                 </tr>
             </thead>
@@ -46,9 +47,10 @@
                         <td class="px-6 py-4">{{ $pedido->registro }}</td>
                         <td class="px-6 py-4">
                             {{-- {{ number_format(round($pedido->coste, -2), 0, ',', '.') }} Gs. --}}
-                            {{ $pedido->costoEnvio > 0 ? number_format($pedido->costoEnvio + $pedido->coste, 0, '.', '.') : number_format(round($pedido->coste, -2), 0, ',', '.') }} Gs.
+                            {{ $pedido->costoEnvio > 0 ? number_format($pedido->costoEnvio + $pedido->coste, 0, '.', '.') : number_format(round($pedido->coste, -2), 0, ',', '.') }}
+                            Gs.
                         </td>
-                        <td class="px-6 py-4">
+                        <td class=" py-4">
                             <form method="POST" action="{{ route('actualizar.estado') }}">
                                 @csrf
                                 <div class="flex">
@@ -95,6 +97,57 @@
                                 </div>
                             </form>
                         </td>
+
+                        <td class="px-6 py-4">
+                            <form class="max-w-sm mx-auto" method="POST" action="{{ route('vendedores.ventas') }}">
+                                @csrf
+                                <div class="flex">
+                                    <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
+                                    <select id="countries" name="vendedor_id"
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                        <option value="">--Selecciona--</option>
+
+                                        @foreach ($vendedores as $vendedor)
+                                            @if (ucfirst($vendedor->departamento) == ucfirst($pedido->departamento) or
+                                                    ucfirst($vendedor->ciudad) == ucfirst($pedido->ciudad))
+                                                @php
+                                                    $asignado = $ventasAsignadas->where('vendedor_id', $vendedor->id)->first();
+                                                    $cantidad = $ventasAsignadas->where('vendedor_id', $vendedor->id)->count();
+                                                @endphp
+
+                                                @if ($asignado)
+                                                    @if ($cantidad > 1)
+                                                        <option value="{{ $vendedor->id }}" selected>Vendedor: {{ $vendedor->nombre }} ({{ $cantidad }})
+                                                        <option class="text-red-600" value="cambiar"> Cancelar y cambiar</option>                                                                                                                 
+                                                        @continue
+                                                    @elseif($cantidad == 1)                                                        
+                                                        @if ($asignado->pedido_id == $pedido->id)
+                                                            <option value="{{ $vendedor->id }}" selected>Vendedor: {{ $vendedor->nombre }} ({{ $cantidad }})
+                                                            <option class="text-red-600" value="cambiar"> Cancelar y cambiar</option>
+                                                        @else
+                                                            <option value="{{ $vendedor->id }}">{{ $vendedor->nombre }}({{ $cantidad }})</option>                                                                    
+                                                        @endif                                                                
+                                                    @endif
+                                                    @continue
+                                                    @if ($asignado->pedido_id == $pedido->id)
+                                                        <option value="{{ $vendedor->id }}" selected>Vendedor: {{ $vendedor->nombre }} ({{ $cantidad }})
+                                                        <option class="text-red-600" value="cambiar"> Cancelar y cambiar</option>
+                                                        
+                                                    @endif
+                                                @else
+                                                    <option value="{{ $vendedor->id }}">{{ $vendedor->nombre }}({{ $cantidad }})</option>
+                                                @endif
+                                            @endif
+                                        @endforeach
+
+                                    </select>
+
+                                    <input class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2"
+                                        type="submit" value="Guardar">
+                                </div>
+                            </form>
+                        </td>
+
                         <td class="px-6 py-4">
                             <a class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2"
                                 href="{{ route('pedido.detalle', ['id' => $pedido->id]) }}">

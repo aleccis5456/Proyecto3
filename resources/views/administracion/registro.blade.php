@@ -20,8 +20,7 @@
 
     <body>
         <form action=" {{ route('adm.login') }} " method="GET">
-            <div class="max-w-sm mx-auto ">
-                {{-- <a href="{{ route('adm.login') }}" --}}
+            <div class="max-w-sm mx-auto ">                
                 <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     <svg class="w-6 h-6 text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4"/>
@@ -41,6 +40,7 @@
             </div>
             <div class="mb-6">
                 <b class="text-2xl text-gray-900 dark:text-white">Registro de Administradores</b>
+                
             </div>
             <div class="mb-5">
                 <label for="nombre"
@@ -62,7 +62,10 @@
             </div>
             <button type="submit"
                 class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Registrar</button>
-
+                
+            
+            <a href="{{ route('vendedores.showRegister') }}" class="pl-12 text-sm text-gray-600  hover:text-blue-600 hover:underline  hover:font-bold hover:pl-9 ">Registrar un vendedor</a>
+            
         </form>
 
     </body>

@@ -8,11 +8,12 @@ use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PedidoController;
+use App\Http\Controllers\VendedoresController;
 
 //middlewares   
 use App\Http\Middleware\AdminIndex;
 use App\Http\Middleware\carrito;
-
+use App\Http\Middleware\Vendedor;
 //index de la pagina
 Route::get('/home', [ProductoController::class, 'index'])->name('home');
 Route::get('/', [ProductoController::class, 'index']);
@@ -62,7 +63,13 @@ Route::post('/adm/save', [AdmController::class, 'loginSave'])->name('adm.loginSa
 Route::get('/adm/registro', [AdmController::class, 'registro'])->name('adm.registro');
 Route::post('/adm/registro/save', [AdmController::class, 'registroSave'])->name('adm.registroSave');
 
-Route::middleware([AdminIndex::class])->group(function () {    
+//vendedores
+Route::get('/adm/registro/vendedores', [VendedoresController::class , 'showRegister'])->name('vendedores.showRegister');
+Route::post('adm/registro/vendedores', [VendedoresController::class ,'register'])->name('vendedores.register');
+Route::get('/vend/login', [VendedoresController::class, 'showLogin'])->name('vendedores.showlogin');
+Route::post('/vend/login', [VendedoresController::class, 'login'])->name('vendedores.login');
+
+Route::middleware([AdminIndex::class])->group(function () {        
     Route::get('/adm/usuarios', [AdmController::class, 'users'])->name('adm.users');
 
     Route::get('/adm', [AdmController::class, 'index'])->name('adm.index');    
@@ -95,13 +102,23 @@ Route::middleware([AdminIndex::class])->group(function () {
     Route::get('/adm/pedido/busqueda', [PedidoController::class, 'buscador'])->name('pedido.buscador');
     Route::get('/adm/pedidos', [PedidoController::class, 'pedidos'])->name('pedidos');
     Route::post('/actualizar-estado', [PedidoController::class, 'actualizarEstado'])->name('actualizar.estado');
-    Route::get('/adm/pedido/{id}', [PedidoController::class, 'detalle'])->name('pedido.detalle');    
-
-
+    Route::get('/adm/pedido/{id}', [PedidoController::class, 'detalle'])->name('pedido.detalle');       
+    //vendedores
+    Route::post('/adm/asignar', [VendedoresController::class, 'ventaAsignada'])->name('vendedores.ventas');
+    
 });
 
+Route::middleware([Vendedor::class])->group(function(){
+    //vendedores   
+    Route::get('/vend/index', [VendedoresController::class, 'index'])->name('vendedores.index'); 
+    Route::get('/vend/logout', [VendedoresController::class, 'logout'])->name('vendedores.logout');
+    Route::get('/vend/pedido/{pedido}/detalle', [VendedoresController::class, 'pedidoDetalle'])->name('vendedores.pedidodetalle');
+    Route::post('/vend/pedido/estado', [VendedoresController::class, 'cambiarEstado'])->name('vendedores.cambiarestado');
+});
+
+
 Route::get('/debug', function(){
-    echo count(session('carrito'));
+    echo count(session('carrito'));    
 });
 
 Route::get('/debug/3', function(){
