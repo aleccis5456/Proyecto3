@@ -12,7 +12,7 @@
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 <a
-                                    href="{{ route('sub.ver', ['sort_by' => 'id', 'sort_order' => $sortBy === 'id' && $sortOrder === 'asc' ? 'desc' : 'asc']) }}">
+                                    href="{{ route('sub.ver', ['sort_by' => 'id', 'sort_order' => $sortBy == 'id' && $sortOrder == 'asc' ? 'desc' : 'asc']) }}">
                                     ID
                                     @if ($sortBy === 'id')
                                         <span>{{ $sortOrder === 'asc' ? '▲' : '▼' }}</span>

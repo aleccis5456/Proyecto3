@@ -2,11 +2,30 @@
 
 @section('contenidoAdm')
     <div class="flex"> <!-- Contenedor principal con Flexbox -->      
-        <div class="flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900">
-            <div
-                class="w-5/6 mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">                
+        <div class="w-2/3 flex items-center justify-center pt-10 dark:bg-gray-900">
+            <div class="w-full mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">                
                 <div class="flex justify-between items-center">
                     <p class="font-bold text-xl">Ventas</p>
+                    <!-- formulario de busqueda -->
+                    <form class="max-w-md mx-auto px-1 pb-1" action="{{ route('adm.index') }}" method="GET" name="form_buscador">
+                        <label for="default-search" class="mb-1 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                        <div class="relative">                            
+                            <input type="search" id="default-search" name="filtro" value="{{ $b ?? '' }}"
+                                class="block w-full p-2.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Busca por código o producto..."  />
+                                
+                                <button type="submit" class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                                    </svg>
+                                </button>
+                        </div>
+                    </form>
+
+                    
+
                     <form action="{{ route('reporte.pdf') }}" method="get">
                         <span class="font-bold">Exportar en PDF</span>:
                         <button type="submit"
@@ -35,8 +54,17 @@
                             <th scope="col" class="px-6 py-3">
                                 Producto
                             </th>
-                            <th scope="col" class="px-6 py-3">
-                                Ventas
+                            <th scope="col" class="px-6 py-3">                                
+                                <form action="{{ route('adm.index') }}" method="get">                                    
+                                    <input type="hidden" name="orderBy" value="{{ $orderBy == 'asc' ? 'desc' : 'asc'  }}">
+                                    <button type="submit">VENTAS
+                                        @if ($orderBy == 'desc')
+                                        ▼
+                                        @else
+                                        ▲
+                                        @endif
+                                    </button>
+                                </form>                                
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Stock Actual
@@ -71,25 +99,24 @@
                     </div>
                 </div>
             </div>
+            
         </div>
 
-    {{-- </div>
-    </div> --}}
 
-    <div class="w-1/3 p-4 text-center">
-        <a href="{{ route('producto.amdIndex') }}">
-            <button type="button"
-                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                Ver todos los productos
-            </button>
-        </a>
-        <a href="{{ route('pedidos') }}">
-            <button type="button"
-                class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                Pedidos
-            </button>
-        </a>
-    </div>
+        <div class="w-1/3 p-4 text-center">
+            <a href="{{ route('producto.amdIndex') }}">
+                <button type="button"
+                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    Ver todos los productos
+                </button>
+            </a>
+            <a href="{{ route('pedidos') }}">
+                <button type="button"
+                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    Pedidos
+                </button>
+            </a>
+        </div>
 
 
     </div>

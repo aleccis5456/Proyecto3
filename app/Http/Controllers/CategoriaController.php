@@ -95,7 +95,7 @@ class CategoriaController extends Controller
         ]);
     }
     public function verSub(Request $request)
-    {
+    {     
         $sortBy = $request->input('sort_by', 'id');
         $sortOrder = $request->input('sort_order', 'desc');
 

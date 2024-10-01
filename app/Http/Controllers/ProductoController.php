@@ -9,6 +9,7 @@ use App\Models\SubCategoria;
 use App\Models\ProductoFoto;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use Exception;
 use Intervention\Image\ImageManager;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
@@ -22,7 +23,8 @@ class ProductoController extends Controller
         //$productos = Producto::orderByDesc('id')->get();
         $productos = Producto::where('visible', 'si')
             ->where('oferta', 0)
-            ->orderByDesc('id')
+            ->inRandomOrder()
+            ->take(8)
             ->get()
             ->map(function ($producto) {
                 $producto->id_encriptado = Crypt::encrypt($producto->id);
@@ -33,14 +35,40 @@ class ProductoController extends Controller
             'productos' => $productos,
         ]);
     }
-    public function amdIndex()
+    public function amdIndex(Request $request)
     {
-        $productos = Producto::with('subcategoria')->paginate(8);
-        $cantidad = Producto::with('subcategoria')->count();
 
+        $query = Producto::with('subcategoria');
+        $orderBy = $request->query('orderBy') ?? 'desc';
+        $column = $request->query('column') ?? 'registro';
+        $filtro = $request->query('filtro') ?? null;
+
+        if($orderBy === 'asc'){
+            $query->orderBy($column, $orderBy);
+        }else{
+            $query->orderByDesc($column);
+        }
+
+        if(!is_null($filtro)){
+            $query->whereLike('nombre', $filtro)
+                ->orWhereLike('codigo', $filtro)
+                ->orWhereHas('subcategoria', function ($q) use ($filtro) {
+                    $q->where('nombre', 'like', "%$filtro%"); // Accediendo a la variable 'nombre' de la subcategoría
+                    //Sí, orWhereHas se utiliza para filtrar resultados basados en la relación de un modelo con otra tabla.
+                });
+        }
+
+        $productos = $query->paginate(8)->appends(['orderBy' => $orderBy, 'column' => $column]);
+        $cantidad = Producto::with('subcategoria')->count();
+        $flag = $column.'_column';
+        //dd($flag);
         return view('producto.todos', [
             'productos' => $productos,
-            'cantidad' => $cantidad
+            'cantidad' => $cantidad,
+            'orderBy' => $orderBy,
+            'column' => $column,
+            'flag' => $flag,
+            'b' => $filtro
         ]);
     }
 
@@ -81,8 +109,8 @@ class ProductoController extends Controller
         $subcategoria = SubCategoria::find($request->subcategoria);
         $categoria = $subcategoria->categoria;
 
-        $iniciales = strtolower(substr($categoria->nombre, 0, 1)) 
-                    . strtolower(substr($subcategoria->nombre, 0, 1));
+        $iniciales = strtolower(substr($categoria->nombre, 0, 1))
+            . strtolower(substr($subcategoria->nombre, 0, 1));
 
         $letrasNumerosAleatorios = $this->generateRandomCode(4);
 
@@ -182,7 +210,7 @@ class ProductoController extends Controller
         $producto->precio_oferta = $request->precio_oferta ?? $producto->precio_oferta;
         $producto->visible = $request->visible ?? 'si';
         $producto->ventas = $request->ventas ?? $producto->ventas;
-        $producto->subCategoria_id = $request->subcategoria ?? $producto->subCategoria_id;        
+        $producto->subCategoria_id = $request->subcategoria ?? $producto->subCategoria_id;
         $producto->mod_fecha = Carbon::now();
         $producto->modificado_por_adm_id = session('adm')->id;
 
@@ -241,7 +269,7 @@ class ProductoController extends Controller
     {
         try {
             $id = Crypt::decrypt($idEncriptado);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return back()->with('error', 'Error al procesar el producto.');
         }
         $producto = Producto::findOrFail($id);
@@ -265,22 +293,35 @@ class ProductoController extends Controller
     }
 
 
-    public function busqueda()
+    public function busqueda(Request $request)
     {
-        if (isset($_GET['b'])) {
-            $b = trim($_GET['b']);
+        if (
+            $request->query('b') == null and
+            $request->query('precio_max') == null and
+            $request->query('precio_min') == null
+        ) {
 
-            $productos = Producto::where('nombre', 'like', '%' . $b . '%')
-                ->where('visible', 'si')
-                ->orderByDesc('id')->get();
-        } else {
             return back();
         }
+        //dd($request);
+        $filtro = $request->query('b');
+        $query = Producto::whereLike('nombre', "%$filtro%");
 
+        if ($request->has('precio_min')) {
+            $query->where('precio', '>=', $request->query('precio_min'));
+        }
+        if ($request->has('precio_max')) {
+            $query->where('precio', '<=', $request->query('precio_max'));
+        }
+        $productos = $query->get();
+        $item = $query->first();
 
         return view('home.busqueda', [
             'productos' => $productos,
-            'b' => $b
+            'b' => $filtro,
+            'item' => $item,
+            'precio_min' => $request->precio_min,
+            'precio_max' => $request->precio_max
         ]);
     }
 
@@ -304,7 +345,8 @@ class ProductoController extends Controller
         ]);
     }
 
-    public function ofertas(){
+    public function ofertas()
+    {
         $ofertas = Producto::where('oferta', 1)->get()
             ->map(function ($oferta) {
                 $oferta->id_encriptado = Crypt::encrypt($oferta->id);
@@ -313,6 +355,47 @@ class ProductoController extends Controller
 
         return view('producto.ofertas', [
             'ofertas' => $ofertas,
+        ]);
+    }
+
+    public function filtro(Request $request)
+    {
+        $categoriaId = $request->query('categoria_id');
+        $subCategoriaId = $request->query('filtro');
+
+        $query = Producto::query();
+
+        if ($categoriaId) {
+            // Obtener todos los subcategorías que pertenecen a la categoría seleccionada
+            $subCategoriasIds = SubCategoria::where('categoria_id', $categoriaId)->pluck('id');
+            $query->whereIn('subCategoria_id', $subCategoriasIds);
+            $flagCategoria = 1;
+        } elseif ($subCategoriaId) {
+            //esta parte ahora se cambia por elseif
+            $query->where('subCategoria_id', $subCategoriaId);
+        }
+
+        if ($request->has('precio_min')) {
+            $query->where('precio', '>=', $request->query('precio_min'));
+        }
+
+        if ($request->has('precio_max')) {
+            $query->where('precio', '<=', $request->query('precio_max'));
+        }
+
+        $productos = $query->get();
+        $filtros = $query->first();
+
+        $b = $filtros ? $filtros->subcategoria->nombre : '';
+        $flag = 1;
+
+        return view('home.busqueda', [
+            'productos' => $productos,
+            'flag' => $flag,
+            'flagCategoria' => $flagCategoria ?? null,
+            'filtros' => $filtros,
+            'precio_min' => $request->precio_min ?? 100000,
+            'precio_max' => $request->precio_max ?? 20000000,
         ]);
     }
 }

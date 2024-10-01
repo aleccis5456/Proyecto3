@@ -30,6 +30,7 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">codigo</th>
+                    <th scope="col" class="px-6 py-3">estado</th>
                     <th scope="col" class="px-6 py-3">usuario</th>
                     <th scope="col" class="px-6 py-3">registro</th>
                     <th scope="col" class="px-6 py-3">Total</th>                    
@@ -43,6 +44,7 @@
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             #{{ $venta->pedido->codigo }}
                         </th>
+                        <td class="px-6 py-4 {{ $venta->pedido->estado == 'Finalizado' ? 'text-red-500 font-semibold': '' }}">{{ $venta->pedido->estado }}</td>
                         <td class="px-6 py-4">{{ $venta->pedido->usuario->name }}</td>
                         <td class="px-6 py-4">{{ $venta->pedido->registro }}</td>
                         <td class="px-6 py-4">

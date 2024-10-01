@@ -10,4 +10,8 @@ class Categoria extends Model
     use HasFactory;
     public $timestamps = false;
     protected $table = 'categorias';
+
+    public function subcategoria(){
+        return $this->hasMany(SubCategoria::class);
+    }
 }

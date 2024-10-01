@@ -5,8 +5,7 @@
             </button>            
 
             <div>
-                <a href="{{ route('vendedores.index') }}" class="text-white text-center">Administracion de la pagina:
-                    Proyecto</a>
+                <a href="{{ route('vendedores.index') }}" class="text-white text-center">Pagina de vendedores</a>
             </div>
 
 

@@ -18,6 +18,7 @@ use App\Http\Middleware\Vendedor;
 Route::get('/home', [ProductoController::class, 'index'])->name('home');
 Route::get('/', [ProductoController::class, 'index']);
 Route::get('/busqueda', [ProductoController::class, 'busqueda'])->name('home.busqueda');
+Route::get('/b', [ProductoController::class, 'filtro'])->name('filtro.subcategoria');
 
 //reportes y facturas
 Route::get('/reporte/pdf', [PDFController::class, 'generarPDF'])->name('reporte.pdf');
@@ -73,6 +74,7 @@ Route::middleware([AdminIndex::class])->group(function () {
     Route::get('/adm/usuarios', [AdmController::class, 'users'])->name('adm.users');
 
     Route::get('/adm', [AdmController::class, 'index'])->name('adm.index');    
+    Route::get('/adm/ventas', [AdmController::class, 'bventas'])->name('adm.bventas');
     Route::get('/adm/logout', [AdmController::class, 'logout'])->name('adm.logout');
     //categoria
     Route::get('/adm/agregar/categoria', [CategoriaController::class, 'agregar'])->name('categoria.agregar');

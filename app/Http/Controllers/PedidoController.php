@@ -219,7 +219,7 @@ class PedidoController extends Controller
     }
 
     public function actualizarEstado(Request $request)
-    {
+    {        
         $request->validate([
             'estado' => 'required|string',
             'pedido_id' => 'required|integer',

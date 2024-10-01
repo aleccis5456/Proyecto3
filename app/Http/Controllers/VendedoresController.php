@@ -21,11 +21,12 @@ class VendedoresController extends Controller
 {
     public function index()
     {
-
         // $listapedidos = ListaPedido::orderByDesc('id')->get();        
         // $pedidos = Pedido::orderByDesc('id')->paginate(8);
         // $vendedores = Vendedor::all();
-        $ventas = VentasAsignada::where('vendedor_id', Auth::guard('vendedores')->user()->id)->get();
+        $ventas = VentasAsignada::where('vendedor_id', Auth::guard('vendedores')->user()->id)
+                                ->orderByDesc('id')                                
+                                ->get();
 
 
         return view('vendedores.home', [
@@ -119,19 +120,26 @@ class VendedoresController extends Controller
 
     public function ventaAsignada(Request $request)
     {
+        if($request->vendedor_id == null){
+            return redirect()->route('pedidos')->with('error', 'Selecciona una opcion');
+        }        
         if ($request->vendedor_id == 'cambiar') {
             $venta = VentasAsignada::where('pedido_id', $request->pedido_id);
             $venta->delete();
             return back()->with('error', 'Vendedor desasignado');
         } else {
-            $vendedor = Vendedor::findOrFail($request->vendedor_id);
-            $pedido = Pedido::findOrFail($request->pedido_id);
+            $vendedor = Vendedor::findOrFail($request->vendedor_id);            
 
             try {
-                $venta = VentasAsignada::create([
+                VentasAsignada::create([
                     'vendedor_id' => $request->vendedor_id,
                     'pedido_id' => $request->pedido_id
                 ]);
+
+                $vendedor->ventas_asginadas += 1;
+                $vendedor->update();
+                
+
             } catch (Exception $e) {
                 return back()->with('warning', 'Ya se asigno un vendedor');
             }
@@ -157,7 +165,8 @@ class VendedoresController extends Controller
     }
 
     public function cambiarEstado(Request $request)
-    {                   
+    {                         
+        
         $pedido = Pedido::find($request->pedido_id);        
         if (!$pedido) {
             return back()->with('warning', 'Pedido no encontrado');
@@ -166,6 +175,22 @@ class VendedoresController extends Controller
         $listas = ListaPedido::where('pedido_id', $request->pedido_id)->get();                
         if (!$listas) {
             return back()->with('warning', 'Pedido no encontrado');
+        }
+
+        if($pedido->estado == 'Finalizado'){
+            return back()->with('info','El pedido fue finalizado');
+        }
+
+        if($request->estado == "Finalizado"){            
+
+            $vendedor = Vendedor::findOrFail($request->vendedor_id);
+            $vendedor->ventas_completadas += 1;
+            $vendedor->save();
+
+            $pedido->estado = $request->estado;
+            $pedido->save();
+
+            return back()->with('success', 'Estado del pedido cambiado');
         }
 
         if ($request->estado == 'Anulado') {        

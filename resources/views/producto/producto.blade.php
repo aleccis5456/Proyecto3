@@ -168,7 +168,7 @@
         </div>
     </div>
 
-
+    <!-- Productos similares -->
     <div class="flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900">
         <div
             class="w-5/6 mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
@@ -199,14 +199,14 @@
                                 class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <a href="{{ route('producto', ['id' => $similar->id]) }}">
+                                    <a href="{{ route('producto', [Crypt::encrypt($similar->id)]) }}">
                                         <img src=" {{ asset('uploads/productos') }}/{{ $similar->imagen }} "
                                             width="200" alt="">
                                     </a>
-                                </th>
+                                </th>                                
 
                                 <td class="">
-                                    <a href="{{ route('producto', ['id' => $similar->id]) }}">
+                                    <a href="{{ route('producto', [Crypt::encrypt($similar->id)]) }}">
                                         <div class="flex-col">
                                             <div class="pb-10">
                                                 <b class="mb-10 text-black"> {{ $similar->nombre }} </b>
@@ -243,8 +243,8 @@
                                         </div>
 
                                         <div class="mb-10">
-                                            <a href="#"
-                                                class="flex justify-center items-center  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-3 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                                            <a href="{{ route('carrito.add', [Crypt::encrypt($similar->id)]) }}"
+                                                class="flex justify-center items-center  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-3 me-2">
                                                 <b class="text-xs">AGREGAR AL CARRITO</b>
                                             </a>
                                         </div>

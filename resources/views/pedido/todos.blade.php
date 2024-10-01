@@ -103,7 +103,7 @@
                                 @csrf
                                 <div class="flex">
                                     <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
-                                    <select id="countries" name="vendedor_id"
+                                    <select id="vendedores" name="vendedor_id"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                         <option value="">--Selecciona--</option>
 
@@ -114,7 +114,6 @@
                                                     $asignado = $ventasAsignadas->where('vendedor_id', $vendedor->id)->first();
                                                     $cantidad = $ventasAsignadas->where('vendedor_id', $vendedor->id)->count();
                                                 @endphp
-
                                                 @if ($asignado)
                                                     @if ($cantidad > 1)
                                                         <option value="{{ $vendedor->id }}" selected>Vendedor: {{ $vendedor->nombre }} ({{ $cantidad }})
@@ -127,13 +126,7 @@
                                                         @else
                                                             <option value="{{ $vendedor->id }}">{{ $vendedor->nombre }}({{ $cantidad }})</option>                                                                    
                                                         @endif                                                                
-                                                    @endif
-                                                    @continue
-                                                    @if ($asignado->pedido_id == $pedido->id)
-                                                        <option value="{{ $vendedor->id }}" selected>Vendedor: {{ $vendedor->nombre }} ({{ $cantidad }})
-                                                        <option class="text-red-600" value="cambiar"> Cancelar y cambiar</option>
-                                                        
-                                                    @endif
+                                                    @endif                                                 
                                                 @else
                                                     <option value="{{ $vendedor->id }}">{{ $vendedor->nombre }}({{ $cantidad }})</option>
                                                 @endif

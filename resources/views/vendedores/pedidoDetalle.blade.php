@@ -1,7 +1,7 @@
 @extends('layouts.vend')
 
 @section('contenidoVend')
-    <div class="flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900"> <!-- Contenedor principal centrado -->
+    <div class=" flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900"> <!-- Contenedor principal centrado -->
         <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <x-alertas />
             <div class="max-w-full flex">
@@ -19,6 +19,7 @@
                         @csrf
                         <div class="flex">
                             <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
+                            <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id }}">
                             <select id="estado" name="estado"
                                 class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 @if ($pedido->estado == 'Recibido')
@@ -102,9 +103,9 @@
                 </div>
             </div>
 
-            <div class="flex justify-center items-center text-center pt-10 max-w-full">
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <div class="px-10 w-full flex justify-center items-center text-center pt-10 ">
+                <div class="relative overflow-x-auto shadow-md sm:rounded-lg ">
+                    <table class="w-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
