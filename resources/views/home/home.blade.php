@@ -3,9 +3,8 @@
 
 @section('contenido')
 
-
     <div class="text-center items-center justify-center px-10">
-        <x-ofertas />
+        <x-mostrar-ofertas/>
     </div>
     <div class="mx-10">
         <div class="text-center items-center justify-center px-10">

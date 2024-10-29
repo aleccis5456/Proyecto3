@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     use HasFactory;
+    
     public $timestamps = false;
+    
     protected $table = 'productos';
+
     public function subcategoria(){
         return $this->belongsTo(SubCategoria::class, 'subCategoria_id');
     }

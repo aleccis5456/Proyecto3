@@ -42,6 +42,6 @@
     <script src="{{ asset('js/funciones.js') }}"></script>
 </body>
 
-<x-menu-categorias />
+<x-mostrar-menu-categorias />
 
 </html>

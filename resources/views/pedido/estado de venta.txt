@@ -1,0 +1,34 @@
+ @if ($pedido->estado == 'Recibido')
+                                            <option class="text-blue-500 font-bold" selected value="Recibido">Recibido
+                                            </option>
+                                            <option class="text-yellow-500" value="Enviado">Procesado</option>
+                                            <option class="text-orange-500" value="Procesado">Enviado</option>
+                                            <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                            <option class="text-red-500" value="Anulado">Anulado</option>
+                                        @elseif($pedido->estado == 'Procesado')
+                                            <option class="text-blue-500" value="Recibido">Recibido</option>
+                                            <option class="text-yellow-500" value="Procesado" selected>Procesado</option>
+                                            <option class="text-orange-500 font-bold" value="Enviado">Enviado</option>
+                                            <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                            <option class="text-red-500" value="Anulado">Anulado</option>
+                                        @elseif($pedido->estado == 'Enviado')
+                                            <option class="text-blue-500" value="Recibido">Recibido</option>
+                                            <option class="text-yellow-500" value="Procesado">Procesado</option>
+                                            <option class="text-orange-500" value="Enviado" selected>Enviado</option>
+                                            <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                            <option class="text-red-500" value="Anulado">Anulado</option>
+                                        @elseif($pedido->estado == 'Finalizado')
+                                            <option class="text-blue-500" value="Recibido">Recibido</option>
+                                            <option class="text-yellow-500" value="Procesado">Procesado</option>
+                                            <option class="text-orange-500" value="Enviado">Enviado</option>
+                                            <option class="text-green-500 font-bold" selected value="Finalizado">Finalizado
+                                            </option>
+                                            <option class="text-red-500" value="Anulado">Anulado</option>
+                                        @elseif($pedido->estado == 'Anulado')
+                                            <option class="text-blue-500" value="Recibido">Recibido</option>
+                                            <option class="text-yellow-500" value="Procesado">Procesado</option>
+                                            <option class="text-orange-500" value="Enviado">Enviado</option>
+                                            <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                            <option class="text-red-500 font-bold" selected value="Anulado">Anulado
+                                            </option>
+                                        @endif

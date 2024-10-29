@@ -132,6 +132,10 @@ Route::get('/debug/2', function(){
     return  redirect('/');
 });
 
+Route::get('/prueba', function(){
+    return view('pruebas.prueba');
+});
+
 
 
 

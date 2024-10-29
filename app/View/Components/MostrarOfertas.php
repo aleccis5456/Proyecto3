@@ -8,30 +8,33 @@ use Illuminate\View\Component;
 use App\Models\Producto;
 use Illuminate\Support\Facades\Crypt;
 
-class ofertas extends Component
+class Mostrarofertas extends Component
 {
-    public $ofertas;
     /**
      * Create a new component instance.
      */
+    protected $ofertas;
     public function __construct()
     {
         $this->ofertas = Producto::where('oferta', 1)
                                 ->orderByDesc('id')                                
-                                ->get()
-                                ->map(function ($producto) {
+                                 ->get()
+                                 ->map(function ($producto) {
                                     $producto->id_encriptado = Crypt::encrypt($producto->id);
-                                    return $producto;
-                                });
+                                     return $producto;
+                                 });                                                                 
+        //dd('dasdasdasdas');
     }
 
     /**
      * Get the view / contents that represent the component.
      */
+    
     public function render(): View|Closure|string
     {
-        return view('components.ofertas', [
-            'ofertas' => $this->ofertas,
+        
+        return view('components.mostrar-ofertas', [
+            'ofertas' => $this->ofertas
         ]);
     }
 }

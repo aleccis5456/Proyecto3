@@ -1,268 +1,135 @@
 @extends('layouts.adm')
 
 @section('contenidoAdm')
-    <div class="flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900"> <!-- Contenedor principal centrado -->
-        <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <x-alertas />
-            <div class="max-w-full flex">
-                <div class="w-full">
-                    <b>Pedido #{{ $pedido->codigo }} de {{ $pedido->usuario->name }}</b>                    
-                    <a href="{{ route('pdf.factura', ['id' => $pedido->id]) }}"
-                        class="ml-10 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                        Generar Factura
-                    </a>
-
-                  
-                </div>
-                <span class="flex mr-10 w-full">
-                    <form method="POST" action="{{ route('actualizar.estado') }}">
-                        @csrf
-                        <div class="flex">
-                            <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
-                            <select id="estado" name="estado"
-                                class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                @if ($pedido->estado == 'Recibido')
-                                    <option class="text-blue-500 font-bold" selected value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Enviado">Procesado</option>
-                                    <option class="text-orange-500" value="Procesado">Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Procesado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado" selected>Procesado</option>
-                                    <option class="text-orange-500 font-bold" value="Enviado">Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Enviado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
-                                    <option class="text-orange-500" value="Enviado" selected>Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Finalizado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
-                                    <option class="text-orange-500" value="Enviado">Enviado</option>
-                                    <option class="text-green-500 font-bold" selected value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Anulado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
-                                    <option class="text-orange-500" value="Enviado">Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500 font-bold" selected value="Anulado">Anulado</option>
-                                @endif
-                            </select>
-                            <input class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-1.5 ml-2 px-2 text-sm"
-                                type="submit" value="Guardar">
-                        </div>
-                    </form>
-                </span>
-                
-                <div class="">
-                    @if ($pedido->estado == 'Recibido')
-                        <button
-                            class="focus:outline-none text-white bg-blue-500 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Recibido
-                        </button>
-                    @elseif ($pedido->estado == 'Enviado')
-                        <button
-                            class="focus:outline-none text-white bg-orange-500 hover:bg-orange-600  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Enviado
-                        </button>
-                    @elseif($pedido->estado == 'Procesado')
-                        <button
-                            class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Procesado
-                        </button>
-                    @elseif($pedido->estado == 'Finalizado')
-                        <button
-                            class="focus:outline-none text-white bg-green-500 hover:bg-green-800  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Finalizado
-                        </button>
-                    @elseif($pedido->estado == 'Anulado')
-                        <button
-                            class="focus:outline-none text-white bg-red-600 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Anulado
-                        </button>
-                    @endif
-                </div>
-                <div class="">
-                    <form action="{{ route('pedidos') }}" method="GET">
-                        <button type="submit"
-                            class="focus:outline-none text-white bg-blue-500 hover:bg-blue-800  font-medium rounded-lg text-xs px-3 py-1 me-2 mb-2 ">
-                            <svg class="w-5 h-5 text-white dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="m15 19-7-7 7-7" />
-                            </svg>
-                        </button>
-                    </form>
-                </div>
-
-            </div>
-            <div class="max-w-full flex">
-                <div class="w-4/5">
-                    <b>{{ $cantidad }} de Producto/os en este pedido</b>
-                </div>
-
-                <div>
-                    <b>Total:
-                        {{ $pedido->costoEnvio > 0
-                            ? number_format(round($pedido->coste + (int) $pedido->costoEnvio, -2), 0, ',', '.')
-                            : number_format(round($pedido->coste, -2), 0, ',', '.') }}
-                        Gs.</b>
-                </div>
-            </div>
-
-            <div class="flex justify-center items-center text-center pt-10 max-w-full">
-                <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">
-                                    <b>Codigo</b>
-                                </th>
-                                <th scope="col" class="px-10 py-3">
-                                    <b>producto</b>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <b>Unidades</b>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <b>precio unitario</b>
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    <b>total</b>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                class=" odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <td scope="row" class="px-12 py-4">
-                                    @foreach ($producto as $item)
-                                        {{ $item->producto->codigo }}<br />
-                                    @endforeach
-                                </td>
-                                <th scope="row" class="px-12 py-4">
-                                    @foreach ($producto as $item)
-                                        {{ $item->producto->nombre }}<br />
-                                    @endforeach
-                                </th>
-                                <td class="px-12 py-4">
-                                    @foreach ($unidades as $unidad)
-                                        {{ $unidad }}<br />
-                                    @endforeach
-                                </td>
-                                <td class="px-10 py-4">
-                                    @foreach ($producto as $item)
-                                        {{ number_format(round($item->precio_unitario, -2), 0, ',', '.') }} Gs.<br />
-                                    @endforeach
-                                </td>
-                                <td class="px-6 py-4">
-                                    {{ number_format(round($pedido->coste, -2), 0, ',', '.') }} Gs.<br />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900">
+    <div class="flex items-center justify-center py-12 bg-gray-100 dark:bg-gray-900">
         <!-- Contenedor principal centrado -->
         <div
-            class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <div class="max-w-full flex justify-between">
-                <div class="flex justify-center items-center text-center pt-10 max-w-full">
-                    <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full">
-                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        <b>Datos del cliente</b>
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
+            class="w-full max-w-4xl p-8 bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <x-alertas />
 
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-
-                                    </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        <b>Datos del pedido</b>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr
-                                    class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                    <td scope="row" class="px-6 py-4">
-                                        <span class="font-bold">Nombre y apellido:</span> {{ $datos->nombre }}
-                                        {{ $datos->apellido }}
-                                        <br><br>
-                                        <span class="font-bold">RUC o CI:</span> {{ $datos->ruc_ci }}
-                                        <br><br>
-                                        <span class="font-bold">celular:</span> {{ $pedido->celular }}
-                                        <br><br>
-                                        <span class="font-bold">email:</span> {{ $pedido->usuario->email ?? 'invitado' }}
-                                        <br><br>
-                                        <span class="font-bold">cantidad de pedidos:</span> 's'
-                                    </td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td scope="row" class="px-6 py-4">
-                                        <span class="font-bold">Registrado el:</span>
-                                        {{ App\Utils\Util::formatearFecha($pedido->registro) }}
-                                        <br><br>
-                                        <span class="font-bold">Direccion de envio:</span> <br> - Departamento:
-                                        {{ $pedido->departamento }}<br />
-                                        - Ciudad: {{ $pedido->ciudad }} <br>
-                                        - Calle: {{ $pedido->calle }}
-
-                                        <br><br>
-                                        <span class="font-bold">Forma de pago:</span> {{ $pedido->formaPago }}
-                                        <br><br>
-                                        <span class="font-bold">Forma de envio:</span>
-                                        {{ $pedido->formaEntrega == 'retiro' ? 'Retiro en local' : 'Envio a domicilio' }}
-                                        <br><br>
-                                        <span class="font-bold">Total del envio:</span>
-                                        {{ number_format(round($pedido->costoEnvio ?? 0, -2), 0, ',', '.') }} Gs.
-                                        <br><br>
-                                        <span class="font-bold">Total del pedido:</span>
-                                        {{ number_format(round($pedido->coste, -2), 0, ',', '.') }} Gs.
-                                        <br><br>
-                                        <span class="font-bold">Total:</span>
-                                        {{ $pedido->costoEnvio > 0
-                                            ? number_format(round($pedido->coste + (int) $pedido->costoEnvio, -2), 0, ',', '.')
-                                            : number_format(round($pedido->coste, -2), 0, ',', '.') }}
-                                        </b>Gs.
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <!-- Cabecera de Pedido -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <div class="text-2xl font-semibold text-gray-800 dark:text-gray-300">Pedido #{{ $pedido->codigo }}
+                        </div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Pedido realizado por
+                            {{ $pedido->usuario->name }}</div>
+                        <!-- Fecha del Pedido -->
+                        <div class="text-sm text-gray-500 dark:text-gray-400">Fecha del Pedido:
+                            {{ App\Utils\Util::formatearFecha($pedido->registro) }}</div>
                     </div>
+                    <a href="{{ route('pdf.factura', ['id' => $pedido->id]) }}"
+                        class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg px-4 py-2 transition duration-150">
+                        Generar Factura
+                    </a>
                 </div>
             </div>
+
+            <!-- Estado y Acciones -->
+            <div class="mb-8 flex items-center gap-4">
+                <form method="POST" action="{{ route('actualizar.estado') }}" class="flex items-center">
+                    @csrf
+                    <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
+                    <select id="estado" name="estado" class="bg-gray-50 border border-gray-300 rounded-lg px-2 py-1">
+                        @foreach (['Recibido', 'Procesado', 'Enviado', 'Finalizado', 'Anulado'] as $estado)
+                            <option value="{{ $estado }}" {{ $pedido->estado == $estado ? 'selected' : '' }}>
+                                {{ ucfirst($estado) }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <button type="submit"
+                        class="ml-2 bg-gray-800 hover:bg-gray-600 text-white font-medium rounded-lg px-4 py-1 transition duration-150">
+                        Guardar
+                    </button>
+                </form>
+
+                <!-- Estado Actual del Pedido -->
+                <span
+                    class="px-3 py-1 rounded-lg text-white {{ $pedido->estado == 'Recibido' ? 'bg-blue-500' : '' }} {{ $pedido->estado == 'Procesado' ? 'bg-yellow-400' : '' }} {{ $pedido->estado == 'Enviado' ? 'bg-orange-500' : '' }} {{ $pedido->estado == 'Finalizado' ? 'bg-green-500' : '' }} {{ $pedido->estado == 'Anulado' ? 'bg-red-600' : '' }}">
+                    {{ ucfirst($pedido->estado) }}
+                </span>
+            </div>
+
+            <!-- Detalles del Pedido -->
+            <div class="border-t border-gray-300 pt-6 mb-8">
+                <p class="font-medium text-gray-700 dark:text-gray-300 mb-1">Resumen del Pedido</p>
+                <p><strong class="text-gray-800 dark:text-gray-100">Total:</strong>
+                    {{ number_format($pedido->costoEnvio + $pedido->coste, 0, ',', '.') }} Gs.</p>
+                <p><strong class="text-gray-800 dark:text-gray-100">Productos:</strong> {{ $cantidad }}</p>
+            </div>
+
+            <!-- Tabla de Productos -->
+            <div class="overflow-x-auto mb-8">
+                <table class="w-full text-sm text-left text-gray-700 dark:text-gray-300">
+                    <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-6 py-3">Código</th>
+                            <th class="px-6 py-3">Producto</th>
+                            <th class="px-6 py-3">Unidades</th>
+                            <th class="px-6 py-3">Precio Unitario</th>
+                            <th class="px-6 py-3">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($producto as $item)
+                            <tr class="bg-white dark:bg-gray-900">
+                                <td class="px-6 py-4">{{ $item->producto->codigo }}</td>
+                                <td class="px-6 py-4">{{ $item->producto->nombre }}</td>
+                                <td class="px-6 py-4">{{ $item->unidades }}</td>
+                                <td class="px-6 py-4">{{ number_format($item->precio_unitario, 0, ',', '.') }} Gs.</td>
+                                <td class="px-6 py-4">
+                                    {{ number_format($item->precio_unitario * $item->unidades, 0, ',', '.') }} Gs.</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <hr>
+            <!-- Información del Cliente -->
+            <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Información del Cliente</p>
+                <p><strong>Nombre:</strong> {{ $datos->nombre }} {{ $datos->apellido }}</p>
+                <p><strong>RUC o CI:</strong> {{ $datos->ruc_ci }}</p>
+                <p><strong>Celular:</strong> {{ $pedido->celular }}</p>
+                <p><strong>Email:</strong> {{ $pedido->usuario->email ?? 'Invitado' }}</p>
+                <p><strong>Dirección de Envío:</strong> {{ $pedido->departamento }}, {{ $pedido->ciudad }},
+                    {{ $pedido->calle }}</p>
+                <p><strong>Total del Envío:</strong> {{ number_format($pedido->costoEnvio, 0, ',', '.') }} Gs.</p>
+            </div>
+            <hr>
+            <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
+                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Asignar vendedor</p>
+            </div>
+            <form class="max-w-sm mx-auto" method="POST" action="{{ route('vendedores.ventas') }}">
+                @csrf
+                <div class="flex">
+                    <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
+                    <select id="vendedores" name="vendedor_id"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="">--Selecciona--</option>
+                        @foreach ($vendedores as $vendedor)
+                            @if (ucfirst($vendedor->departamento) == ucfirst($pedido->departamento) or
+                                ucfirst($vendedor->ciudad) == ucfirst($pedido->ciudad))
+                                @php
+                                    $asignado = $ventasAsignadas->where('vendedor_id', $vendedor->id)->first();                                    
+                                @endphp
+                                @if ($asignado)
+                                    <option value="" {{ $asignado->pedido_id == $pedido->id ? 'selected' : '' }}>:{{$vendedor->nombre}}</option>                                                                
+                                @else 
+                                <option value="{{ $vendedor->id }}">{{$vendedor->nombre}}</option>
+                                @endif                                                                    
+                            @endif                            
+                        @endforeach
+
+                    </select>
+
+                    <input class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2" type="submit"
+                        value="Guardar">
+                </div>
+            </form>
+
         </div>
+
     </div>
 @endsection

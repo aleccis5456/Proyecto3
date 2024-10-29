@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Vendedor;
 use App\Models\Departamento;
 use App\Models\Pedido;
-use App\models\VentasAsignada;
+use App\Models\VentasAsignada;
 use App\Models\ListaPedido;
 use App\Models\DatosEnvio;
 use app\Models\Producto;

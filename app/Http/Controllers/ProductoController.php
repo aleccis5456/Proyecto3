@@ -7,7 +7,6 @@ use App\Models\Categoria;
 use App\Models\Producto;
 use App\Models\SubCategoria;
 use App\Models\ProductoFoto;
-use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Exception;
 use Intervention\Image\ImageManager;
@@ -35,32 +34,45 @@ class ProductoController extends Controller
             'productos' => $productos,
         ]);
     }
-    public function amdIndex(Request $request)
-    {
 
+    // public function mOfertas()
+    // {
+    //     $ofertas = Producto::where('oferta', 1)
+    //         ->orderByDesc('id')
+    //         ->get()
+    //         ->map(function ($producto) {
+    //             $producto->id_encriptado = Crypt::encrypt($producto->id);
+    //             return $producto;
+    //         });
+    //         dd($ofertas);
+    //     return view('home.includes.ofertas', [
+    //         'ofertas' => $ofertas
+    //     ]);
+    // }
+    public function amdIndex(Request $request)
+    {        
+        
         $query = Producto::with('subcategoria');
         $orderBy = $request->query('orderBy') ?? 'desc';
         $column = $request->query('column') ?? 'registro';
-        $filtro = $request->query('filtro') ?? null;
-
-        if($orderBy === 'asc'){
+        $filtro = $request->query('filtro') ?? $request->b;        
+        //dd($filtro);
+        if ($orderBy === 'asc') {
             $query->orderBy($column, $orderBy);
-        }else{
+        } else {
             $query->orderByDesc($column);
-        }
-
-        if(!is_null($filtro)){
-            $query->whereLike('nombre', $filtro)
-                ->orWhereLike('codigo', $filtro)
+        }                   
+        if (!is_null($filtro)) {
+            $query->whereLike('nombre', "%$filtro%")
+                ->orWhereLike('codigo', "%$filtro%")
                 ->orWhereHas('subcategoria', function ($q) use ($filtro) {
                     $q->where('nombre', 'like', "%$filtro%"); // Accediendo a la variable 'nombre' de la subcategoría
                     //Sí, orWhereHas se utiliza para filtrar resultados basados en la relación de un modelo con otra tabla.
                 });
-        }
-
-        $productos = $query->paginate(8)->appends(['orderBy' => $orderBy, 'column' => $column]);
+        }        
+        $productos = $query->paginate(8)->appends(['orderBy' => $orderBy, 'column' => $column, 'filtro' => $filtro]);
         $cantidad = Producto::with('subcategoria')->count();
-        $flag = $column.'_column';
+        $flag = $column . '_column';
         //dd($flag);
         return view('producto.todos', [
             'productos' => $productos,
@@ -172,7 +184,6 @@ class ProductoController extends Controller
 
     public function editarSave(Request $request)
     {
-
         $request->validate([
             'nombre' => 'nullable',
             'descripcion' => 'nullable',

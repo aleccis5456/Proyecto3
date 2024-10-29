@@ -1,4 +1,4 @@
-{{-- <div>
+<div>
     <div id="drawer-navigation"
         class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-1/4 dark:bg-gray-800"
         tabindex="-1" aria-labelledby="drawer-navigation-label">
@@ -49,11 +49,9 @@
                             @endforeach
                         </ul>
                     @endforeach
-                </li>
-                
+                </li>                
                 <!--  /categorias --->
             </ul>
         </div>
     </div>
-
-</div> --}}
+</div>

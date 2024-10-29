@@ -11,7 +11,6 @@ class CategoriaController extends Controller
     public function agregar()
     {
         $categorias = Categoria::orderByDesc('id')->get();
-
         $subcategorias = SubCategoria::orderByDesc('id')->get();
 
         return view('administracion.aggCategoria', [

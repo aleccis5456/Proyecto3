@@ -71,11 +71,11 @@
                 id="imagen" name="imagen" type="file">
 
             <button type="submit"
-                class="mt-5 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                class="mt-5 text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                 Guardar
             </button>
             <a href=" {{ route('producto.amdIndex') }} ">
-                <span class="text-blue-500">Ver Todos los Productos</span>
+                <span class="text-gray-500 hover:underline">Ver Todos los Productos</span>
             </a>
         </div>
         </form>

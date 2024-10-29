@@ -44,7 +44,7 @@
 
                 <div class="">
                     <a href=" {{ route('producto.agregar') }} "
-                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        class="focus:outline-none text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                         Agregar Producto
                     </a>
                 </div>
@@ -72,7 +72,8 @@
                                     nombre
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    <form action="{{ route('producto.amdIndex') }}" method="get">
+                                    <form action="{{ route('producto.amdIndex') }}" method="get">                                        
+                                        <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
                                             value="{{ $orderBy == 'asc' ? 'desc' : 'asc' }}">
                                         <input type="hidden" name="column" value="oferta">
@@ -90,6 +91,7 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
+                                        <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
                                             value="{{ $orderBy == 'asc' ? 'desc' : 'asc' }}">
                                         <input type="hidden" name="column" value="subCategoria_id">
@@ -108,6 +110,7 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
+                                        <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
                                             value="{{ $orderBy == 'asc' ? 'desc' : 'asc' }}">
                                         <input type="hidden" name="column" value="precio">
@@ -125,6 +128,7 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
+                                        <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
                                             value="{{ $orderBy == 'asc' ? 'desc' : 'asc' }}">
                                         <input type="hidden" name="column" value="stock_actual">
@@ -142,6 +146,7 @@
                                 </th>
                                 <th scope="col" class="px-6 py-3">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
+                                        <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
                                             value="{{ $orderBy == 'asc' ? 'desc' : 'asc' }}">
                                         <input type="hidden" name="column" value="registro">
