@@ -141,3 +141,4 @@ Route::get('/prueba', function(){
 
 
 
+route::get('/indexdos', [ProductoController::class, 'indexdos']);

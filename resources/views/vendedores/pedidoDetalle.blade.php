@@ -16,6 +16,7 @@
                 </div>
                 <span class="flex mr-10 w-full">
                     <form method="POST" action="{{ route('vendedores.cambiarestado') }}">
+                        <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id   }}">
                         @csrf
                         <div class="flex">
                             <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">

@@ -99,7 +99,7 @@
             </div>
             <hr>
             <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Asignar vendedor</p>
+                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Asignar Repartidor</p>
             </div>
             <form class="max-w-sm mx-auto" method="POST" action="{{ route('vendedores.ventas') }}">
                 @csrf
@@ -110,20 +110,28 @@
                         <option value="">--Selecciona--</option>
                         @foreach ($vendedores as $vendedor)
                             @if (ucfirst($vendedor->departamento) == ucfirst($pedido->departamento) or
-                                ucfirst($vendedor->ciudad) == ucfirst($pedido->ciudad))
+                                    ucfirst($vendedor->ciudad) == ucfirst($pedido->ciudad))
                                 @php
-                                    $asignado = $ventasAsignadas->where('vendedor_id', $vendedor->id)->first();                                    
+                                    $asignado = $ventasAsignadas
+                                        ->where('vendedor_id', $vendedor->id)
+                                        ->where('pedido_id', $pedido->id)
+                                        ->first();
+                                    $cantidad = $ventasAsignadas->where('vendedor_id', $vendedor->id)->count();
                                 @endphp
                                 @if ($asignado)
-                                    <option value="" {{ $asignado->pedido_id == $pedido->id ? 'selected' : '' }}>:{{$vendedor->nombre}}</option>                                                                
-                                @else 
-                                <option value="{{ $vendedor->id }}">{{$vendedor->nombre}}</option>
-                                @endif                                                                    
-                            @endif                            
+                                    <option value="{{ $vendedor->id }}" selected>
+                                        Vendedor: <b>{{ $vendedor->nombre }}</b> ({{ $cantidad }} pedidos asignados)
+                                    </option>
+                                    <option value="cambiar" class="cancelar-cambiar">Cancelar y cambiar</option>
+                                @else
+                                    <option value="{{ $vendedor->id }}">
+                                        <b>{{ $vendedor->nombre }}</b>
+                                        ({{ $cantidad > 0 ? $cantidad . ' pedidos asignados' : 'sin pedidos asignados' }})
+                                    </option>
+                                @endif
+                            @endif
                         @endforeach
-
                     </select>
-
                     <input class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2" type="submit"
                         value="Guardar">
                 </div>

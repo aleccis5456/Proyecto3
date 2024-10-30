@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 use App\Models\User;
 use App\Models\Pedido;
-use App\Models\ListaPedido;
-use App\Models\DatosEnvio;
-use App\Models\Producto;
+use App\Models\Ventas;
 use App\Models\Vendedor;
+use App\Models\Producto;
+use App\Models\DatosEnvio;
+use App\Models\ListaPedido;
 use App\Models\Departamento;
-use App\Models\VentasAsignada;
-use App\Models\Ciudad;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\VentasAsignada;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\DB;
 
 class PedidoController extends Controller
 {
@@ -97,7 +98,6 @@ class PedidoController extends Controller
         $pedido->estado = 'Recibido';
         $pedido->formaPago = $pago;
         $pedido->registro = Carbon::now();
-
         $pedido->save();
 
         DatosEnvio::create([
@@ -107,7 +107,7 @@ class PedidoController extends Controller
             'ruc_ci' => $request->ruc,
             'nro_factura' => '001 001'
         ]);  
-
+        
         foreach (session('carrito') as $item) {
             $lista = ListaPedido::create([
                 'pedido_id' => $pedido->id,
@@ -116,10 +116,8 @@ class PedidoController extends Controller
                 'precio_unitario' =>  $item['precio_oferta'] > 0 ? $item['precio_oferta'] : $item['precio'],
                 'registro' => Carbon::now(),
             ]);
-        }
-
-        $listas = ListaPedido::where('pedido_id', $pedido->id)->get();
-
+        }        
+        $listas = ListaPedido::where('pedido_id', $pedido->id)->get();        
         foreach($listas as $lista){
             $producto = Producto::findOrFail($lista->producto_id);
             if($producto){
@@ -127,6 +125,12 @@ class PedidoController extends Controller
                 $producto->ventas += $lista->unidades;
                 $producto->update();
             }
+
+            $venta = Ventas::create([
+                'producto_id' => $lista->producto_id, 	
+                'cantidad' => $lista->unidades, 	
+                'fecha_venta' => Carbon::now(),
+            ]);
         }
         
             $user = Auth::user() ?? User::findOrFail(1);            
@@ -173,8 +177,7 @@ class PedidoController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (!$user) {
-            return back()->with('warning', 'El correo electrónico no está registrado.');
-            // return redirect()->route('login')->with('warning', 'El correo electrónico no está registrado.');
+            return back()->with('warning', 'El correo electrónico no está registrado.');            
         }
 
         if (!Hash::check($request->password, $user->password)) {
@@ -182,9 +185,8 @@ class PedidoController extends Controller
         }
 
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
-            //return redirect()->intended('home');
-             return back();
+            $user = Auth::user();            
+            return back();
         } else {
             Auth::logout();
             Session::flush();
@@ -219,7 +221,7 @@ class PedidoController extends Controller
     }
 
     public function actualizarEstado(Request $request)
-    {        
+    {                
         $request->validate([
             'estado' => 'required|string',
             'pedido_id' => 'required|integer',

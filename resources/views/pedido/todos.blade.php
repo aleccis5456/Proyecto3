@@ -33,7 +33,7 @@
                     <th scope="col" class="px-6 py-3">registro</th>
                     <th scope="col" class="px-6 py-3">Total</th>
                     <th scope="col" class="px-6 py-3">Estado</th>
-                    <th scope="col" class="px-6 py-3">Asignar Vendedor</th>
+                    <th scope="col" class="px-6 py-3">Repartidor</th>
                     <th scope="col" class="px-6 py-3">Detalle</th>
                 </tr>
             </thead>
@@ -70,21 +70,20 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            <form class="max-w-sm mx-auto" method="POST" action="{{ route('vendedores.ventas') }}">
-                                @csrf
-                                <div class="flex">
-                                    <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
-                                    <select id="vendedores" name="vendedor_id"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                        <option value="">--Selecciona--</option>
-
+                            @foreach ($vendedores as $vendedor)
+                                @if (ucfirst($vendedor->departamento) == ucfirst($pedido->departamento) or
+                                        ucfirst($vendedor->ciudad) == ucfirst($pedido->ciudad))
+                                    @php
+                                        $asignado = $ventasAsignadas->where('vendedor_id', $vendedor->id)
+                                                    ->where('pedido_id', $pedido->id)->first();                                                                   
+                                    @endphp
+                                    @if ($asignado and $asignado->pedido_id == $pedido->id)
+                                        <p>{{ $vendedor->nombre }}</p>                                    
+                                    @else
                                         
-                                    </select>
-
-                                    <input class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2"
-                                        type="submit" value="Guardar">
-                                </div>
-                            </form>
+                                    @endif
+                                @endif
+                            @endforeach                           
                         </td>
 
                         <td class="px-6 py-4">

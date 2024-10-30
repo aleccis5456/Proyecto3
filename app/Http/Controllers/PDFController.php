@@ -7,18 +7,24 @@ use App\Models\Producto;
 use App\Models\Pedido;
 use App\Models\DatosEnvio;
 use App\Models\ListaPedido;
+use App\Models\Ventas;
 use PDF;
 use Carbon\Carbon;
 
 class PDFController extends Controller
 {
-    public function generarPDF()
+    public function generarPDF(Request $request)
     {        
-        $productos = Producto::where('ventas', '>', 0)->orderByDesc('ventas')->get();
-
+        $desde = $request->fecha_desde;
+        $hasta = $request->fecha_hasta;        
+        $ventas = Ventas::where('fecha_venta', '>', $desde)->where('fecha_venta', '<', $hasta)->get();
+        $productos = [];
+        foreach($ventas as $venta){            
+            $producto = Producto::where('id', $venta->producto_id)->first();                        
+            $productos[] = $producto;
+        }        
         $ventas = [];
-
-        foreach ($productos as $producto) {
+        foreach ($productos as $producto) {            
             $ventas[] = [
                 'codigo' => $producto->codigo,
                 'producto' => $producto->nombre,
@@ -26,8 +32,7 @@ class PDFController extends Controller
                 'precio' => $producto->precio,
                 'precio_oferta' => $producto->precio_oferta > 0 ? $producto->precio_oferta : 0, 
             ];
-        }
-        
+        }    
         $data = [
             'titulo' => 'Reporte de Ventas',
             'fecha' => Carbon::now(),

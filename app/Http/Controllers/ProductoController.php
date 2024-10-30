@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Producto;
 use App\Models\SubCategoria;
 use App\Models\ProductoFoto;
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Exception;
-use Intervention\Image\ImageManager;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Crypt;
-
-
 
 class ProductoController extends Controller
 {
     public function index()
-    {
-        //$productos = Producto::orderByDesc('id')->get();
+    {        
         $productos = Producto::where('visible', 'si')
             ->where('oferta', 0)
             ->inRandomOrder()
@@ -34,6 +29,35 @@ class ProductoController extends Controller
             'productos' => $productos,
         ]);
     }
+    public function indexdos(){        
+            $categorias = [
+                'fotoyfil' => 5,
+                'elec' => 6,
+                'info' => 7,
+                'juegos' => 8,
+                'ropas' => 9,
+                'electro' => 10,
+                'muebles' => 11,
+            ];
+        
+            $productos = [];
+        
+            foreach ($categorias as $nombre => $categoria_id) {
+                $productos[$nombre] = Producto::where('categoria_id', $categoria_id)
+                    ->where('visible', 'si')
+                    ->where('oferta', 0)                    
+                    ->take(8)
+                    ->get()
+                    ->map(function ($producto) {
+                        $producto->id_encriptado = Crypt::encrypt($producto->id);
+                        return $producto;
+                    });
+            }
+            dd($productos);
+            return view('nombre_de_la_vista', compact('productos'));
+        }
+        
+    
 
     // public function mOfertas()
     // {
