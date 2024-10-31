@@ -3,6 +3,7 @@
 namespace App\View\Components;
 
 use Closure;
+use App\Models\Banner;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 use App\Models\Producto;
@@ -14,6 +15,7 @@ class Mostrarofertas extends Component
      * Create a new component instance.
      */
     protected $ofertas;
+    protected $banner;
     public function __construct()
     {
         $this->ofertas = Producto::where('oferta', 1)
@@ -23,7 +25,8 @@ class Mostrarofertas extends Component
                                     $producto->id_encriptado = Crypt::encrypt($producto->id);
                                      return $producto;
                                  });                                                                 
-        //dd('dasdasdasdas');
+
+        $this->banner = Banner::where('activo', true)->first();        
     }
 
     /**
@@ -34,7 +37,8 @@ class Mostrarofertas extends Component
     {
         
         return view('components.mostrar-ofertas', [
-            'ofertas' => $this->ofertas
+            'ofertas' => $this->ofertas,
+            'banner' => $this->banner,
         ]);
     }
 }

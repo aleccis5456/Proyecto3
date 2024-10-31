@@ -45,8 +45,7 @@
                         </th>
                         <td class="px-6 py-4">{{ $pedido->usuario->name }}</td>
                         <td class="px-6 py-4">{{ $pedido->registro }}</td>
-                        <td class="px-6 py-4">
-                            {{-- {{ number_format(round($pedido->coste, -2), 0, ',', '.') }} Gs. --}}
+                        <td class="px-6 py-4">                            
                             {{ $pedido->costoEnvio > 0 ? number_format($pedido->costoEnvio + $pedido->coste, 0, '.', '.') : number_format(round($pedido->coste, -2), 0, ',', '.') }}
                             Gs.
                         </td>

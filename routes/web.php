@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdmController;
+use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\UsuarioController;
@@ -72,7 +73,6 @@ Route::post('/vend/login', [VendedoresController::class, 'login'])->name('vended
 
 Route::middleware([AdminIndex::class])->group(function () {        
     Route::get('/adm/usuarios', [AdmController::class, 'users'])->name('adm.users');
-
     Route::get('/adm', [AdmController::class, 'index'])->name('adm.index');    
     Route::get('/adm/ventas', [AdmController::class, 'bventas'])->name('adm.bventas');
     Route::get('/adm/logout', [AdmController::class, 'logout'])->name('adm.logout');
@@ -107,7 +107,11 @@ Route::middleware([AdminIndex::class])->group(function () {
     Route::get('/adm/pedido/{id}', [PedidoController::class, 'detalle'])->name('pedido.detalle');       
     //vendedores
     Route::post('/adm/asignar', [VendedoresController::class, 'ventaAsignada'])->name('vendedores.ventas');
-    
+    //banner
+    Route::get('/adm/banner', [BannerController::class, 'showForm'])->name('banner.showForm');
+    Route::post('/adm/banner', [BannerController::class, 'store'])->name('banner.store');
+    Route::get('/adm/banner/edit/{id}', [BannerController::class, 'showFormEdit'])->name('banner.showFormEdit');
+    Route::post('/adm/banner/edit`', [BannerController::class, 'edit'])->name('banner.edit');    
 });
 
 Route::middleware([Vendedor::class])->group(function(){
@@ -135,10 +139,5 @@ Route::get('/debug/2', function(){
 Route::get('/prueba', function(){
     return view('pruebas.prueba');
 });
-
-
-
-
-
 
 route::get('/indexdos', [ProductoController::class, 'indexdos']);

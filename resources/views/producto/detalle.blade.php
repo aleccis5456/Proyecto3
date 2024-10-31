@@ -11,12 +11,17 @@
                 </div>
 
                 <a href=" {{ route('producto.editar', ['id' => $item->id]) }} "
-                    class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-yellow-300 dark:hover:bg-yellow-700 dark:focus:ring-yellow-500">
+                    class="focus:outline-none text-white bg-gray-600 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-yellow-300 dark:hover:bg-yellow-700 dark:focus:ring-yellow-500">
                     Editar
                 </a>
                 <a href=" {{ url()->previous() }} "
-                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                    Volver Atras
+                    class="focus:outline-none text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12h14M5 12l4-4m-4 4 4 4" />
+                    </svg>
+
                 </a>
             </div>
 
@@ -163,12 +168,12 @@
                                 <td class="px-6 py-4">
                                     <input type="number" name="precio_oferta" id=""
                                         class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-                                        value="{{ $item->precio_oferta ?? '' }}" >
+                                        value="{{ $item->precio_oferta ?? '' }}">
                                 </td>
                                 <!-- Guardar Cambios -->
                                 <td class="px-6 py-4">
                                     <input type="submit" value="Guardar"
-                                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                                        class="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600">
                                 </td>
                             </tr>
                         </form>
@@ -199,7 +204,7 @@
                         <input type="hidden" name="producto_id" value="{{ $item->id }}">
 
                         <input type="submit" value="Guardar"
-                            class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                            class="focus:outline-none text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                     </form>
                 </div>
             </div>
@@ -352,7 +357,6 @@
     @endif
 
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const openModalButtons = document.querySelectorAll('.open-modal');
@@ -362,8 +366,7 @@
                 button.addEventListener('click', function() {
                     const fotoId = this.getAttribute('data-foto-id');
                     const deleteUrl = `{{ url('/adm/eliminar/foto') }}/${fotoId}`;
-                    deleteForm.setAttribute('action', deleteUrl);
-                    // Mostrar modal (si estás usando un script específico para modales, ajusta aquí)
+                    deleteForm.setAttribute('action', deleteUrl);                    
                     const modal = document.getElementById('popup-modal-foto');
                     modal.classList.remove('hidden');
                 });

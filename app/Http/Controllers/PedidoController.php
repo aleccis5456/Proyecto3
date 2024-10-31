@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\User;
 use App\Models\Pedido;
 use App\Models\Ventas;
@@ -240,11 +239,14 @@ class PedidoController extends Controller
                 if ($producto) {
                     $producto->stock_actual += $lista->unidades;
                     $producto->save();
-
                     DB::update("update productos set ventas = 0 where id = ?", [$lista->producto_id]);
                 }
+                $venta = Ventas::where('producto_id', $producto->id)->first();
+                if($venta){
+                    $venta->delete();                                
+                }                
             }
-        }
+        }        
         $pedido->estado = $request->estado;
         $pedido->save();
         

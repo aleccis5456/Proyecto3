@@ -67,7 +67,7 @@
                                         @if ($item['producto_completo']['precio'] == $item['precio'])
                                             Cantidad:
                                             <span class="bg-gray-100 px-1 border">
-                                                <a
+                                                <a id="xdd"
                                                     href="{{ route('carrito.add', ['id' =>  Crypt::encrypt($item['id_producto'])]) }}">+</a>
                                                 <span class="border px-1">{{ $item['cantidad'] }}</span>
                                                 <a href="{{ route('carrito.quitar', ['indice' => $indice]) }}">-</a>
@@ -135,9 +135,10 @@
                         Finalizar compra</a>
                 </div>
             @endif
-
         </div>
-
-
     @endif
 </div>
+
+<script>
+    documents.getElementBy('')
+</script>

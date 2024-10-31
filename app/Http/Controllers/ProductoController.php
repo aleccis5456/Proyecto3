@@ -25,54 +25,36 @@ class ProductoController extends Controller
                 return $producto;
             });
 
+        $categorias = [
+            'fotoyfil' => 5,
+            'elec' => 6,
+            'info' => 7,
+            'juegos' => 8,
+            'ropas' => 9,
+            'electro' => 10,
+            'muebles' => 11,
+        ];        
+        $productosPorCategoria = [];
+        
+        foreach ($categorias as $nombre => $categoria_id) {
+            $productosPorCategoria[$nombre] = Producto::where('categoria_id', $categoria_id)
+                ->where('visible', 'si')
+                ->where('oferta', 0)    
+                ->inRandomOrder()                
+                ->take(5)
+                ->get()
+                ->map(function ($producto) {
+                    $producto->id_encriptado = Crypt::encrypt($producto->id);
+                    return $producto;
+                });
+        }            
+
         return view('home.home', [
             'productos' => $productos,
+            'porCategoria' => $productosPorCategoria
         ]);
-    }
-    public function indexdos(){        
-            $categorias = [
-                'fotoyfil' => 5,
-                'elec' => 6,
-                'info' => 7,
-                'juegos' => 8,
-                'ropas' => 9,
-                'electro' => 10,
-                'muebles' => 11,
-            ];
-        
-            $productos = [];
-        
-            foreach ($categorias as $nombre => $categoria_id) {
-                $productos[$nombre] = Producto::where('categoria_id', $categoria_id)
-                    ->where('visible', 'si')
-                    ->where('oferta', 0)                    
-                    ->take(8)
-                    ->get()
-                    ->map(function ($producto) {
-                        $producto->id_encriptado = Crypt::encrypt($producto->id);
-                        return $producto;
-                    });
-            }
-            dd($productos);
-            return view('nombre_de_la_vista', compact('productos'));
-        }
-        
-    
-
-    // public function mOfertas()
-    // {
-    //     $ofertas = Producto::where('oferta', 1)
-    //         ->orderByDesc('id')
-    //         ->get()
-    //         ->map(function ($producto) {
-    //             $producto->id_encriptado = Crypt::encrypt($producto->id);
-    //             return $producto;
-    //         });
-    //         dd($ofertas);
-    //     return view('home.includes.ofertas', [
-    //         'ofertas' => $ofertas
-    //     ]);
-    // }
+    }    
+            
     public function amdIndex(Request $request)
     {        
         
@@ -91,7 +73,7 @@ class ProductoController extends Controller
                 ->orWhereLike('codigo', "%$filtro%")
                 ->orWhereHas('subcategoria', function ($q) use ($filtro) {
                     $q->where('nombre', 'like', "%$filtro%"); // Accediendo a la variable 'nombre' de la subcategoría
-                    //Sí, orWhereHas se utiliza para filtrar resultados basados en la relación de un modelo con otra tabla.
+                    //orWhereHas se utiliza para filtrar resultados basados en la relación de un modelo con otra tabla.
                 });
         }        
         $productos = $query->paginate(8)->appends(['orderBy' => $orderBy, 'column' => $column, 'filtro' => $filtro]);

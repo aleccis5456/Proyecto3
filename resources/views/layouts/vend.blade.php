@@ -24,7 +24,7 @@
     <title>Document @yield('tituloAdm')</title>
 </head>
 
-@include('layouts.vend.header')
+    @include('layouts.vend.header')
 <body>
     <!-- drawer component -->
     @include('layouts.vend.drawer')

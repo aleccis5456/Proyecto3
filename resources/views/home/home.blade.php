@@ -11,8 +11,7 @@
             <x-alertas />
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-10 mx-12">
-        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-10 mx-12">        
             @foreach ($productos as $producto)
                 <div
                     class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
@@ -35,7 +34,7 @@
                             {{Str::limit($producto->nombre, 54)}}
                         <div class="mt-4">
                             <a href="{{ route('carrito.add', ['id' => $producto->id_encriptado]) }}"
-                                class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-4 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
+                                class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-1 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
                                 <span
                                     class="text-xl font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
                                     Gs.</span>
@@ -51,7 +50,10 @@
                     </div>
                 </div>
             @endforeach
-        </div>
+            
+        </div>        
+        @include('home.includes.camarasyFilmadoras')                
+        @include('home.includes.electronica')
+        @include('home.includes.informatica')
     </div>
-
 @endsection
