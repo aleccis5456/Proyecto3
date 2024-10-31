@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Position;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,7 @@ class BannerController extends Controller
     public function showForm(){
         return view('banner.index', [
             'banners' => Banner::all(),
+            'positions' => Position::all(),
         ]);
     }
 
@@ -18,7 +20,8 @@ class BannerController extends Controller
         $request->validate([
             'titulo' => 'required|string',
             'activo' => 'nullable',
-            'banner_image' => 'required|image'
+            'banner_image' => 'required|image',
+            'position_id' => 'required|exists:banner_position,id'
         ]);
 
         if ($request->hasFile('banner_image')) {
@@ -32,6 +35,7 @@ class BannerController extends Controller
             'titulo' => $request->titulo,
             'imagen' => $imageName,
             'activo' => $request->activo ?? false,
+            'position_id' => $request->position_id,
         ]);
         
         if($banner->activo == true){

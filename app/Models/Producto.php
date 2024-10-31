@@ -20,4 +20,8 @@ class Producto extends Model
     public function admin(){
         return $this->belongsTo(Administrador::class, 'reg_por_adm_id');
     }
+
+    public function categoria(){
+        return $this->belongsTo(Categoria::class, 'categoria_id');
+    }
 }

@@ -10,8 +10,8 @@
     </div>
 
         <div class="bg-cover bg-center p-4 rounded-lg shadow-lg">    
-    @else
-        <div style="background-image: url('{{ asset("uploads/banners/$banner->imagen") }}'); background-position: center top; background-size: cover;" class="bg-cover bg-center p-12 rounded-lg shadow-lg">
+    @elseif (!is_null($banner) and $banner->position_id == 1)
+        <div style="background-image: url('{{ asset("uploads/banners/$banner->imagen") }}'); background-position: center top; background-size: cover;" class="bg-cover bg-center p-12  shadow-lg">
         <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>        
     @endif
     
@@ -40,11 +40,12 @@
         
                                 <!-- Información del producto -->
                                 <div class="p-6">
-                                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-800 mb-2">{{ $oferta->nombre }}
+                                    <h2 class="text-lg font-bold text-gray-900 dark:text-gray-800 mb-2">
+                                        {{ Str::limit($oferta->nombre, 64) }}
                                     </h2>
-                                    <p class="text-sm text-gray-600 dark:text-gray-500">
+                                    {{-- <p class="text-sm text-gray-600 dark:text-gray-500">
                                         {{ Str::limit($oferta->descripcion, 100) }}                                
-                                    </p>
+                                    </p> --}}
                                     <div class="mt-4">
                                         <p class="text-sm text-gray-400 line-through">
                                             Antes: {{ number_format($oferta->precio, 0, ',', '.') }} Gs.
@@ -80,7 +81,7 @@
                 </div>
         
             </div>
-            @if (is_null($banner))
+            {{-- @if (is_null($banner))
             <div class="relative py-10">
                 <!-- Cinta horizontal -->
                 <div class="absolute inset-0 flex items-center justify-center">
@@ -104,7 +105,7 @@
                     Algunos de nuestros productos
                 </p>
             </div>
-            @endif
+            @endif --}}
             
         @endif
     </div>

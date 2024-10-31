@@ -4,23 +4,26 @@
 
 @section('contenidoAdm')
     <div class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800">
-        <x-alertas/>
+        <x-alertas />
         <form action="{{ route('banner.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Subir Banner</h2>
-            
+
             <div class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 p-4 mb-4 rounded">
                 <p class="text-sm">* Sugerencia: se recomienda una imagen con relación de aspecto 9:10 para mejor
                     visualización.</p>
             </div>
             <div class="mb-6">
                 <label class="block text-gray-800 dark:text-white font-medium mb-2" for="banner_image">Titulo</label>
-                <input name="titulo" type="text" id="default-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <input name="titulo" type="text" id="default-input"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
-            
+
             <div class="mb-6">
-                <label class="block text-gray-800 dark:text-white font-medium mb-2" for="banner_image">Imagen del Banner</label>                
-                <input class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                <label class="block text-gray-800 dark:text-white font-medium mb-2" for="banner_image">Imagen del
+                    Banner</label>
+                <input
+                    class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                     name="banner_image" accept="image/*" aria-describedby="file_input_help" id="file_input" type="file">
 
             </div>
@@ -36,12 +39,29 @@
                 </label>
 
             </div>
-            
+
+            <div class="mb-6">
+                <label class="block text-gray-800 dark:text-white font-medium mb-2" for="position">
+                    Seleccionar Posición
+                </label>
+                <select name="position_id" id="position"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option value="">Seleccione una posición</option>
+                    @foreach ($positions as $position)
+                        <option value="{{ $position->id }}">
+                            <span class="font-semibold text-blue-600">{{ $position->category }}</span> 
+                            - 
+                            <span class="text-gray-700">{{ $position->position }}</span>
+                        </option>
+                    @endforeach
+                </select>
+            </div>            
+
             <button type="submit"
                 class="w-full bg-gray-800 text-white hover:bg-gray-700 p-2.5 rounded-lg font-semibold transition">
                 Subir Banner
             </button>
-        </form>        
+        </form>
     </div>
 
     <div class="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-lg dark:bg-gray-800">
@@ -56,14 +76,15 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                @foreach($banners as $banner)                
+                @foreach ($banners as $banner)
                     <tr>
                         <td class="px-6 py-4">{{ $banner->titulo }}</td>
                         <td class="px-6 py-4">
-                            <img src="{{ asset("uploads/banners/$banner->imagen") }}" alt="{{ $banner->titulo }}" class="w-32 h-auto rounded-lg">
+                            <img src="{{ asset("uploads/banners/$banner->imagen") }}" alt="{{ $banner->titulo }}"
+                                class="w-32 h-auto rounded-lg">
                         </td>
                         <td class="px-6 py-4">
-                            @if($banner->activo)
+                            @if ($banner->activo)
                                 Sí
                             @else
                                 No

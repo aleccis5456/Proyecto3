@@ -3,6 +3,7 @@
 </div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 p-10 mx-12">
+    @php $contador = 0; @endphp
     @foreach ($porCategoria['info'] as $producto)
         <div
             class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
@@ -37,8 +38,11 @@
                             </svg>
                         </a>
                     </div>
-
             </div>
         </div>
+        @php $contador++ @endphp
+        @if ($contador == 5)
+            @break
+        @endif
     @endforeach
 </div>

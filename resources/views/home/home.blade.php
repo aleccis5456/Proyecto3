@@ -2,16 +2,23 @@
 @section('titulo', 'Home')
 
 @section('contenido')
-
-    <div class="text-center items-center justify-center px-10">
+    <div class="text-center items-center justify-center">
         <x-mostrar-ofertas/>
     </div>
+
+    {{-- banner mid --}}
+    @include('home.includes.bannerMid')
+    
     <div class="mx-10">
         <div class="text-center items-center justify-center px-10">
             <x-alertas />
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-10 mx-12">        
+        <div class="p-10 mx-12 text-2xl font-bold text-blue-600 border-b-2 border-blue-600">
+            Algunos de nuestros productos
+        </div>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 p-10 mx-12">                    
             @foreach ($productos as $producto)
                 <div
                     class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
@@ -49,11 +56,17 @@
 
                     </div>
                 </div>
-            @endforeach
-            
-        </div>        
+            @endforeach                        
+        </div>  
+        {{-- banner bottom--}}
+        @include('home.includes.bannerBottom')        
+        {{-- productos por categorias --}}
         @include('home.includes.camarasyFilmadoras')                
         @include('home.includes.electronica')
         @include('home.includes.informatica')
+        {{-- imagen antes del footer --}}
+        <div class="px-20">
+            <img class="rounded-lg" src="{{asset('uploads/images/banner-bancos.webp')}}" alt="">
+        </div>  
     </div>
 @endsection

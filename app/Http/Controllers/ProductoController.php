@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Categoria;
 use App\Models\Producto;
 use App\Models\SubCategoria;
@@ -25,6 +26,8 @@ class ProductoController extends Controller
                 return $producto;
             });
 
+        $banners = Banner::all();
+
         $categorias = [
             'fotoyfil' => 5,
             'elec' => 6,
@@ -41,7 +44,8 @@ class ProductoController extends Controller
                 ->where('visible', 'si')
                 ->where('oferta', 0)    
                 ->inRandomOrder()                
-                ->take(5)
+                ->take(6)
+                ->orderBy('id', 'asc')
                 ->get()
                 ->map(function ($producto) {
                     $producto->id_encriptado = Crypt::encrypt($producto->id);
@@ -51,7 +55,8 @@ class ProductoController extends Controller
 
         return view('home.home', [
             'productos' => $productos,
-            'porCategoria' => $productosPorCategoria
+            'porCategoria' => $productosPorCategoria,
+            'banners' => $banners,
         ]);
     }    
             
