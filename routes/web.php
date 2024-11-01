@@ -41,7 +41,7 @@ Route::get('/pedido/confirmado/{id}', [PedidoController::class, 'confirmado'])->
 //carrito
 Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
 Route::get('/carrito/add/{id}', [CarritoController::class, 'add'])->name('carrito.add');
-Route::post('/carrito/add/cuota', [CarritoController::class, 'addCuota'])->name('carrito.addCuota');
+Route::post('/carrito/add-cuota/{producto_id}', [CarritoController::class, 'addCuota'])->name('carrito.addCuota');
 Route::get('/carrito/quitar/{indice}', [CarritoController::class, 'quitar'])->name('carrito.quitar');
 Route::get('/carrito/eliminar/{indice}', [CarritoController::class, 'eliminar'])->name('carrito.eliminar');
 Route::get('/carrito/borrar', [CarritoController::class, 'borrar'])->name('carrito.borrar');

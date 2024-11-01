@@ -68,7 +68,7 @@
                                             Cantidad:
                                             <span class="bg-gray-100 px-1 border">
                                                 <a id="xdd"
-                                                    href="{{ route('carrito.add', ['id' =>  Crypt::encrypt($item['id_producto'])]) }}">+</a>
+                                                    href="{{ route('carrito.add', ['id' => $item['id_producto']]) }}">+</a>
                                                 <span class="border px-1">{{ $item['cantidad'] }}</span>
                                                 <a href="{{ route('carrito.quitar', ['indice' => $indice]) }}">-</a>
                                             </span>
@@ -139,6 +139,6 @@
     @endif
 </div>
 
-<script>
+<script>    
     documents.getElementBy('')
 </script>

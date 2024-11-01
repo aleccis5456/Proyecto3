@@ -123,7 +123,7 @@
 
 
             <div class="mt-5 text-center">
-                <a href="{{ route('carrito.add', ['id' => $producto->id_encriptado]) }}"
+                <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
                     class="flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     <b>AGREGAR AL CARRITO</b>
                 </a>
@@ -131,37 +131,25 @@
             @if ($producto->precio_oferta > 0)
                 <p class="text-gray-500 text-sm pt-2 mr-3">*Las ofertas solo esta disponibles en precio al contado</p>
             @else
-                <form class="mt-5 text-center" method="POST" action="{{ route('carrito.addCuota') }}">
-                    @csrf
-                    <input type="hidden" name="producto_id" value="{{ $producto->id_encriptado }}">
-                    <div class="flex items-center space-x-2">
-                        <select id="cuotas" name="cuotas"
-                            class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-
-                            <option value="3">3x
-                                {{ number_format(round($producto->precio / 3 + 30000, -2), 0, ',', '.') }} Gs.</option>
-                            <option value="6">6x
-                                {{ number_format(round($producto->precio / 6 + 60000, -2), 0, ',', '.') }} Gs.</option>
-                            <option selected value="12">12x
-                                {{ number_format(round($producto->precio / 12 + 120000, -2), 0, ',', '.') }} Gs.
-                            </option>
-                            <option value="18">18x
-                                {{ number_format(round($producto->precio / 18 + 110000, -2), 0, ',', '.') }} Gs.
-                            </option>
-
-                        </select>
-                        <button type="submit"
-                            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                            <svg class="w-6 h-6 text-gray-100 dark:text-white" aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
-                                viewBox="0 0 24 24">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
-                            </svg>
-                        </button>
-                    </div>
-                </form>
+            <form class="mt-5 text-center" method="POST" action="{{ route('carrito.addCuota', ['producto_id' => $producto->id]) }}">
+                @csrf
+                <input type="hidden" name="producto_id" value="{{ $producto->id }}">
+                <div class="flex items-center space-x-2">
+                    <select id="cuotas" name="cuotas"
+                        class="font-bold bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="3">3x {{ number_format(round($producto->precio / 3 + 30000, -2), 0, ',', '.') }} Gs.</option>
+                        <option value="6">6x {{ number_format(round($producto->precio / 6 + 60000, -2), 0, ',', '.') }} Gs.</option>
+                        <option selected value="12">12x {{ number_format(round($producto->precio / 12 + 120000, -2), 0, ',', '.') }} Gs.</option>
+                        <option value="18">18x {{ number_format(round($producto->precio / 18 + 110000, -2), 0, ',', '.') }} Gs.</option>
+                    </select>
+                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                        <svg class="w-6 h-6 text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                        </svg>
+                    </button>
+                </div>
+            </form>
+            
             @endif
 
 
@@ -199,14 +187,14 @@
                                 class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    <a href="{{ route('producto', [Crypt::encrypt($similar->id)]) }}">
+                                    <a href="{{ route('producto', [$similar->id]) }}">
                                         <img src=" {{ asset('uploads/productos') }}/{{ $similar->imagen }} "
                                             width="200" alt="">
                                     </a>
                                 </th>                                
 
                                 <td class="">
-                                    <a href="{{ route('producto', [Crypt::encrypt($similar->id)]) }}">
+                                    <a href="{{ route('producto', [$similar->id]) }}">
                                         <div class="flex-col">
                                             <div class="pb-10">
                                                 <b class="mb-10 text-black"> {{ $similar->nombre }} </b>
@@ -243,7 +231,7 @@
                                         </div>
 
                                         <div class="mb-10">
-                                            <a href="{{ route('carrito.add', [Crypt::encrypt($similar->id)]) }}"
+                                            <a href="{{ route('carrito.add', [$similar->id]) }}"
                                                 class="flex justify-center items-center  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-3 me-2">
                                                 <b class="text-xs">AGREGAR AL CARRITO</b>
                                             </a>

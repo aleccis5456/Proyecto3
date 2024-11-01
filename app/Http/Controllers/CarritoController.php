@@ -24,14 +24,8 @@ class CarritoController extends Controller
     }
 
 
-    public function add($idEncriptado, Request $request)
-    {
-        try {            
-            $id = Crypt::decrypt($idEncriptado);
-        } catch (Exception $e) {
-            return back()->with('error', 'Error al procesar el producto.');
-        }
-
+    public function add(Request $request, $id)
+    {        
         $carrito = session('carrito', []);
         $producto = Producto::findOrFail($id);
 
@@ -71,9 +65,8 @@ class CarritoController extends Controller
         return back()->with('info', 'El producto se agregó a tu carrito.');
     }
 
-    public function addCuota(Request $request)
-    {        
-        $id = Crypt::decrypt($request->producto_id);        
+    public function addCuota(Request $request, $producto_id)
+    {                
         $cuota = $request->cuotas;
         $suma = 0;
 
@@ -88,7 +81,7 @@ class CarritoController extends Controller
         }
 
         $carrito = session('carrito', []);
-        $producto = Producto::findOrFail($id);
+        $producto = Producto::findOrFail($producto_id);
 
         $contador = 0;
         foreach ($carrito as &$item) {

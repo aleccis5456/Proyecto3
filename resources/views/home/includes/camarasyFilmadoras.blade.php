@@ -5,45 +5,98 @@
 @elseif (!is_null($banners))
     @foreach ($banners as $banner)
         @if ($banner->activo == 1 and $banner->position_id == 4)
+            @php
+                $cantidad = $banners->where('position_id', 4)->where('activo', 1)->count();
+            @endphp
             <div class="flex pt-1 px-20 mx-auto items-stretch"> <!-- Cambiar items-center a items-stretch -->
-                <!-- Columna de la imagen -->
-                @if ($banner->imagen == '1730414905.webp')                    
-                    <div class="h-64 overflow-hidden flex-[4]"> 
-                        <a href="">
-                            <img class="w-full h-full object-cover" src="{{ asset("uploads/banners/$banner->imagen") }}" alt="">
-                        </a>                        
+                @if ($cantidad >= 2)
+                    <div id="controls-carousel" class="relative w-full h-64 flex-[4]" data-carousel="static">
+                        <!-- Carousel wrapper -->
+                        <div class="relative h-full overflow-hidden">
+                            @foreach ($banners as $index => $banner)
+                                @if ($banner->activo == 1 and $banner->position_id == 4)
+                                    <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out"
+                                        data-carousel-item>
+                                        <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                            class="w-full h-full object-cover" alt="...">
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <!-- Slider controls -->
+                        <button type="button"
+                            class="absolute top-0 left-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                            data-carousel-prev>
+                            <span
+                                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="M5 1 1 5l4 4" />
+                                </svg>
+                                <span class="sr-only">Previous</span>
+                            </span>
+                        </button>
+                        <button type="button"
+                            class="absolute top-0 right-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
+                            data-carousel-next>
+                            <span
+                                class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                                <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2" d="m1 9 4-4-4-4" />
+                                </svg>
+                                <span class="sr-only">Next</span>
+                            </span>
+                        </button>
                     </div>
                 @else
-                    <div class="h-64 overflow-hidden flex-[4]"> 
-                        <img class="w-full h-full object-cover" src="{{ asset("uploads/banners/$banner->imagen") }}" alt="">
+                    <div class="h-64 overflow-hidden flex-[4]">
+                        <a href="producto/9">
+                            <img class="w-full h-full object-cover" src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                alt="">
+                        </a>
                     </div>
                 @endif
-            
+
                 <!-- Columna del producto -->
                 <div class="flex-[1] p-2 rounded-lg text-blue-600 flex flex-col"> <!-- Agregar flex flex-col -->
                     @foreach ($porCategoria['fotoyfil']->reverse() as $producto)
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex-1"> <!-- Agregar flex-1 -->
+                        <div
+                            class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex-1">
+                            <!-- Agregar flex-1 -->
                             <!-- Imagen del producto -->
-                            <a href="{{ route('producto', ['id' => $producto->id_encriptado]) }}" class="block relative group">
+                            <a href="{{ route('producto', ['id' => $producto->id]) }}" class="block relative group">
                                 <img class="w-full h-36 object-contain group-hover:scale-110 transition-transform duration-300"
-                                    src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
-                                <div class="absolute inset-0 bg-blue-700 opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                                <div class="absolute bottom-0 left-0 right-0 text-center bg-blue-700 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}"
+                                    alt="{{ $producto->nombre }}">
+                                <div
+                                    class="absolute inset-0 bg-blue-700 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+                                </div>
+                                <div
+                                    class="absolute bottom-0 left-0 right-0 text-center bg-blue-700 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     Ver producto
                                 </div>
                             </a>
-            
+
                             <!-- Detalles del producto -->
                             <div class="p-2.5 text-center">
                                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
                                     {{ Str::limit($producto->nombre, 20) }}
                                 </h3>
                                 <div class="mt-4">
-                                    <a href="{{ route('carrito.add', ['id' => $producto->id_encriptado]) }}"
+                                    <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
                                         class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-1 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
-                                        <span class="text-lg font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }} Gs.</span>
-                                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
+                                        <span
+                                            class="text-lg font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
+                                            Gs.</span>
+                                        <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                            width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
                                         </svg>
                                     </a>
                                 </div>
@@ -52,7 +105,7 @@
                         @break
                     @endforeach
                 </div>
-            </div>        
+            </div>
             @break
         @endif
     @endforeach
@@ -66,7 +119,7 @@
         <div
             class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
             <!-- Imagen del producto -->
-            <a href="{{ route('producto', ['id' => $producto->id_encriptado]) }}" class="block relative group">
+            <a href="{{ route('producto', ['id' => $producto->id]) }}" class="block relative group">
                 <img class="w-full h-48 object-contain group-hover:scale-110 transition-transform duration-300"
                     src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                 <div
@@ -83,7 +136,7 @@
                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
                     {{ Str::limit($producto->nombre, 38) }}
                     <div class="mt-4">
-                        <a href="{{ route('carrito.add', ['id' => $producto->id_encriptado]) }}"
+                        <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
                             class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-1 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
                             <span
                                 class="text-lg font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
@@ -102,6 +155,5 @@
         @if ($contador == 5)
             @break
         @endif
-
     @endforeach
 </div>

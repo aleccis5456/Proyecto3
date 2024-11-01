@@ -20,11 +20,7 @@ class ProductoController extends Controller
             ->where('oferta', 0)
             ->inRandomOrder()
             ->take(8)
-            ->get()
-            ->map(function ($producto) {
-                $producto->id_encriptado = Crypt::encrypt($producto->id);
-                return $producto;
-            });
+            ->get();
 
         $banners = Banner::all();
 
@@ -46,11 +42,7 @@ class ProductoController extends Controller
                 ->inRandomOrder()                
                 ->take(6)
                 ->orderBy('id', 'asc')
-                ->get()
-                ->map(function ($producto) {
-                    $producto->id_encriptado = Crypt::encrypt($producto->id);
-                    return $producto;
-                });
+                ->get();
         }            
 
         return view('home.home', [
@@ -287,25 +279,15 @@ class ProductoController extends Controller
         return back()->with('success', 'La foto se elimino con exito');
     }
 
-    public function producto($idEncriptado)
-    {
-        try {
-            $id = Crypt::decrypt($idEncriptado);
-        } catch (Exception $e) {
-            return back()->with('error', 'Error al procesar el producto.');
-        }
-        $producto = Producto::findOrFail($id);
-        $producto->id_encriptado = Crypt::encrypt($producto->id);
+    public function producto($id)
+    {        
+        $producto = Producto::findOrFail($id);        
         $fotos = ProductoFoto::where('producto_id', $id)->get();
 
         $similares = Producto::where('id', '!=', $id)
             ->where('subCategoria_id', $producto->subCategoria_id)
             ->whereBetween('precio', [$producto->precio - 1500000, $producto->precio + 2000000])
-            ->get()
-            ->map(function ($similar) {
-                $similar->id_encriptado = Crypt::encrypt($similar->id);
-                return $similar;
-            });
+            ->get();
 
         return view('producto.producto', [
             'producto' => $producto,
@@ -369,11 +351,7 @@ class ProductoController extends Controller
 
     public function ofertas()
     {
-        $ofertas = Producto::where('oferta', 1)->get()
-            ->map(function ($oferta) {
-                $oferta->id_encriptado = Crypt::encrypt($oferta->id);
-                return $oferta;
-            });
+        $ofertas = Producto::where('oferta', 1)->get();
 
         return view('producto.ofertas', [
             'ofertas' => $ofertas,
