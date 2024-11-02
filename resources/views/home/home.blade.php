@@ -10,11 +10,11 @@
     @include('home.includes.bannerMid')
     
     <div class="mx-10">
-        <div class="text-center items-center justify-center px-10">
+        <div class="text-center items-center justify-center px-10 py-5">
             <x-alertas />
         </div>
-
-        <div class="p-10 mx-12 text-2xl font-bold text-blue-600 border-b-2 border-blue-600">
+        
+        <div class="mx-20 text-2xl font-bold text-gray-600 border-b-2 border-gray-600">
             Algunos de nuestros productos
         </div>
         
@@ -27,10 +27,10 @@
                         <img class="w-full h-48 object-contain group-hover:scale-110 transition-transform duration-300"
                             src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                         <div
-                            class="absolute inset-0 bg-blue-700 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+                            class="absolute inset-0 bg-yellow-100 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
                         </div>
                         <div
-                            class="absolute bottom-0 left-0 right-0 text-center bg-blue-700 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            class="font-bold text-yellow-400 absolute bottom-0 left-0 right-0 text-center bg-gray-300 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             Ver producto
                         </div>
                     </a>
@@ -41,9 +41,9 @@
                             {{Str::limit($producto->nombre, 54)}}
                         <div class="mt-4">
                             <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
-                                class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-1 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
+                                class="flex items-center justify-between text-gray-600 rounded-lg py-2.5 hover:px-1 hover:bg-yellow-100 focus:outline-none focus:ring-4 focus:ring-yellow-300 hover:text-black">
                                 <span
-                                    class="text-xl font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
+                                    class="text-xl font-bold hover:text-black">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
                                     Gs.</span>
                                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                                     height="24" fill="none" viewBox="0 0 24 24">
@@ -53,7 +53,6 @@
                                 </svg>
                             </a>
                         </div>
-
                     </div>
                 </div>
             @endforeach                        

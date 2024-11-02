@@ -10,8 +10,8 @@
         </button>
 
         <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" />
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Proyecto</span>
+            <img src="{{ asset('src/imgs/logo2.webp') }}" class="h-8" alt="Flowbite Logo" />
+            <span class="self-center text-2xl text-gray-600 font-semibold whitespace-nowrap dark:text-white">Proyecto</span>
         </a>
 
         <div class="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
@@ -20,8 +20,8 @@
                 <button href="  " data-drawer-target="drawer-right-carrito" data-drawer-show="drawer-right-carrito"
                     data-drawer-placement="right" aria-controls="drawer-right-carrito">
                     <div class="flex ">
-                        <div class=" bg-blue-600 rounded-full px-2 py-2">
-                            <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true"
+                        <div class=" bg-[#fbb321] rounded-full px-2 py-2">
+                            <svg class="w-6 h-6  text-gray-600 dark:text-white" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                                 viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -29,14 +29,14 @@
                                     d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
                             </svg>
                         </div>
-                        <span class="text-blue-500 font-bold text-xs ">+
+                        <span class="text-gray-600 font-bold text-xs ">+
                             {{ App\Utils\Util::stats()['total_conteo'] }}</span>
                     </div>
                 </button>
             @else
                 <button href="  " data-drawer-target="drawer-right-carrito" data-drawer-show="drawer-right-carrito"
                     data-drawer-placement="right" aria-controls="drawer-right-carrito">
-                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                    <svg class="w-6 h-6 text-gray-600 dark:text-white" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                         viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -53,7 +53,7 @@
                 <a href=" {{ route('login') }} "
                     class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Ingresar</a>
                 <a href="{{ route('usuario.registro') }}"
-                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Registrarse</a>
+                    class="text-gray-700 bg-[#fbb321] hover:bg-yellow-100 focus:ring-4 focus:ring-yellow-300 hover:text-black font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Registrarse</a>
             @elseif(Auth::user())
                 <button class="rounded-lg hover:bg-gray-200 px-4 py-2 flex items-center space-x-2"
                     id="dropdownDefaultButton" data-dropdown-toggle="dropdown">
@@ -85,8 +85,8 @@
 
                 <!-- Botón de búsqueda centrado -->
                 <button type="submit"
-                    class="absolute inset-y-0 right-1 flex items-center justify-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 my-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <svg class="w-5 h-5 text-gray-100 dark:text-white" aria-hidden="true"
+                    class="absolute inset-y-0 right-1 flex items-center justify-center text-white bg-[#fbb321] hover:bg-yellow-100 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-4 my-1 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    <svg class="w-5 h-5 text-gray-600 dark:text-white" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
                         viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="round" stroke-width="2"

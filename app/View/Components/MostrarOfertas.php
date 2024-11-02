@@ -20,15 +20,11 @@ class Mostrarofertas extends Component
     {
         $this->ofertas = Producto::where('oferta', 1)
                                 ->orderByDesc('id')                                
-                                 ->get()
-                                 ->map(function ($producto) {
-                                    $producto->id_encriptado = Crypt::encrypt($producto->id);
-                                     return $producto;
-                                 });                                                                 
+                                ->where('visible', 'si')
+                                ->get();
 
-        $this->banner = Banner::where('activo', true)->first();        
-    }
-
+        $this->banner = Banner::where('activo', true)->where('position_id', 1)->first();               
+    }    
     /**
      * Get the view / contents that represent the component.
      */

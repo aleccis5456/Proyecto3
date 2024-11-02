@@ -44,17 +44,17 @@
                 <label class="block text-gray-800 dark:text-white font-medium mb-2" for="position">
                     Seleccionar Posición
                 </label>
-                <select name="position_id" id="position"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select name="position_id" id="position" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     <option value="">Seleccione una posición</option>
-                    @foreach ($positions as $position)
-                        <option value="{{ $position->id }}">
-                            <span class="font-semibold text-blue-600">{{ $position->category }}</span> 
-                            - 
-                            <span class="text-gray-700">{{ $position->position }}</span>
-                        </option>
+                    @foreach ($categories as $category => $positions)
+                        <optgroup label="{{ $category }}">
+                            @foreach ($positions as $position)
+                                <option value="{{ $position->id }}">{{ $position->position }}</option>
+                            @endforeach
+                        </optgroup>
                     @endforeach
                 </select>
+                
             </div>            
 
             <button type="submit"
@@ -72,6 +72,7 @@
                     <th class="px-6 py-3 bg-gray-50 dark:bg-gray-700">Titulo</th>
                     <th class="px-6 py-3 bg-gray-50 dark:bg-gray-700">Imagen</th>
                     <th class="px-6 py-3 bg-gray-50 dark:bg-gray-700">Activo</th>
+                    <th class="px-6 py-3 bg-gray-50 dark:bg-gray-700">Posicion</th>
                     <th class="px-6 py-3 bg-gray-50 dark:bg-gray-700">Acciones</th>
                 </tr>
             </thead>
@@ -89,6 +90,9 @@
                             @else
                                 No
                             @endif
+                        </td>
+                        <td>
+                            {{ $banner->position->category }} - {{ $banner->position->position }}
                         </td>
                         <td>
                             <a href="{{ route('banner.showFormEdit', ['id' => $banner->id]) }}">Editar</a>

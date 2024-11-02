@@ -1,14 +1,13 @@
 @extends('layouts.app')
 @section('titulo', 'productos')
-
 @section('contenido')
     <div class="flex items-center justify-center p-10 ">
-        <div class="w-2/3  px-10">
+        <div class="w-2/3 px-10">
             <div class=" text-2xl">
                 @if ($producto->precio_oferta > 0)
                     <b class="text-blue-600">{{ $producto->nombre }}</b>
                 @else
-                    <b>{{ $producto->nombre }}</b>
+                    <b class="text-gray-600">{{ $producto->nombre }}</b>
                 @endif
 
             </div>
@@ -32,12 +31,12 @@
 
                 </div>
                 <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                    <button style="border: 3px solid blue;" type="button" class="w-11 h-11 " aria-current="true"
+                    <button style="border: 1px solid #fbb321;" type="button" class="w-11 h-11 " aria-current="true"
                         aria-label="Slide 1" data-carousel-slide-to="0">
                         <img src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" alt="">
                     </button>
                     @foreach ($fotos as $foto)
-                        <button style="border: 3px solid blue;" type="button" class="w-11 h-11" aria-current="true"
+                        <button style="border: 1px solid #fbb321;" type="button" class="w-11 h-11" aria-current="true"
                             aria-label="Slide 1" data-carousel-slide-to="0">
                             <img src="{{ asset('uploads/productos') }}/{{ $foto->nombre }}" alt=""></button>
                     @endforeach
@@ -98,7 +97,7 @@
             <div class="mb-8">
                 @if ($producto->stock_actual >= 1)
                     <button type="button"
-                        class="focus:outline-none text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                        class="focus:outline-none text-white bg-gray-600 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-2 py-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
                         <b>EN STOCK</b>
                     </button>
                     <p>solo queda <b>{{ $producto->stock_actual }}</b></p>
@@ -116,7 +115,6 @@
             <div class=" p-2">
                 <div class="">
                     <p>{!! nl2br(e($producto->descripcion)) !!}</p>
-
                 </div>
 
             </div>
@@ -124,7 +122,7 @@
 
             <div class="mt-5 text-center">
                 <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
-                    class="flex items-center justify-center w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    class="flex items-center justify-center w-full text-gray-600 bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-2.5 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     <b>AGREGAR AL CARRITO</b>
                 </a>
             </div>
@@ -142,7 +140,7 @@
                         <option selected value="12">12x {{ number_format(round($producto->precio / 12 + 120000, -2), 0, ',', '.') }} Gs.</option>
                         <option value="18">18x {{ number_format(round($producto->precio / 18 + 110000, -2), 0, ',', '.') }} Gs.</option>
                     </select>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    <button type="submit" class="text-white bg-[#fbb321] hover:bg-yellow-200 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                         <svg class="w-6 h-6 text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
                         </svg>

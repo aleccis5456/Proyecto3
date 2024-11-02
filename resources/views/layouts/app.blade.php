@@ -26,7 +26,7 @@
     <title>Tienda - @yield('titulo')</title>
 </head>
 
-<body>
+<body class="bg-yellow-50">
 
     @include('layouts.app.navbar')<!-- nav-->
     @include('layouts.app.cerrarsesion')<!-- confirmar cerrar sesion -->

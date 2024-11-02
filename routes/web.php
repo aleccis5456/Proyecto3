@@ -10,6 +10,7 @@ use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\VendedoresController;
+use App\Http\Controllers\OfertaController;
 
 //middlewares   
 use App\Http\Middleware\AdminIndex;
@@ -111,7 +112,11 @@ Route::middleware([AdminIndex::class])->group(function () {
     Route::get('/adm/banner', [BannerController::class, 'showForm'])->name('banner.showForm');
     Route::post('/adm/banner', [BannerController::class, 'store'])->name('banner.store');
     Route::get('/adm/banner/edit/{id}', [BannerController::class, 'showFormEdit'])->name('banner.showFormEdit');
-    Route::post('/adm/banner/edit`', [BannerController::class, 'edit'])->name('banner.edit');    
+    Route::post('/adm/banner/edit`', [BannerController::class, 'edit'])->name('banner.edit');  
+    //ofertas
+    Route::get('adm/ofertas', [OfertaController::class, 'index'])->name('oferta.index');  
+    Route::get('adm/ofertas/quitar/{estado}', [OfertaController::class, 'quitarTodos'])->name('oferta.quitarTodos');
+    Route::post('adm/ofertas/editar', [OfertaController::class, 'editar'])->name('oferta.editar');
 });
 
 Route::middleware([Vendedor::class])->group(function(){

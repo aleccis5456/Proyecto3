@@ -13,6 +13,27 @@ class Producto extends Model
     
     protected $table = 'productos';
 
+    protected $fillable = [
+        'codigo', 	
+        'subCategoria_id', 	
+        'nombre',
+        'slug', 	
+        'descripcion', 	
+        'precio', 	
+        'stock_actual', 	
+        'stock_min', 	
+        'oferta', 	
+        'precio_oferta',	
+        'visible', 	
+        'ventas', 	
+        'imagen', 	
+        'registro', 	
+        'reg_por_adm_id', 	
+        'mod_fecha', 	
+        'modificado_por_adm_id',
+        'categoria_id'
+    ];
+
     public function subcategoria(){
         return $this->belongsTo(SubCategoria::class, 'subCategoria_id');
     }

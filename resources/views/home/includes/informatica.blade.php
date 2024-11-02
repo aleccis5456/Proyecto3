@@ -1,4 +1,4 @@
-<div class="p-10 mx-12 text-2xl font-bold text-blue-600 border-b-2 border-blue-600">
+{{-- <div class="p-10 mx-12 text-2xl font-bold text-blue-600 border-b-2 border-blue-600">
     Informatica
 </div>
 
@@ -45,4 +45,4 @@
             @break
         @endif
     @endforeach
-</div>
+</div> --}}

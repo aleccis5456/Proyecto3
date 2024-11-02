@@ -1,4 +1,4 @@
-<div class="mx-20 text-2xl font-bold text-blue-600 border-b-2 border-blue-600">
+<div class="mx-20 text-2xl font-bold text-gray-600 border-b-2 border-gray-600">
     Fotografía y Filmación
 </div>
 @if (is_null($banners))
@@ -62,7 +62,7 @@
                 @endif
 
                 <!-- Columna del producto -->
-                <div class="flex-[1] p-2 rounded-lg text-blue-600 flex flex-col"> <!-- Agregar flex flex-col -->
+                <div class="flex-[1] p-2 rounded-lg text-gray-600 flex flex-col"> <!-- Agregar flex flex-col -->
                     @foreach ($porCategoria['fotoyfil']->reverse() as $producto)
                         <div
                             class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex-1">
@@ -73,10 +73,10 @@
                                     src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}"
                                     alt="{{ $producto->nombre }}">
                                 <div
-                                    class="absolute inset-0 bg-blue-700 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+                                    class="absolute inset-0 bg-yellow-100 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
                                 </div>
                                 <div
-                                    class="absolute bottom-0 left-0 right-0 text-center bg-blue-700 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    class="font-bold absolute bottom-0 left-0 text-yellow-400 right-0 text-center bg-gray-300 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     Ver producto
                                 </div>
                             </a>
@@ -84,11 +84,11 @@
                             <!-- Detalles del producto -->
                             <div class="p-2.5 text-center">
                                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-                                    {{ Str::limit($producto->nombre, 20) }}
+                                    {{ Str::limit($producto->nombre, 23) }}
                                 </h3>
                                 <div class="mt-4">
                                     <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
-                                        class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-1 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
+                                        class="flex items-center justify-between text-gray-600 rounded-lg py-2.5 hover:px-1 hover:bg-yellow-100 hover:text-black focus:outline-none focus:ring-4 focus:ring-blue-300">
                                         <span
                                             class="text-lg font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
                                             Gs.</span>
@@ -123,10 +123,10 @@
                 <img class="w-full h-48 object-contain group-hover:scale-110 transition-transform duration-300"
                     src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                 <div
-                    class="absolute inset-0 bg-blue-700 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
+                    class="absolute inset-0 bg-yellow-100 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
                 </div>
                 <div
-                    class="absolute bottom-0 left-0 right-0 text-center bg-blue-700 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    class="font-bold text-yellow-400 absolute bottom-0 left-0 right-0 text-center bg-gray-300 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     Ver producto
                 </div>
             </a>
@@ -137,7 +137,7 @@
                     {{ Str::limit($producto->nombre, 38) }}
                     <div class="mt-4">
                         <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
-                            class="flex items-center justify-between text-blue-600 rounded-lg py-2.5 hover:px-1 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 hover:text-white">
+                            class="flex items-center justify-between text-gray-600 rounded-lg py-2.5 hover:px-1 hover:bg-yellow-100 hover:text-black focus:outline-none focus:ring-4 focus:ring-yellow-300">
                             <span
                                 class="text-lg font-bold">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
                                 Gs.</span>
