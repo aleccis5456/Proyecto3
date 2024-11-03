@@ -235,11 +235,9 @@
         </div>
     </div>
 
-
     <!-- confirmacion eliminar producto -->
     @include('producto.includes.deleteModal')
     <!-- /confirmacion eliminar producto -->
-
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

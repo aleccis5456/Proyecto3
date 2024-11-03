@@ -3,83 +3,70 @@
 @section('tituloAdm', 'Agregar Categoria')
 
 @section('contenidoAdm')
-    <div class="flex">
-        <div class="flex flex-col w-1/2">
-            <!-- Categoria -->
-            <div class="mb-8">
-                <form class="max-w-sm mx-auto" method="POST" action="{{ route('aggSave') }}">
-                    <br><br><br><br>
-                    @csrf
-                    <div class="mb-6">
-                        <b class="text-2xl text-gray-900 dark:text-white">Agregar Categoria</b>
-                    </div>
-                    <div class="mb-5">
-                        <label for="categoria" class="block mb-2 text-sm font-medium text-gray-800 dark:text-white">
-                            Nueva Categoria</label>
-                        <input type="text" id="categoria" name="categoria"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                    </div>
-                    <button type="submit"
-                        class="text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Guardar
-                    </button>
-                    <spam class="text-sm text-gray-600 hover:underline">
-                        <a href=" {{ route('categoria.todos') }} ">Ver Categorias</a>
-                    </spam>
-                </form>
+    <div class="min-h-screen bg-white flex flex-col items-center py-6">
+        <div class="w-full max-w-lg bg-white shadow-md rounded-lg p-8">
+            <!-- Formulario Agregar Categoria -->
+            <div class="mb-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800">Agregar Categoria</h2>
             </div>
-        </div>
-        <!-- /tabla -->
-
-
-        <div class="w-1/2"> <!-- Contenedor principal con Flexbox en columna -->
-            <!-- Categoria -->
-            <!-- subcategoria -->
-            <div class="pr-10">
-                <form class="max-w-sm mx-auto" method="POST" action="{{ route('sub.agregar') }}">
-                    <br><br><br><br>
-                    @csrf
-                    <x-alertas />
-                    <div class="mb-6">
-                        <b class="text-2xl text-gray-900 dark:text-white">Agregar Sub Categoria</b>
-                    </div>
-                    <div class="mb-5">
-                        <label for="nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nueva
-                            Categoria</label>
-                        <input type="text" id="nombre" name="nombre"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-                    </div>
-                    <div class="mb-5">
-                        <select id="categoria" name="categoria"
-                            class="select2 mb-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option selected value="0">Selecciona una Categoria</option>
-                            @foreach ($categorias as $categoria)
-                                <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+            <form method="POST" action="{{ route('aggSave') }}">
+                @csrf
+                <div class="mb-5">
+                    <label for="categoria" class="block mb-2 text-sm font-medium text-gray-800">Nueva Categoria</label>
+                    <input type="text" id="categoria" name="categoria"
+                        class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+                        placeholder="Ingrese el nombre de la categoría" />
+                </div>
+                <div class="flex flex-col space-y-4">
                     <button type="submit"
-                        class="text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Guardar
                     </button>
+                    <a href="{{ route('categoria.todos') }}" class="w-full text-center text-gray-800 hover:underline py-2 rounded-lg border border-gray-800">
+                        Ver Categorias
+                    </a>
+                </div>
+            </form>
 
-                    <span>
-                        <a href="{{ route('sub.ver') }}" class="text-gray-800 text-sm hover:underline">
-                            ver Sub Categorias
-                        </a>                        
-                    </span>
-                </form>
-            </div>          
+            <!-- Formulario Agregar Subcategoria -->
+            <div class="mt-12 mb-8 text-center">
+                <h2 class="text-2xl font-bold text-gray-800">Agregar Sub Categoria</h2>
+            </div>
+            <form method="POST" action="{{ route('sub.agregar') }}">
+                @csrf
+                <x-alertas />
+                <div class="mb-5">
+                    <label for="nombre" class="block mb-2 text-sm font-medium text-gray-800">Nueva Subcategoria</label>
+                    <input type="text" id="nombre" name="nombre"
+                        class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800"
+                        placeholder="Ingrese el nombre de la subcategoría" />
+                </div>
+                <div class="mb-5">
+                    <label for="categoria" class="block mb-2 text-sm font-medium text-gray-800">Selecciona Categoria</label>
+                    <select id="categoria" name="categoria"
+                        class="select2 w-full p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-800">
+                        <option value="0" selected>Selecciona una Categoria</option>
+                        @foreach ($categorias as $categoria)
+                            <option value="{{ $categoria->id }}">{{ $categoria->nombre }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="flex flex-col space-y-4">
+                    <button type="submit"
+                        class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                        Guardar
+                    </button>
+                    <a href="{{ route('sub.ver') }}" class="w-full text-center text-gray-800 hover:underline py-2 rounded-lg border border-gray-800">
+                        Ver Sub Categorias
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 
-
-
-
-    
     <x-mostrar-sub-categorias />
 
-
+    <!-- Modal Script -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const openModalButtons = document.querySelectorAll('.open-modal');
@@ -95,12 +82,13 @@
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        $('.select2').select2({
-            placeholder: "Buscar...",
-            allowClear: true
+    <!-- Select2 Initialization -->
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Buscar...",
+                allowClear: true
+            });
         });
-    });
-</script>
+    </script>
 @endsection
