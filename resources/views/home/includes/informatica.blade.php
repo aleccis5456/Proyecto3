@@ -1,4 +1,4 @@
-{{-- <div class="p-10 mx-12 text-2xl font-bold text-blue-600 border-b-2 border-blue-600">
+ <div class="p-10 mx-12 text-2xl font-bold text-blue-600 border-b-2 border-blue-600">
     Informatica
 </div>
 
@@ -8,7 +8,8 @@
         <div
             class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
             <!-- Imagen del producto -->
-            <a href="{{ route('producto', ['id' => $producto->id]) }}" class="block relative group">
+            <a href="{{ route('producto', ['id' => $producto->id, 'slug' => $producto->slug]) }}" class="block relative group">
+
                 <img class="w-full h-48 object-contain group-hover:scale-110 transition-transform duration-300"
                     src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" alt="{{ $producto->nombre }}">
                 <div
@@ -45,4 +46,4 @@
             @break
         @endif
     @endforeach
-</div> --}}
+</div> 

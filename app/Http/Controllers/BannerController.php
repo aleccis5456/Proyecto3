@@ -85,7 +85,7 @@ class BannerController extends Controller
         ]);        
     }
     
-    public function edit(Request $request){          
+    public function edit(Request $request){               
         $request->validate([
             'titulo ' => 'sometimes|string',
             'status' => 'sometimes|nullable',
@@ -113,7 +113,7 @@ class BannerController extends Controller
             'activo' => $request->status ?? $banner->activo,
             'position_id' => $request->position_id ?? $banner->position_id,
             'producto_id' => $request->producto_id ?? $banner->producto_id,
-            'url_relation' => $filtro == "" ? null : $url_completo,
+            'url_relation' => $request->url == null ? $banner->url_relation : $url_completo,
         ]);
 
         if($banner->activo == true){

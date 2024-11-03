@@ -27,8 +27,8 @@ Route::get('/reporte/pdf', [PDFController::class, 'generarPDF'])->name('reporte.
 Route::get('/factura/pdf/{id}',[PDFController::class, 'factura'])->name('pdf.factura');
 
 //producto
-Route::get('/producto/{id}', [ProductoController::class, 'producto'])->name('producto');
-;
+Route::get('/producto/{id}/{slug?}', [ProductoController::class, 'producto'])->name('producto');
+
 //oferta
 Route::get('/ver-todas/ofertas', [ProductoController::class, 'ofertas'])->name('oferta.todos');
 //Route::get('/ofertas', [ProductoController::class, 'ofertas'])->name('ofertas');

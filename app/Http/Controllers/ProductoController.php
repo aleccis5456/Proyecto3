@@ -9,8 +9,7 @@ use App\Models\SubCategoria;
 use App\Models\ProductoFoto;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Str;
 
 class ProductoController extends Controller
 {
@@ -146,6 +145,7 @@ class ProductoController extends Controller
         $producto->subCategoria_id = $request->subcategoria;
         $producto->reg_por_adm_id = session('adm')->id;
         $producto->categoria_id = $subcategoria->categoria->id;
+        $producto->slug = Str::slug($request->nombre);
 
         $producto->save();
 
@@ -280,21 +280,22 @@ class ProductoController extends Controller
     }
 
     public function producto($id)
-    {        
-        $producto = Producto::findOrFail($id);        
-        $fotos = ProductoFoto::where('producto_id', $id)->get();
+{        
+    $producto = Producto::findOrFail($id);        
+    $fotos = ProductoFoto::where('producto_id', $id)->get();
 
-        $similares = Producto::where('id', '!=', $id)
-            ->where('subCategoria_id', $producto->subCategoria_id)
-            ->whereBetween('precio', [$producto->precio - 1500000, $producto->precio + 2000000])
-            ->get();
+    $similares = Producto::where('id', '!=', $id)
+        ->where('subCategoria_id', $producto->subCategoria_id)
+        ->whereBetween('precio', [$producto->precio - 1500000, $producto->precio + 2000000])
+        ->get();
 
-        return view('producto.producto', [
-            'producto' => $producto,
-            'fotos' => $fotos,
-            'similares' => $similares,
-        ]);
-    }
+    return view('producto.producto', [
+        'producto' => $producto,
+        'fotos' => $fotos,
+        'similares' => $similares,
+    ]);
+}
+
 
 
     public function busqueda(Request $request)

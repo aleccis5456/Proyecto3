@@ -44,7 +44,7 @@ class OfertaController extends Controller
 
         if($producto->oferta == 0){
             $producto->precio_oferta = 0;
-            $producto->save();
+            $producto->save();  
         }
 
         $productos = Producto::where('oferta', 1)->get();                
