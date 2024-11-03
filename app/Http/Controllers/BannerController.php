@@ -6,6 +6,7 @@ use App\Models\Position;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use App\Models\Producto;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class BannerController extends Controller
@@ -35,7 +36,8 @@ class BannerController extends Controller
             'activo' => 'nullable',
             'banner_image' => 'required|image',
             'position_id' => 'required|exists:banner_position,id',
-            'producto_id' => 'nullable|exists:productos,id'
+            'producto_id' => 'nullable|exists:productos,id',
+            'url' => 'nullable',
         ]);
 
         if ($request->hasFile('banner_image')) {
@@ -51,6 +53,7 @@ class BannerController extends Controller
             'activo' => $request->activo ?? false,
             'position_id' => $request->position_id,
             'producto_id' => $request->producto->id ?? null,
+            'url' => $request->url ?? null,
         ]);
         
         if($banner->activo == true){
@@ -59,7 +62,7 @@ class BannerController extends Controller
             return back()->with('info', 'Banner creado, pero esta inactivo');
         }
     }
-    public function showFormEdit(String $id){        
+    public function showFormEdit(String $id){          
         $banner = Banner::find($id);
         $positions = Position::all();
         $productos = Producto::all();
@@ -79,31 +82,35 @@ class BannerController extends Controller
         ]);        
     }
     
-    public function edit(Request $request){                  
+    public function edit(Request $request){          
         $request->validate([
             'titulo ' => 'sometimes|string',
             'status' => 'sometimes|nullable',
             'banner_image' => 'sometimes|image',
-            'position_id' => 'sometimes|exists:banner_position,id',
-            'producto_id' => 'sometimes|exists:productos,id'
-        ]);
-
+            'position_id' => 'sometimes',
+            'producto_id' => 'sometimes',
+            'url' => 'nullable|string'
+        ]);        
+        $filtro = Str::slug($request->url, '+');        
+        $url = 'http://127.0.0.1:8000/busqueda?b=';        
+        $url_completo = $url.$filtro;                
         if ($request->hasFile('banner_image')) {
             $image_path = $request->file('banner_image');
             $imageName = time() . '.' . $image_path->getClientOriginalExtension();
             $destinationPath = public_path('uploads/banners');
             $image_path->move($destinationPath, $imageName);
-        }
+        }        
         $banner = Banner::find($request->banner_id);
         if(!$banner){
             return back()->with('warning', 'No se encontro el banner');
-        }                
+        }                    
         $banner->update([
             'titulo' => $request->titulo ?? $banner->titulo,
             'image' => $imageName ?? $banner->imagen,
             'activo' => $request->status ?? $banner->activo,
             'position_id' => $request->position_id ?? $banner->position_id,
             'producto_id' => $request->producto_id ?? $banner->producto_id,
+            'url_relation' => $filtro == "" ? null : $url_completo,
         ]);
 
         if($banner->activo == true){

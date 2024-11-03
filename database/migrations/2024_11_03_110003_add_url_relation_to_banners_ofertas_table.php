@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('banners_ofertas', function (Blueprint $table) {
-            //
+            $table->string('url_relation')->nullable();
         });
     }
 

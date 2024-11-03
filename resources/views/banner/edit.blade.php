@@ -34,7 +34,7 @@
                     class="w-full h-auto rounded-lg">
             </div>
 
-            <label class=" pb-4" for="">Opciones del banner</label>
+            <label class=" pb-4" for="">Visibilidad del banner</label>
             <div class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
                 <input {{ $banner->activo == false ? 'checked' : '' }} id="bordered-radio-1" type="radio" value="0" name="status"
                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -72,10 +72,10 @@
             </div>
 
             <div class="pb-5">
-                <label for="subcategoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Relacionar con un prodcuto</label>
+                <label for="subcategoria" class="block text-gray-800 dark:text-white font-medium mb-2">Relacionar con un prodcuto</label>
                 <select id="subcategoria" name="producto_id"
                     class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option selected>Selecciona un producto</option>
+                    <option selected value="0">Selecciona un producto</option>
                     @foreach ($productos as $producto)
                         @if ($producto->id == $banner->producto_id)
                             <option selected value="{{ $producto->id }}">
@@ -83,7 +83,7 @@
                                 <p>{{ $producto->nombre }}</p>
                             </option>    
                         @else
-                            <option selected value="{{ $producto->id }}">
+                            <option value="{{ $producto->id }}">
                                 <p>#{{$producto->codigo}} | </p><br>                            
                                 <p>{{ $producto->nombre }}</p>
                             </option>    
@@ -93,6 +93,13 @@
                 </select>
             </div>
 
+            <div class="mb-6">
+                <label class="block text-gray-800 dark:text-white font-medium mb-2" for="url">Asociar a una url (busqueda)</label>
+                <input name="url" type="text" id="default-input"
+                {{ $banner->url_relation != null ? 'value='.$banner->url_relation.'' : 'placeholder=Sin'. ' url'. ' asociada' }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            </div>
+            
+            {{-- value="{{ $banner->url ?? null }}" placeholder="{{$banner->url ?? 'Sin url asociada'}}" --}}
             <button type="submit"
                 class="w-full bg-gray-800 text-white hover:bg-gray-700 p-2.5 rounded-lg font-semibold transition">
                 Guardar cambios

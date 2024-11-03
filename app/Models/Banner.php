@@ -11,7 +11,7 @@ class Banner extends Model
 
     public $table  = 'banners_ofertas';
 
-    protected $fillable = ['imagen', 'activo', 'titulo', 'position_id', 'producto_id'];
+    protected $fillable = ['imagen', 'activo', 'titulo', 'position_id', 'producto_id', 'url_relation'];
 
     public function position(){
         return $this->belongsTo(Position::class);
