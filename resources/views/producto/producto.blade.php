@@ -230,7 +230,7 @@
 
                                         <div class="mb-10">
                                             <a href="{{ route('carrito.add', [$similar->id]) }}"
-                                                class="flex justify-center items-center  text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-3 me-2">
+                                                class="flex justify-center items-center  text-gray-600 bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-2 py-3 me-2">
                                                 <b class="text-xs">AGREGAR AL CARRITO</b>
                                             </a>
                                         </div>

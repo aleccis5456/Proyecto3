@@ -39,6 +39,9 @@ class BannerController extends Controller
             'producto_id' => 'nullable',
             'url' => 'nullable',
         ]);
+        $filtro = Str::slug($request->url, '+');        
+        $url = 'http://127.0.0.1:8000/busqueda?b=';        
+        $url_completo = $url.$filtro;                
 
         if ($request->hasFile('banner_image')) {
             $image_path = $request->file('banner_image');
@@ -53,7 +56,7 @@ class BannerController extends Controller
             'activo' => $request->activo ?? false,
             'position_id' => $request->position_id,
             'producto_id' => $request->producto->id ?? 0,
-            'url' => $request->url ?? null,
+            'url' => $url_completo ?? null,
         ]);
         
         if($banner->activo == true){

@@ -42,6 +42,11 @@ class OfertaController extends Controller
             'visible' => $request->visible ?? $producto->visible,
         ]);
 
+        if($producto->oferta == 0){
+            $producto->precio_oferta = 0;
+            $producto->save();
+        }
+
         $productos = Producto::where('oferta', 1)->get();                
         return redirect()->route('oferta.index', [
             'productos' => $productos,

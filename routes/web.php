@@ -30,9 +30,8 @@ Route::get('/factura/pdf/{id}',[PDFController::class, 'factura'])->name('pdf.fac
 Route::get('/producto/{id}', [ProductoController::class, 'producto'])->name('producto');
 ;
 //oferta
-//Route::get('/ofertas', [ProductoController::class, 'ofertas'])->name('ofertas');
 Route::get('/ver-todas/ofertas', [ProductoController::class, 'ofertas'])->name('oferta.todos');
-
+//Route::get('/ofertas', [ProductoController::class, 'ofertas'])->name('ofertas');
 //pedido
 Route::get('/checkout', [PedidoController::class, 'checkout'])->name('checkout')->middleware(carrito::class);
 Route::post('/checkout/save', [PedidoController::class, 'checkoutSave'])->name('checkoutSave');

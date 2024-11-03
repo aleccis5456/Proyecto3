@@ -55,7 +55,7 @@
                 <a href="{{ route('usuario.registro') }}"
                     class="text-gray-700 bg-[#fbb321] hover:bg-yellow-100 focus:ring-4 focus:ring-yellow-300 hover:text-black font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Registrarse</a>
             @elseif(Auth::user())
-                <button class="rounded-lg hover:bg-gray-200 px-4 py-2 flex items-center space-x-2"
+                <button class="rounded-lg hover:bg-yellow-100 px-4 py-2 flex items-center space-x-2"
                     id="dropdownDefaultButton" data-dropdown-toggle="dropdown">
 
                     <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"

@@ -96,7 +96,7 @@
             <div class="mb-6">
                 <label class="block text-gray-800 dark:text-white font-medium mb-2" for="url">Asociar a una url (busqueda)</label>
                 <input name="url" type="text" id="default-input"
-                {{ $banner->url_relation != null ? 'value='.$banner->url_relation.'' : 'placeholder=Sin'. ' url'. ' asociada' }} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                placeholder="{{ $banner->url_relation }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </div>
             
             {{-- value="{{ $banner->url ?? null }}" placeholder="{{$banner->url ?? 'Sin url asociada'}}" --}}
