@@ -36,7 +36,7 @@ class BannerController extends Controller
             'activo' => 'nullable',
             'banner_image' => 'required|image',
             'position_id' => 'required|exists:banner_position,id',
-            'producto_id' => 'nullable|exists:productos,id',
+            'producto_id' => 'nullable',
             'url' => 'nullable',
         ]);
 
@@ -52,7 +52,7 @@ class BannerController extends Controller
             'imagen' => $imageName,
             'activo' => $request->activo ?? false,
             'position_id' => $request->position_id,
-            'producto_id' => $request->producto->id ?? null,
+            'producto_id' => $request->producto->id ?? 0,
             'url' => $request->url ?? null,
         ]);
         

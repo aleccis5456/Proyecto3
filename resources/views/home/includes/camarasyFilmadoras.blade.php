@@ -15,12 +15,17 @@
                         <div class="relative h-full overflow-hidden">
                             @foreach ($banners as $index => $banner)
                                 @if ($banner->activo == 1 and $banner->position_id == 4)
-                                    <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out"
-                                        data-carousel-item>
-                                        <a href="{{ route("producto", ['id' => $banner->producto_id]) }}">
+                                    <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out" data-carousel-item>
+                                        @if ($banner->producto_id != null or $banner->producto_id != 0)
+                                            <a href="{{ route("producto", ['id' => $banner->producto_id]) }}">
+                                                <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                                class="w-full h-full object-cover" alt="...">
+                                            </a>                                            
+                                        @else
                                             <img src="{{ asset("uploads/banners/$banner->imagen") }}"
-                                            class="w-full h-full object-cover" alt="...">
-                                        </a>
+                                                class="w-full h-full object-cover" alt="...">
+                                        @endif
+
                                         
                                     </div>
                                 @endif
@@ -57,10 +62,14 @@
                     </div>
                 @else
                     <div class="h-64 overflow-hidden flex-[4]">
-                        <a href="producto/9">
-                            <img class="w-full h-full object-cover" src="{{ asset("uploads/banners/$banner->imagen") }}"
-                                alt="">
-                        </a>
+                        @if ($banner->producto_id != null or $banner->producto_id != 0)
+                            <a href="{{ route("producto", ['id' => $banner->producto_id]) }}">
+                                <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                    class="w-full h-full object-cover" alt="...">
+                            </a>                                            
+                        @else
+                            <img src="{{ asset("uploads/banners/$banner->imagen") }}" class="w-full h-full object-cover" alt="...">
+                        @endif
                     </div>
                 @endif
 
