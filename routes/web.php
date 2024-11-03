@@ -113,6 +113,7 @@ Route::middleware([AdminIndex::class])->group(function () {
     Route::post('/adm/banner', [BannerController::class, 'store'])->name('banner.store');
     Route::get('/adm/banner/edit/{id}', [BannerController::class, 'showFormEdit'])->name('banner.showFormEdit');
     Route::post('/adm/banner/edit`', [BannerController::class, 'edit'])->name('banner.edit');  
+    Route::get('/adm/banner/eliminar/{id}', [BannerController::class, 'delete'])->name('banner.delete');
     //ofertas
     Route::get('adm/ofertas', [OfertaController::class, 'index'])->name('oferta.index');  
     Route::get('adm/ofertas/quitar/{estado}', [OfertaController::class, 'quitarTodos'])->name('oferta.quitarTodos');

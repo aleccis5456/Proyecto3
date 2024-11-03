@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Position;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use App\Models\Producto;
 use Illuminate\Support\Facades\Validator;
 
 class BannerController extends Controller
@@ -12,8 +13,8 @@ class BannerController extends Controller
     public function showForm(){
         $banners = Banner::all();
         $positions = Position::all();
-        $categories = [];
-        
+        $productos = Producto::all();        
+        $categories = [];        
         foreach ($positions as $position) {
             $categories[$position->category][] = $position;
         }
@@ -23,7 +24,8 @@ class BannerController extends Controller
         }        
         return view('banner.index', [
             'banners' => $banners,
-            'categories' => $categories
+            'categories' => $categories,
+            'productos' => $productos,            
         ]);
     }
 
@@ -32,7 +34,8 @@ class BannerController extends Controller
             'titulo' => 'required|string',
             'activo' => 'nullable',
             'banner_image' => 'required|image',
-            'position_id' => 'required|exists:banner_position,id'
+            'position_id' => 'required|exists:banner_position,id',
+            'producto_id' => 'nullable|exists:productos,id'
         ]);
 
         if ($request->hasFile('banner_image')) {
@@ -47,6 +50,7 @@ class BannerController extends Controller
             'imagen' => $imageName,
             'activo' => $request->activo ?? false,
             'position_id' => $request->position_id,
+            'producto_id' => $request->producto->id ?? null,
         ]);
         
         if($banner->activo == true){
@@ -58,6 +62,7 @@ class BannerController extends Controller
     public function showFormEdit(String $id){        
         $banner = Banner::find($id);
         $positions = Position::all();
+        $productos = Producto::all();
         $categories = [];
         
         foreach ($positions as $position) {
@@ -69,16 +74,18 @@ class BannerController extends Controller
         }        
         return view('banner.edit', [
             'banner' => $banner,
-            'categories' => $categories
+            'categories' => $categories,
+            'productos' => $productos,
         ]);        
     }
     
-    public function edit(Request $request){             
+    public function edit(Request $request){                  
         $request->validate([
             'titulo ' => 'sometimes|string',
             'status' => 'sometimes|nullable',
             'banner_image' => 'sometimes|image',
-            'position_id' => 'sometimes|exists:banner_position,id'
+            'position_id' => 'sometimes|exists:banner_position,id',
+            'producto_id' => 'sometimes|exists:productos,id'
         ]);
 
         if ($request->hasFile('banner_image')) {
@@ -95,7 +102,8 @@ class BannerController extends Controller
             'titulo' => $request->titulo ?? $banner->titulo,
             'image' => $imageName ?? $banner->imagen,
             'activo' => $request->status ?? $banner->activo,
-            'position_id' => $request->position_id ?? $banner->position_id
+            'position_id' => $request->position_id ?? $banner->position_id,
+            'producto_id' => $request->producto_id ?? $banner->producto_id,
         ]);
 
         if($banner->activo == true){
@@ -104,7 +112,8 @@ class BannerController extends Controller
             return back()->with('info', 'Banner editado, inactivo');
         }
     }
-    public function delete(String $id){
-
+    public function delete(String $id){           
+        Banner::destroy($id);
+        return back()->with('info', 'banner eliminado');
     }
 }

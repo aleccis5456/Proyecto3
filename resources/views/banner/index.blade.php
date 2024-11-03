@@ -57,6 +57,20 @@
                 
             </div>            
 
+            <div class="pb-5">
+                <label for="subcategoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Relacionar con un prodcuto</label>
+                <select id="subcategoria" name="producto_id"
+                    class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Selecciona un producto</option>
+                    @foreach ($productos as $producto)
+                        <option value="{{ $producto->id }}">
+                            <p>#{{$producto->codigo}} | </p><br>                            
+                            <p>{{ $producto->nombre }}</p>
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            
             <button type="submit"
                 class="w-full bg-gray-800 text-white hover:bg-gray-700 p-2.5 rounded-lg font-semibold transition">
                 Subir Banner
@@ -84,7 +98,7 @@
                             <img src="{{ asset("uploads/banners/$banner->imagen") }}" alt="{{ $banner->titulo }}"
                                 class="w-32 h-auto rounded-lg">
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 {{ $banner->activo == true ? 'text-green-500 font-bold' : 'text-red-500 font-bold' }}">
                             @if ($banner->activo)
                                 Sí
                             @else
@@ -95,13 +109,25 @@
                             {{ $banner->position->category }} - {{ $banner->position->position }}
                         </td>
                         <td>
-                            <a href="{{ route('banner.showFormEdit', ['id' => $banner->id]) }}">Editar</a>
-                            <a href="">Eliminar</a>
+                            <a class="hover:font-bold hover:text-gray-600" href="{{ route('banner.showFormEdit', ['id' => $banner->id]) }}">
+                                Editar
+                            </a>
+                            <a onclick="return confirm('Estas seguto de eliminar este banner?')" class="hover:font-bold hover:text-gray-600" href="{{ route('banner.delete', ['id' => $banner->id]) }}">
+                                Eliminar
+                            </a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#subcategoria').select2({
+                placeholder: 'Selecciona una categoría',
+                allowClear: true
+            });
+        });
+    </script>
 
 @endsection

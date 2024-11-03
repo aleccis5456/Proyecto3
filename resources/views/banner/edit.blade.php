@@ -28,10 +28,10 @@
                     name="banner_image" accept="image/*" aria-describedby="file_input_help" id="file_input" type="file">
             </div>
 
-            <div class="px-6 pb-4 items-center">
+            <div class="w-full h-full pb-4 items-center">
                 <span>Imagen actual</span>
                 <img src="{{ asset("uploads/banners/$banner->imagen") }}" alt="{{ $banner->titulo }}"
-                    class="w-32 h-auto rounded-lg">
+                    class="w-full h-auto rounded-lg">
             </div>
 
             <label class=" pb-4" for="">Opciones del banner</label>
@@ -69,13 +69,43 @@
                         </optgroup>
                     @endforeach
                 </select>
+            </div>
 
+            <div class="pb-5">
+                <label for="subcategoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Relacionar con un prodcuto</label>
+                <select id="subcategoria" name="producto_id"
+                    class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Selecciona un producto</option>
+                    @foreach ($productos as $producto)
+                        @if ($producto->id == $banner->producto_id)
+                            <option selected value="{{ $producto->id }}">
+                                <p>#{{$producto->codigo}} | </p><br>                            
+                                <p>{{ $producto->nombre }}</p>
+                            </option>    
+                        @else
+                            <option selected value="{{ $producto->id }}">
+                                <p>#{{$producto->codigo}} | </p><br>                            
+                                <p>{{ $producto->nombre }}</p>
+                            </option>    
+                        @endif
+                        
+                    @endforeach
+                </select>
             </div>
 
             <button type="submit"
                 class="w-full bg-gray-800 text-white hover:bg-gray-700 p-2.5 rounded-lg font-semibold transition">
-                Subir Banner
+                Guardar cambios
             </button>
         </form>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('#subcategoria').select2({
+                placeholder: 'Selecciona una categoría',
+                allowClear: true
+            });
+        });
+    </script>
 @endsection

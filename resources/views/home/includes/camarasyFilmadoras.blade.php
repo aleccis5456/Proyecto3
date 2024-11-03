@@ -17,8 +17,11 @@
                                 @if ($banner->activo == 1 and $banner->position_id == 4)
                                     <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out"
                                         data-carousel-item>
-                                        <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                        <a href="{{ route("producto", ['id' => $banner->producto_id]) }}">
+                                            <img src="{{ asset("uploads/banners/$banner->imagen") }}"
                                             class="w-full h-full object-cover" alt="...">
+                                        </a>
+                                        
                                     </div>
                                 @endif
                             @endforeach
