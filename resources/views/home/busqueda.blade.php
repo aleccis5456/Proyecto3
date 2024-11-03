@@ -85,7 +85,7 @@
                                 class="bg-gray-100 dark:bg-gray-900 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300">
                                 <!-- Imagen del Producto -->
                                 <td class="px-2 py-4 w-1/4">
-                                    <a href="{{ route('producto', ['id' => $similar->id]) }}">
+                                    <a href="{{ route('producto', ['id' => $similar->id, 'slug' => $similar->slug]) }}">
                                         <img class="w-48 h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
                                             src="{{ asset('uploads/productos') }}/{{ $similar->imagen }}"
                                             alt="{{ $similar->nombre }}">
@@ -93,7 +93,7 @@
                                 </td>
                                 <!-- Detalles del Producto -->
                                 <td class="px-2 py-4 ">
-                                    <a href="{{ route('producto', ['id' => $similar->id]) }}"
+                                    <a href="{{ route('producto', ['id' => $similar->id, 'slug' => $similar->slug]) }}"
                                         class="text-lg font-semibold text-gray-900 dark:text-white">
                                         {{ $similar->nombre }}
                                     </a>

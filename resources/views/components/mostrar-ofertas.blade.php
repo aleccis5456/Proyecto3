@@ -27,7 +27,7 @@
                 @foreach ($ofertas as $oferta)
                     <div
                         class="relative bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
-                        <a href="{{ route('producto', ['id' => $oferta->id]) }}" class="block group">
+                        <a href="{{ route('producto', ['id' => $oferta->id, 'slug' => $oferta->slug]) }}" class="block group">
                             <!-- Imagen del producto -->
                             <div class="relative  w-full bg-gray-200 overflow-hidden">
                                 <img src="{{ asset('uploads/productos') }}/{{ $oferta->imagen }}"
@@ -79,9 +79,7 @@
                         Ver todas las ofertas
                     </a>
                 @endif
-            </div>
-            
-
+            </div>    
         </div>
         
     @endif
