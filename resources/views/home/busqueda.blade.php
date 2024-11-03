@@ -39,7 +39,7 @@
                                 value="{{ $precio_max ?? 20000000 }}"
                                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-                            <button class="mt-5 p-1 rounded bg-blue-600 border text-white" type="submit">Filtrar</button>
+                                <button class="mt-5 p-1 rounded bg-[#fbb321] text-semibold text-gray-800 hover:bg-yellow-100 hover:text-black" type="submit">Filtrar</button>
                         </form>
                     </div>
                 @else
@@ -62,7 +62,7 @@
                                 value="{{ $precio_max ?? 20000000 }}"
                                 class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
 
-                            <button class="mt-5 p-1 rounded bg-blue-600 border text-white" type="submit">Filtrar</button>
+                            <button class="mt-5 p-1 rounded bg-[#fbb321] text-semibold text-gray-800 hover:bg-yellow-100 hover:text-black" type="submit">Filtrar</button>
                         </form>
                     </div>
                 @endif
@@ -85,7 +85,7 @@
                                 class="bg-gray-100 dark:bg-gray-900 border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-300">
                                 <!-- Imagen del Producto -->
                                 <td class="px-2 py-4 w-1/4">
-                                    <a href="{{ route('producto', ['id' => Crypt::encrypt($similar->id)]) }}">
+                                    <a href="{{ route('producto', ['id' => $similar->id]) }}">
                                         <img class="w-48 h-48 object-cover rounded-lg hover:scale-105 transition-transform duration-300"
                                             src="{{ asset('uploads/productos') }}/{{ $similar->imagen }}"
                                             alt="{{ $similar->nombre }}">
@@ -93,7 +93,7 @@
                                 </td>
                                 <!-- Detalles del Producto -->
                                 <td class="px-2 py-4 ">
-                                    <a href="{{ route('producto', ['id' => Crypt::encrypt($similar->id)]) }}"
+                                    <a href="{{ route('producto', ['id' => $similar->id]) }}"
                                         class="text-lg font-semibold text-gray-900 dark:text-white">
                                         {{ $similar->nombre }}
                                     </a>
@@ -115,10 +115,10 @@
                                         <div>Precio: <b>{{ number_format($similar->precio, 0, ',', '.') }} Gs.</b></div>
                                     @endif
                                     <div class="mt-4">
-                                        <form action="{{ route('carrito.add', ['id' => Crypt::encrypt($similar->id)]) }}"
+                                        <form action="{{ route('carrito.add', ['id' => $similar->id]) }}"
                                             method="get">
                                             <button
-                                                class="text-sm bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+                                                class="text-sm bg-[#fbb321] text-gray-800 py-2 px-4 rounded hover:bg-yellow-100 hover:text-black">
                                                 <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                                     width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linecap="round"

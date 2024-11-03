@@ -128,8 +128,7 @@ class ProductoController extends Controller
             . strtolower(substr($subcategoria->nombre, 0, 1));
 
         $letrasNumerosAleatorios = $this->generateRandomCode(4);
-
-        $codigo = $iniciales . $letrasNumerosAleatorios;
+        $codigo = $iniciales . $letrasNumerosAleatorios;        
 
         $producto = new Producto;
         $producto->codigo = $codigo;
@@ -146,6 +145,7 @@ class ProductoController extends Controller
         $producto->stock_min = 0;
         $producto->subCategoria_id = $request->subcategoria;
         $producto->reg_por_adm_id = session('adm')->id;
+        $producto->categoria_id = $subcategoria->categoria->id;
 
         $producto->save();
 
@@ -366,7 +366,7 @@ class ProductoController extends Controller
         $query = Producto::query();
 
         if ($categoriaId) {
-            // Obtener todos los subcategorías que pertenecen a la categoría seleccionada
+            //Obtener todos los subcategorías que pertenecen a la categoría seleccionada
             $subCategoriasIds = SubCategoria::where('categoria_id', $categoriaId)->pluck('id');
             $query->whereIn('subCategoria_id', $subCategoriasIds);
             $flagCategoria = 1;
