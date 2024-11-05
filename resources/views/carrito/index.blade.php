@@ -2,7 +2,7 @@
 @section('titulo', 'Carrito')
 
 @section('contenido')
-
+    <br>
     <div>
         <p class="text-2xl font-bold text-center pt-2">Carrito de Compras</p>
     </div>

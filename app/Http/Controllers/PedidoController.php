@@ -10,6 +10,7 @@ use App\Models\Producto;
 use App\Models\DatosEnvio;
 use App\Models\ListaPedido;
 use App\Models\Departamento;
+use App\Models\Notificacion;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\VentasAsignada;
@@ -132,6 +133,13 @@ class PedidoController extends Controller
             ]);
         }
         
+        $notificacion = Notificacion::create([
+            'nombre' => 'pedido',
+            'mensaje' => '', 	
+            'cantiad' => 1, 	
+            'leida' => false,
+        ]);
+
         $user = Auth::user() ?? User::findOrFail(1);            
         $user->increment('compras');        
 
@@ -208,9 +216,9 @@ class PedidoController extends Controller
         $listapedidos = ListaPedido::orderByDesc('id')->get();        
         $pedidos = Pedido::orderByDesc('id')->paginate(8);
         $vendedores = Vendedor::all();
-        $ventasAsignadas = VentasAsignada::all();     
-           
-
+        $ventasAsignadas = VentasAsignada::all();           
+        $notificacion = Notificacion::where('leida', 0)->update(['leida' => 1]);       
+        
         return view('pedido.todos', [
             'listapedidos' => $listapedidos,
             'pedidos' => $pedidos,

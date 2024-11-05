@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Notificacion;
 use App\Models\User;
 use App\Models\Administrador;
 use App\Models\Producto;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
@@ -80,8 +81,9 @@ class AdmController extends Controller
         }
 
         $productos = $query->paginate(8)->appends(['orderBy' => $orderBy, 'filtro' => $filtro]);
-
+        $notificacion = Notificacion::where('nombre', 'pedido')->where('leida', 0)->first();
         return view('administracion.home', [
+            'notificacion' => $notificacion,
             'productos' => $productos,
             'orderBy' => $orderBy,
             'b' => $filtro ?? ''

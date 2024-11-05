@@ -109,12 +109,23 @@
                     Ver todos los productos
                 </button>
             </a>
-            <a href="{{ route('pedidos') }}">
-                <button type="button"
-                    class="focus:outline-none text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
-                    Pedidos
-                </button>
-            </a>
+            @if (!is_null($notificacion) and $notificacion->nombre == 'pedido')
+                <a href="{{ route('pedidos') }}">
+                    <button type="button"
+                        class="focus:outline-none font-semibold text-gray-600 bg-[#fbb321] hover:bg-yellow-200 hover:text-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                        
+                        Nuevos Pedidos ({{ $notificacion->cantiad }})
+                    </button>                    
+                </a>
+            @else
+                <a href="{{ route('pedidos') }}">
+                    <button type="button"
+                        class="focus:outline-none text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+                        Pedidos                        
+                    </button>
+                </a>    
+            @endif
+            
         </div>
     </div>
 
