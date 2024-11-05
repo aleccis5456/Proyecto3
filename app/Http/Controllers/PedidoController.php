@@ -132,8 +132,8 @@ class PedidoController extends Controller
             ]);
         }
         
-            $user = Auth::user() ?? User::findOrFail(1);            
-            $user->increment('compras');
+        $user = Auth::user() ?? User::findOrFail(1);            
+        $user->increment('compras');        
 
         DB::commit();
         return redirect()->route('pedido.confirmado', ['id' => $pedido->id]);

@@ -4,9 +4,9 @@
 @if (is_null($banners))
 @elseif (!is_null($banners))
     @foreach ($banners as $banner)
-        @if ($banner->activo == 1 and $banner->position_id == 28)
+        @if ($banner->activo == 1 and $banner->position_id == 29)
             @php
-                $cantidad = $banners->where('position_id', 28)->where('activo', 1)->count();
+                $cantidad = $banners->where('position_id', 29)->where('activo', 1)->count();
             @endphp
             <div class="flex pt-1 px-20 mx-auto items-stretch"> <!-- Cambiar items-center a items-stretch -->
                 @if ($cantidad >= 2)
@@ -14,7 +14,7 @@
                         <!-- Carousel wrapper -->
                         <div class="relative h-full overflow-hidden">
                             @foreach ($banners as $index => $banner)
-                                @if ($banner->activo == 1 and $banner->position_id == 28)
+                                @if ($banner->activo == 1 and $banner->position_id == 29)
                                     <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out" data-carousel-item>
                                         @if ($banner->producto_id != null or $banner->producto_id != 0)
                                             <a href="{{ route("producto", ['id' => $banner->producto_id]) }}">

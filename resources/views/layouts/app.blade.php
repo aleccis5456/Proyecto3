@@ -28,10 +28,15 @@
 
 <body class="bg-[#FFFAF0]">
 
-    @include('layouts.app.navbar')<!-- nav-->
+    
+    <nav class="navbar bg-white border-gray-200 dark:bg-gray-900">
+        @include('layouts.app.navbar')<!-- nav-->    
+    </nav>
+    
     @include('layouts.app.cerrarsesion')<!-- confirmar cerrar sesion -->
     
     <div class="">
+        <br><br>
         @yield('contenido')<!-- contenido -->
     </div>    
 

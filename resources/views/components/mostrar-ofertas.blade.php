@@ -2,7 +2,7 @@
     @if ($ofertas->isNotEmpty())
         @if (is_null($banner))            
                 <div style="background-image: url('{{ asset("src/imgs/bannerA2.webp") }}'); background-position: center top; background-size: cover;"
-                    class="bg-cover bg-center p-12 shadow-lg">
+                    class="bg-cover bg-center p-12">
                     <div class="relative bg-white/30 backdrop-blur-md rounded-xl shadow-lg p-6 mx-auto  text-center">
                         <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
                             Ofertas de la Semana
@@ -13,7 +13,7 @@
                     </div>
                     
                     <br><br><br>                                        
-            @elseif (!is_null($banner) and $banner->position_id == 1)
+            @elseif (!is_null($banner) and $banner->position_id == 1)                              
                 <div style="background-image: url('{{ asset("uploads/banners/$banner->imagen") }}'); background-position: center top; background-size: cover;"
                     class="bg-cover bg-center p-12  shadow-lg">
                     <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>

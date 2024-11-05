@@ -1,10 +1,10 @@
 <div class="flex justify-center items-center ">
     <ol class="flex items-center w-1/2 pt-3">
         <li
-            class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-500 after:border-4 after:inline-block dark:after:border-blue-800">
+            class="flex w-full items-center text-yellow-600 dark:text-yellow-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-yellow-500 after:border-4 after:inline-block dark:after:border-yellow-800">
             <span
-                class="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full lg:h-12 lg:w-12 dark:bg-blue-800 shrink-0">
-                <svg class="w-3.5 h-3.5 text-blue-100 lg:w-4 lg:h-4 dark:text-blue-300" aria-hidden="true"
+                class="flex items-center justify-center w-10 h-10 bg-yellow-300 rounded-full lg:h-12 lg:w-12 dark:bg-yellow-800 shrink-0">
+                <svg class="w-3.5 h-3.5 text-yellow-100 lg:w-4 lg:h-4 dark:text-yellow-300" aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M1 5.917 5.724 10.5 15 1.5" />

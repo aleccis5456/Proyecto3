@@ -92,11 +92,12 @@ class BannerController extends Controller
             'banner_image' => 'sometimes|image',
             'position_id' => 'sometimes',
             'producto_id' => 'sometimes',
-            'url' => 'nullable|string'
+            'url' => 'nullable|string',
         ]);        
-        $filtro = Str::slug($request->url, '+');        
         $url = 'http://127.0.0.1:8000/busqueda?b=';        
-        $url_completo = $url.$filtro;                
+        $filtro = Str::slug($request->url, '+');        
+        $url_completo = $url.$filtro;         
+
         if ($request->hasFile('banner_image')) {
             $image_path = $request->file('banner_image');
             $imageName = time() . '.' . $image_path->getClientOriginalExtension();
