@@ -52,8 +52,7 @@ class ProductoController extends Controller
     }    
             
     public function amdIndex(Request $request)
-    {        
-        
+    {                
         $query = Producto::with('subcategoria');
         $orderBy = $request->query('orderBy') ?? 'desc';
         $column = $request->query('column') ?? 'registro';

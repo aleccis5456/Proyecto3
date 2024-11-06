@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Database\Eloquent\Builder;
 
 class PedidoController extends Controller
 {
@@ -212,8 +213,9 @@ class PedidoController extends Controller
         ]);
     }
     public function pedidos(Request $request)
-    {
+    {        
         $query = Pedido::query();
+        $filtro = $request->query('filtro') ?? $request->b;
         $orderBy = $request->query('orderBy') ?? 'desc';
         $column = $request->query('column') ?? 'registro';
 
@@ -223,13 +225,21 @@ class PedidoController extends Controller
             $query->orderByDesc($column);
         }
 
+        if(!is_null($filtro)){
+            $query->whereHas('usuario', function ($query) use ($filtro) {
+                $query->where('name', 'like', "%$filtro%");
+            })
+            ->orWhere('codigo', 'like', "%$filtro%");
+            
+        }
+
         $listapedidos = ListaPedido::orderByDesc('id')->get();                
         $vendedores = Vendedor::all();
         $ventasAsignadas = VentasAsignada::all();          
         $notificacion = Notificacion::where('leida', 0)->where('nombre', 'pedido')->orderBy('id', 'asc')->first();        
         $updateNotificacion = Notificacion::where('leida', 0)->where('nombre', 'pedido')->update(['leida' => 1, 'cantiad' => 0]);       
         $flag = $column . '_column';                
-        $pedidos = $query->paginate(15)->appends(['orderBy' => $orderBy, 'column' => $column]);        
+        $pedidos = $query->paginate(15)->appends(['orderBy' => $orderBy, 'column' => $column, 'filtro' => $filtro]);        
         return view('pedido.todos', [
             'listapedidos' => $listapedidos,
             'pedidos' => $pedidos,
@@ -239,6 +249,7 @@ class PedidoController extends Controller
             'orderBy' => $orderBy,
             'column' => $column,
             'flag' => $flag,
+            'b' => $filtro
         ]);
     }
 
