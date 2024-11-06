@@ -211,22 +211,34 @@ class PedidoController extends Controller
             'pedido' => $pedido
         ]);
     }
-    public function pedidos()
+    public function pedidos(Request $request)
     {
-        $listapedidos = ListaPedido::orderByDesc('id')->get();        
-        $pedidos = Pedido::orderByDesc('id')->paginate(8);
+        $query = Pedido::query();
+        $orderBy = $request->query('orderBy') ?? 'desc';
+        $column = $request->query('column') ?? 'registro';
+
+        if($orderBy == 'asc'){
+            $query->orderBy($column, $orderBy);
+        }else{
+            $query->orderByDesc($column);
+        }
+
+        $listapedidos = ListaPedido::orderByDesc('id')->get();                
         $vendedores = Vendedor::all();
         $ventasAsignadas = VentasAsignada::all();          
-        $notificacion = Notificacion::where('leida', 0)->where('nombre', 'pedido')->orderBy('id', 'asc')->first();
-        //dd($notificacion);
+        $notificacion = Notificacion::where('leida', 0)->where('nombre', 'pedido')->orderBy('id', 'asc')->first();        
         $updateNotificacion = Notificacion::where('leida', 0)->where('nombre', 'pedido')->update(['leida' => 1, 'cantiad' => 0]);       
-        
+        $flag = $column . '_column';                
+        $pedidos = $query->paginate(15)->appends(['orderBy' => $orderBy, 'column' => $column]);        
         return view('pedido.todos', [
             'listapedidos' => $listapedidos,
             'pedidos' => $pedidos,
             'vendedores' => $vendedores,
             'ventasAsignadas' => $ventasAsignadas,
             'notificacion' => $notificacion,
+            'orderBy' => $orderBy,
+            'column' => $column,
+            'flag' => $flag,
         ]);
     }
 

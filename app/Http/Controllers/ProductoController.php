@@ -72,7 +72,7 @@ class ProductoController extends Controller
                     //orWhereHas se utiliza para filtrar resultados basados en la relación de un modelo con otra tabla.
                 });
         }        
-        $productos = $query->paginate(8)->appends(['orderBy' => $orderBy, 'column' => $column, 'filtro' => $filtro]);
+        $productos = $query->paginate(20)->appends(['orderBy' => $orderBy, 'column' => $column, 'filtro' => $filtro]);
         $cantidad = Producto::with('subcategoria')->count();
         $flag = $column . '_column';
         //dd($flag);
@@ -228,10 +228,10 @@ class ProductoController extends Controller
         $producto->mod_fecha = Carbon::now();
         $producto->modificado_por_adm_id = session('adm')->id;
 
-        $producto->update();
+        $producto->save();
 
         $producto->precio_oferta = $producto->oferta == 0 ? 0 : $producto->precio_oferta;
-        $producto->update();
+        $producto->save();
 
         return back()->with('success', 'El producto se Actualizo correctamente');
         //return redirect()->route('producto.agregar')->with('success', 'El producto se Actualizo correctamente');
