@@ -4,13 +4,13 @@
 @section('contenido')
     <!-- linea de progreso -->
     @include('pedido.includes.lineaProgreso')
-    <!-- /linea de progreso -->
-
+    <!-- /linea de progreso -->    
     <div class="flex  pt-5">
         <div class="w-2/3">
             <p class="text-2xl px-10 font-bold text-center">Finalizar el pedido</p>
             @if (!Auth::user())
                 <form class="max-w-sm mx-auto pt-5" method="POST" action=" {{ route('check.login') }} ">
+                    <p class="text-sm text-gray-500 py-2">¿Tienes cuenta? Inicia sesión o continúa como invitado.</p>
                     @csrf
                     <x-alertas />
                     <div class="mb-5">
@@ -29,15 +29,13 @@
                     <input type="hidden" name="bandera" value="1">
 
                     <button type="submit"
-                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ingresar</button>
-
-                    <p class="text-sm text-gray-500 pt-2">Si tenes una cuenta ingresa o continua como invitado</p>
+                        class="text-gray-600 bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Ingresar</button>
                 </form>
             @endif
 
             <div class="pt-6 pb-6">
                 <hr>
-                <p class="text-sm text-blue-500 text-center">Datos para la fatura</p>
+                <p class="text-sm text-gray-600 text-center">Datos para la fatura</p>
             </div>
 
             <!-- formulario para el pedido -->
@@ -119,7 +117,7 @@
                 if (envioRadio.checked) {
                     finalTotal += envioCost;
                 }
-                totalElement.innerHTML = `TOTAL: ${finalTotal.toLocaleString('es-PE')} Gs`;
+                totalElement.innerHTML = `TOTAL: ${finalTotal.toLocaleString('es-PY')} Gs`;
             }
 
             // Event listeners

@@ -31,8 +31,7 @@
     
     <nav class="navbar bg-white border-gray-200 dark:bg-gray-900">
         @include('layouts.app.navbar')<!-- nav-->    
-    </nav>
-    
+    </nav>        
     @include('layouts.app.cerrarsesion')<!-- confirmar cerrar sesion -->
     
     <div class="">

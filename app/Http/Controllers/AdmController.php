@@ -81,9 +81,9 @@ class AdmController extends Controller
         }
 
         $productos = $query->paginate(8)->appends(['orderBy' => $orderBy, 'filtro' => $filtro]);
-        $notificacion = Notificacion::where('nombre', 'pedido')->where('leida', 0)->first();
+        $notificaciones = Notificacion::where('nombre', 'pedido')->where('leida', 0)->count();
         return view('administracion.home', [
-            'notificacion' => $notificacion,
+            'notificaciones' => $notificaciones,
             'productos' => $productos,
             'orderBy' => $orderBy,
             'b' => $filtro ?? ''

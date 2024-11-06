@@ -30,7 +30,7 @@ class PedidoController extends Controller
                 ->first();
 
             if ($pedido) {
-                $datos = DatosEnvio::where('pedido_id', $pedido->id)->first();
+                $datos = DatosEnvio::where('pedido_id', $pedido->id)->orderByDesc('id')->first();                
 
                 return view('pedido.index', [
                     'pedido' => $pedido,
@@ -49,8 +49,7 @@ class PedidoController extends Controller
         }
     }
 
-    public function checkoutSave(Request $request)
-    {        
+    public function checkoutSave(Request $request){              
         $request->validate([
             'ruc' => 'required',
             'celular' => 'required',
@@ -85,66 +84,67 @@ class PedidoController extends Controller
         DB::beginTransaction();
         
         try {
-        $pedido = new Pedido;
-        $pedido->user_id = Auth::user()->id ?? 1;
-        $pedido->celular = $request->celular;
-        $pedido->codigo = $codigo;
-        $pedido->departamento = $request->depa;
-        $pedido->ciudad = $request->ciudad;
-        $pedido->calle = $request->direccion;
-        $pedido->formaEntrega = $request->metodo_envio;
-        $pedido->costoEnvio = $costoEnvio;
-        $pedido->coste = session('stats')['total_pagar'];
-        $pedido->estado = 'Recibido';
-        $pedido->formaPago = $pago;
-        $pedido->registro = Carbon::now();
-        $pedido->save();
-
-        DatosEnvio::create([
-            'pedido_id' => $pedido->id,
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'ruc_ci' => $request->ruc,
-            'nro_factura' => '001 001'
-        ]);  
-        
-        foreach (session('carrito') as $item) {
-            $lista = ListaPedido::create([
+            $pedido = new Pedido;
+            $pedido->user_id = Auth::user()->id ?? 1;
+            $pedido->celular = $request->celular;
+            $pedido->codigo = $codigo;
+            $pedido->departamento = $request->depa;
+            $pedido->ciudad = $request->ciudad;
+            $pedido->calle = $request->direccion;
+            $pedido->formaEntrega = $request->metodo_envio;
+            $pedido->costoEnvio = $costoEnvio;
+            $pedido->coste = session('stats')['total_pagar'];
+            $pedido->estado = 'Recibido';
+            $pedido->formaPago = $pago;
+            $pedido->registro = Carbon::now();
+            $pedido->save();
+            
+            $datos = DatosEnvio::create([
                 'pedido_id' => $pedido->id,
-                'producto_id' => $item['producto_completo']['id'],
-                'unidades' => $item['cantidad'],
-                'precio_unitario' =>  $item['precio_oferta'] > 0 ? $item['precio_oferta'] : $item['precio'],
-                'registro' => Carbon::now(),
-            ]);
-        }        
-        $listas = ListaPedido::where('pedido_id', $pedido->id)->get();        
-        foreach($listas as $lista){
-            $producto = Producto::findOrFail($lista->producto_id);
-            if($producto){
-                $producto->stock_actual = $producto->stock_actual - $lista->unidades;
-                $producto->ventas += $lista->unidades;
-                $producto->update();
-            }
+                'nombre' => $request->nombre,
+                'apellido' => $request->apellido,
+                'ruc_ci' => $request->ruc,
+                'nro_factura' => '001 001'
+            ]);  
+            
+            foreach (session('carrito') as $item) {
+                $lista = ListaPedido::create([
+                    'pedido_id' => $pedido->id,
+                    'producto_id' => $item['producto_completo']['id'],
+                    'unidades' => $item['cantidad'],
+                    'precio_unitario' =>  $item['precio_oferta'] > 0 ? $item['precio_oferta'] : $item['precio'],
+                    'registro' => Carbon::now(),
+                ]);
+            }        
+            $listas = ListaPedido::where('pedido_id', $pedido->id)->get();        
+            foreach($listas as $lista){
+                $producto = Producto::findOrFail($lista->producto_id);
+                if($producto){
+                    $producto->stock_actual = $producto->stock_actual - $lista->unidades;
+                    $producto->ventas += $lista->unidades;
+                    $producto->update();
+                }
 
-            $venta = Ventas::create([
-                'producto_id' => $lista->producto_id, 	
-                'cantidad' => $lista->unidades, 	
-                'fecha_venta' => Carbon::now(),
-            ]);
-        }
-        
-        $notificacion = Notificacion::create([
-            'nombre' => 'pedido',
-            'mensaje' => '', 	
-            'cantiad' => 1, 	
-            'leida' => false,
-        ]);
+                $venta = Ventas::create([
+                    'producto_id' => $lista->producto_id, 	
+                    'cantidad' => $lista->unidades, 	
+                    'fecha_venta' => Carbon::now(),
+                ]);
+            }            
+            
+            Notificacion::create([
+                'nombre' => 'pedido',
+                'mensaje' => 'se genero un nuevo pedido', 	
+                'cantiad' => 1, 	
+                'leida' => false,
+                'pedido_id' => $pedido->id
+            ]);              
 
-        $user = Auth::user() ?? User::findOrFail(1);            
-        $user->increment('compras');        
+            $user = Auth::user() ?? User::findOrFail(1);            
+            $user->increment('compras');        
 
-        DB::commit();
-        return redirect()->route('pedido.confirmado', ['id' => $pedido->id]);
+            DB::commit();
+            return redirect()->route('pedido.confirmado', ['id' => $pedido->id]);
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', 'Hubo un error al procesar el pedido.');
@@ -216,14 +216,17 @@ class PedidoController extends Controller
         $listapedidos = ListaPedido::orderByDesc('id')->get();        
         $pedidos = Pedido::orderByDesc('id')->paginate(8);
         $vendedores = Vendedor::all();
-        $ventasAsignadas = VentasAsignada::all();           
-        $notificacion = Notificacion::where('leida', 0)->update(['leida' => 1]);       
+        $ventasAsignadas = VentasAsignada::all();          
+        $notificacion = Notificacion::where('leida', 0)->where('nombre', 'pedido')->orderBy('id', 'asc')->first();
+        //dd($notificacion);
+        $updateNotificacion = Notificacion::where('leida', 0)->where('nombre', 'pedido')->update(['leida' => 1, 'cantiad' => 0]);       
         
         return view('pedido.todos', [
             'listapedidos' => $listapedidos,
             'pedidos' => $pedidos,
             'vendedores' => $vendedores,
-            'ventasAsignadas' => $ventasAsignadas
+            'ventasAsignadas' => $ventasAsignadas,
+            'notificacion' => $notificacion,
         ]);
     }
 

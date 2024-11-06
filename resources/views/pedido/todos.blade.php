@@ -23,10 +23,9 @@
                     placeholder="Busca por código o por usuario..." />
             </div>
         </form>
-
-
+        
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead class=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3">codigo</th>
                     <th scope="col" class="px-6 py-3">usuario</th>
@@ -38,8 +37,12 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($pedidos as $pedido)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                @foreach ($pedidos as $pedido)       
+                @if (is_null($notificacion))
+                    <tr class="bg-whiteborder-b dark:bg-gray-800 dark:border-gray-700">                                            
+                @else
+                    <tr class="{{ $pedido->id == $notificacion->pedido_id ? 'border-b-4 border-[#fbb321]' : 'bg-white' }}  border-b dark:bg-gray-800 dark:border-gray-700">                        
+                @endif                             
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             #{{ $pedido->codigo }}
                         </th>

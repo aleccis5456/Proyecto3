@@ -1,4 +1,3 @@
-
     <div class=" flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-1">
 
         <button href="" class="pr-10" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"

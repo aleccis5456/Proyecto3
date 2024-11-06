@@ -3,17 +3,23 @@
 @section('contenidoAdm')
     <div class="min-h-screen bg-white flex flex-col items-center py-6">
         <div class="w-full max-w-lg bg-white shadow-md rounded-lg p-8">
+            <div class="flex flex-col space-y-4">
+                <a href="{{ route('producto.amdIndex') }}"
+                    class="w-full text-center text-gray-800 hover:underline py-2 rounded-lg border border-gray-800">
+                    Ver Todos los Productos
+                    
+                </a>                 
+            </div>
+            <br>
             <div class="mb-6 text-center">
                 <h2 class="text-2xl font-bold text-gray-800">Agregar Producto</h2>
                 <div class="px-4 mt-4">
                     <x-alertas />
                 </div>
-            </div>
-
+            </div>            
             <form method="POST" action="{{ route('producto.agregarSave') }}" enctype="multipart/form-data">
                 @csrf
-
-                <!-- Nombre del Producto -->
+                <!-- Nombre del Producto -->                
                 <div class="mb-5">
                     <label for="nombre" class="block mb-2 text-sm font-medium text-gray-800">Nuevo Producto</label>
                     <input type="text" id="nombre" name="nombre"
@@ -70,11 +76,7 @@
                     <button type="submit"
                         class="w-full text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                         Guardar
-                    </button>
-                    <a href="{{ route('producto.amdIndex') }}"
-                        class="w-full text-center text-gray-800 hover:underline py-2 rounded-lg border border-gray-800">
-                        Ver Todos los Productos
-                    </a>
+                    </button>                    
                 </div>
             </form>
         </div>

@@ -109,12 +109,12 @@
                     Ver todos los productos
                 </button>
             </a>
-            @if (!is_null($notificacion) and $notificacion->nombre == 'pedido')
+            @if (!is_null($notificaciones) and $notificaciones >= 1)
                 <a href="{{ route('pedidos') }}">
                     <button type="button"
                         class="focus:outline-none font-semibold text-gray-600 bg-[#fbb321] hover:bg-yellow-200 hover:text-black focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
                         
-                        Nuevos Pedidos ({{ $notificacion->cantiad }})
+                        Nuevos Pedidos ({{ $notificaciones }})
                     </button>                    
                 </a>
             @else
