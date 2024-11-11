@@ -11,11 +11,13 @@ use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\VendedoresController;
 use App\Http\Controllers\OfertaController;
+use App\Http\Controllers\CajeroController;
 
 //middlewares   
 use App\Http\Middleware\AdminIndex;
 use App\Http\Middleware\carrito;
 use App\Http\Middleware\Vendedor;
+use App\Http\Middleware\Caja;
 //index de la pagina
 Route::get('/home', [ProductoController::class, 'index'])->name('home');
 Route::get('/', [ProductoController::class, 'index']);
@@ -120,18 +122,22 @@ Route::middleware([AdminIndex::class])->group(function () {
     Route::post('adm/ofertas/editar', [OfertaController::class, 'editar'])->name('oferta.editar');
 });
 
-Route::middleware([Vendedor::class])->group(function(){
-    //vendedores   
+//vendedores   
+Route::middleware([Vendedor::class])->group(function(){    
     Route::get('/vend/index', [VendedoresController::class, 'index'])->name('vendedores.index'); 
     Route::get('/vend/logout', [VendedoresController::class, 'logout'])->name('vendedores.logout');
     Route::get('/vend/pedido/{pedido}/detalle', [VendedoresController::class, 'pedidoDetalle'])->name('vendedores.pedidodetalle');
     Route::post('/vend/pedido/estado', [VendedoresController::class, 'cambiarEstado'])->name('vendedores.cambiarestado');
 });
 
-
-
-
-
+//caja
+Route::get('/caja/register', [CajeroController::class, 'registerForm'])->name('cajero.registerform');
+Route::get('/caja/login', [CajeroController::class, 'loginForm'])->name('cajero.loginform');
+Route::post('caja/login', [CajeroController::class, 'login'])->name('cajero.login');
+Route::post('/caja/register', [CajeroController::class, 'register'])->name('cajero.register');
+Route::middleware([Caja::class])->group(function(){
+    Route::get('/caja', [CajeroController::class, 'index'])->name('cajero.index');
+});
 
 Route::get('/debug', function(){
     echo count(session('carrito'));    

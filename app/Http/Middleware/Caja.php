@@ -15,6 +15,9 @@ class Caja
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(!session('cajero')){
+            return redirect('adm/login');
+        }
         return $next($request);
     }
 }
