@@ -6,7 +6,7 @@
     @endphp
     
     @if ($count >= 2)
-        <div id="controls-carousel" class="relative w-full h-96" data-carousel="static">
+        <div id="controls-carousel" class="relative w-full h-[450px]" data-carousel="static">
             <!-- Carousel wrapper -->
             <div class="relative h-full overflow-hidden">
                 @foreach ($bannersToUse as $index => $banner)                

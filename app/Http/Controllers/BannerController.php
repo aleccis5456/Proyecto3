@@ -30,7 +30,7 @@ class BannerController extends Controller
         ]);
     }
 
-    public function store(Request $request){          
+    public function store(Request $request){           
         $request->validate([
             'titulo' => 'required|string',
             'activo' => 'nullable',
@@ -41,8 +41,7 @@ class BannerController extends Controller
         ]);
         $filtro = Str::slug($request->url, '+');        
         $url = 'http://127.0.0.1:8000/busqueda?b=';        
-        $url_completo = $url.$filtro;                
-
+        $url_completo = $url.$filtro;                        
         if ($request->hasFile('banner_image')) {
             $image_path = $request->file('banner_image');
             $imageName = time() . '.' . $image_path->getClientOriginalExtension();

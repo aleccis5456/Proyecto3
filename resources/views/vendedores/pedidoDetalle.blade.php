@@ -4,16 +4,7 @@
     <div class=" flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900"> <!-- Contenedor principal centrado -->
         <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <x-alertas />
-            <div class="max-w-full flex">
-                <div class="w-full">
-                    <b>Pedido #{{ $pedido->codigo }} de {{ $pedido->usuario->name }}</b>                    
-                    <a href="{{ route('pdf.factura', ['id' => $pedido->id]) }}"
-                        class="ml-10 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-2 py-1 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                        Generar Factura
-                    </a>
-
-                  
-                </div>
+            <div class="max-w-full flex">                
                 <span class="flex mr-10 w-full">
                     <form method="POST" action="{{ route('vendedores.cambiarestado') }}">
                         <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id   }}">
@@ -55,8 +46,11 @@
                                     <option class="text-red-500 font-bold" selected value="Anulado">Anulado</option>
                                 @endif
                             </select>
-                            <input class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-1.5 ml-2 px-2 text-sm"
-                                type="submit" value="Guardar">
+                            <div class="pl-3">
+                                <button class="border border-gray-800 px-2 py-1 rounded-lg hover:underline"
+                                type="submit">Guardar</button>
+                            </div>
+                            
                         </div>
                     </form>
                 </span>
@@ -210,7 +204,7 @@
                                         <br><br>
                                         <span class="font-bold">email:</span> {{ $pedido->usuario->email ?? 'invitado' }}
                                         <br><br>
-                                        <span class="font-bold">cantidad de pedidos:</span> 's'
+                                        <span class="font-bold">cantidad de pedidos:</span> {{$pedido->usuario->compras}}
                                     </td>
                                     <td></td>
                                     <td></td>

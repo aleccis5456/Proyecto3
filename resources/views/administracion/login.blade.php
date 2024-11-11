@@ -31,7 +31,9 @@
                 <div class="pt-12 text-center flex items-center justify-center">
                     <a href="" class="{{ request()->is('adm/login') ? 'text-blue-500 font-semibold' : 'text-gray-500'}}">Administrador</a>
                     <p class="px-1 text-gray-500">|</p>
-                    <a href="{{ route('vendedores.showlogin') }}" class="{{ request()->is('vend/login') ? 'text-blue-500' : 'text-gray-500 text-sm hover:underline'}}">Vendedor</a>
+                    <a href="{{ route('vendedores.showlogin') }}" class="{{ Route::is('vend/login') ? 'text-blue-500' : 'text-gray-500 text-sm hover:underline'}}">Repartidor</a>
+                    <p class="px-1 text-gray-500">|</p>
+                    <a href="{{ route('vendedores.showlogin') }}" class="{{ Route::is('vend/login') ? 'text-blue-500' : 'text-gray-500 text-sm hover:underline'}}">Caja</a>
                 </div>
             </form>
         </div>

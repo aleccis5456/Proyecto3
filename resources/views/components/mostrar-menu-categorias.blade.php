@@ -1,4 +1,4 @@
-<div>
+<div >    
     <div id="drawer-navigation"
         class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-1/4 dark:bg-gray-800"
         tabindex="-1" aria-labelledby="drawer-navigation-label">
@@ -16,13 +16,15 @@
 
         <div class="py-4 overflow-y-auto">
             <ul class="space-y-2 font-medium">
-
                 <!--  categorias --->
                 <li>
                     @foreach ($categorias as $categoria)
                         <button type="button"
                             class="text-lg flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100"
                             aria-controls="dropdown-{{ $categoria->id }}" data-collapse-toggle="dropdown-{{ $categoria->id }}">                            
+                            <span>
+                                <img class="w-[24px] h-[24px]" src="{{ asset("uploads/categorias/$categoria->imagen") }}" alt="" srcset="">
+                            </span>
                             <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">
                                 {{ $categoria->nombre }}
                             </span>

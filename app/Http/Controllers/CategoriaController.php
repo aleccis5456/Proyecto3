@@ -51,6 +51,30 @@ class CategoriaController extends Controller
         ]);
     }
 
+    public function editarSave(Request $request){        
+        $request->validate([
+            'categoria_id' => 'required|exists:categorias,id',
+            'categoria' => 'sometimes',
+            'imagen' => 'sometimes|image'
+        ]);
+
+        $categoria = Categoria::find($request->categoria_id);
+
+        if($request->hasFile('imagen')){
+            $image_path = $request->file('imagen');
+            $imageName = time() . '.' . $image_path->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/categorias');
+            $image_path->move($destinationPath, $imageName);
+        }
+
+        $categoria->update([
+            'nombre' => $request->categoria ?? $categoria->nombre,
+            'imagen' => $imageName ?? $categoria->imagen
+        ]);
+
+        return back()->with('info', 'la categoria se actualizo');
+    }
+
     public function eliminar($id)
     {
         $categoria = Categoria::destroy($id);

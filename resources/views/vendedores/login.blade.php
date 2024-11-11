@@ -33,6 +33,8 @@
                     <a href="{{ route('adm.login') }}" class="{{ request()->is('adm/login') ? 'text-blue-500 font-semibold' : 'text-gray-500 text-sm hover:underline'}}">Administrador</a>
                     <p class="px-1 text-gray-500">|</p>
                     <a href="{{ route('vendedores.showlogin') }}" class="{{ request()->is('vend/login') ? 'text-blue-500 font-semibold' : 'text-gray-500 text-sm hover:underline'}}">Vendedor</a>
+                    <p class="px-1 text-gray-500">|</p>
+                    <a href="{{ route('vendedores.showlogin') }}" class="{{ request()->is('vend/login') ? 'text-blue-500 font-semibold' : 'text-gray-500 text-sm hover:underline'}}">Caja</a>
                 </div>
             </form>
         </div>

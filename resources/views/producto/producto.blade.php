@@ -5,7 +5,7 @@
         <div class="w-2/3 px-10">
             <div class=" text-2xl">
                 @if ($producto->precio_oferta > 0)
-                    <b class="text-blue-600">{{ $producto->nombre }}</b>
+                    <b class="text-[#fbb321]">{{ $producto->nombre }}</b>
                 @else
                     <b class="text-gray-600">{{ $producto->nombre }}</b>
                 @endif

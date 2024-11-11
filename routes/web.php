@@ -80,6 +80,7 @@ Route::middleware([AdminIndex::class])->group(function () {
     Route::get('/adm/agregar/categoria', [CategoriaController::class, 'agregar'])->name('categoria.agregar');
     Route::post('/adm/agregar/categoria/save', [CategoriaController::class, 'agregarSave'])->name('aggSave');
     Route::get('/adm/editar/{id}', [CategoriaController::class, 'editar'])->name('categoria.editar');
+    Route::post('/adm/editarSave', [CategoriaController::class, 'editarSave'])->name('editarSave');
     Route::delete('/adm/eliminar/{id}', [CategoriaController::class, 'eliminar'])->name('categoria.eliminar');
     Route::get('adm/ver-categorias', [CategoriaController::class, 'verTodos'])->name('categoria.todos');
     //subcategoria
@@ -126,6 +127,10 @@ Route::middleware([Vendedor::class])->group(function(){
     Route::get('/vend/pedido/{pedido}/detalle', [VendedoresController::class, 'pedidoDetalle'])->name('vendedores.pedidodetalle');
     Route::post('/vend/pedido/estado', [VendedoresController::class, 'cambiarEstado'])->name('vendedores.cambiarestado');
 });
+
+
+
+
 
 
 Route::get('/debug', function(){

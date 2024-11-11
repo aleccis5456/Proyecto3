@@ -16,10 +16,10 @@
             @elseif (!is_null($banner) and $banner->position_id == 1)                              
                 <div style="background-image: url('{{ asset("uploads/banners/$banner->imagen") }}'); background-position: center top; background-size: cover;"
                     class="bg-cover bg-center p-12  shadow-lg">
-                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         @endif
         <div class="px-12">
-            <div id="default-carousel" class="relative w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            <div id="default-carousel" class=" relative w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
                 data-carousel="slide">
                 @php
                     $contador = '';
@@ -44,16 +44,16 @@
                             <!-- Información del producto -->
                             <div class="p-6">
                                 <h2 class="text-lg font-bold text-gray-900 dark:text-gray-800 mb-2">
-                                    {{ Str::limit($oferta->nombre, 64) }}
+                                    {{ Str::limit($oferta->nombre, 50) }}
                                 </h2>                                
                                 <div class="mt-4">
-                                    <p class="text-sm text-gray-400 line-through">
+                                    <p class="text-sm text-black font-semibold line-through">
                                         Antes: {{ number_format($oferta->precio, 0, ',', '.') }} Gs.
                                     </p>
                                     <div class="mt-2">
                                         <a href="{{ route('carrito.add', ['id' => $oferta->id]) }}"
-                                            class="items-center text-red-600 rounded-lg py-2.5 hover:px-4 hover:bg-red-700 focus:outline-none focus:ring-4 focus:ring-red-300 hover:text-white">
-                                            <span class="text-xl font-bold">Ahora:
+                                            class="text-xl font-semibold items-center bg-[#fbb321] text-black rounded-lg py-2 px-2">
+                                            <span class="">Ahora:
                                                 {{ number_format(round($oferta->precio_oferta, -2), 0, ',', '.') }}
                                                 Gs.</span>
                                         </a>

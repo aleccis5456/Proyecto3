@@ -45,7 +45,6 @@
     @vite('resources/js/app.js');
     <script src="{{ asset('js/funciones.js') }}"></script>
 </body>
-
 <x-mostrar-menu-categorias />
 
 </html>
