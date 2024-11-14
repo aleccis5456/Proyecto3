@@ -34,8 +34,9 @@
     </nav>        
     @include('layouts.app.cerrarsesion')<!-- confirmar cerrar sesion -->
     
-    <div class="">
+    <div class="max-w-[1380px] mx-auto">
         <br><br>
+        
         @yield('contenido')<!-- contenido -->
     </div>    
 

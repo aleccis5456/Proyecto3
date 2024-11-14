@@ -5,11 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Login de Vendedores</title>
+    <title>Login de Caja</title>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen">
-    <div class="flex w-4/5 h-auto bg-white rounded-lg shadow-lg">
-        
+    <div class="flex w-4/5 h-auto bg-white rounded-lg shadow-lg">        
         <!-- Columna del formulario de inicio de sesión -->
         <div class="w-1/2 p-8">
             <x-alertas/>

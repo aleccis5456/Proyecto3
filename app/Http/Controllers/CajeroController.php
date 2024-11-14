@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Producto;
 use App\Models\Cajero;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class CajeroController extends Controller
 {
@@ -61,6 +63,15 @@ class CajeroController extends Controller
     }
 
     public function index(){
-        return view('caja.index');
+        $productos = Producto::all();
+        return view('caja.index', [
+            'productos' => $productos
+        ]);
+    }
+
+    public function logout(){
+        Session::forget('ventaCaja');
+
+        return redirect('caja/login');
     }
 }

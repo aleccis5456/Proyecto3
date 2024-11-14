@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     @vite('resources/css/app.css')
-    <title>Document @yield('tituloAdm')</title>
+    <title>@yield('tituloAdm')</title>
 </head>
 
 <header>

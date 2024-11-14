@@ -12,6 +12,7 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\VendedoresController;
 use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\CajeroController;
+use App\Http\Controllers\CajaController;
 
 //middlewares   
 use App\Http\Middleware\AdminIndex;
@@ -137,6 +138,10 @@ Route::post('caja/login', [CajeroController::class, 'login'])->name('cajero.logi
 Route::post('/caja/register', [CajeroController::class, 'register'])->name('cajero.register');
 Route::middleware([Caja::class])->group(function(){
     Route::get('/caja', [CajeroController::class, 'index'])->name('cajero.index');
+    Route::get('/caja/ventaCaja/add/{id}', [CajaController::class, 'add'])->name('caja.add');
+    Route::get('/caja/venta', [CajaController::class, 'venta'])->name('caja.venta');
+    Route::get('/caja/venta/{indice}', [CajaController::class, 'quitar'])->name('caja.quitar');
+    Route::post('/agg-cliente',[CajaController::class, 'aggCliente'])->name('caja.addcliente');
 });
 
 Route::get('/debug', function(){

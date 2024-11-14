@@ -108,7 +108,7 @@ class VendedoresController extends Controller
         Auth::guard('vendedores')->logout();
         Session::forget('vendedor');
 
-        return redirect('/adm/login');
+        return redirect('/vend/login');
     }
 
     public function ventaAsignada(Request $request)

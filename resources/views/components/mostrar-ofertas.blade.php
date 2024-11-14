@@ -1,9 +1,9 @@
-<div>
+<div class="items-center justify-center">
     @if ($ofertas->isNotEmpty())
         @if (is_null($banner))            
                 <div style="background-image: url('{{ asset("src/imgs/bannerA2.webp") }}'); background-position: center top; background-size: cover;"
                     class="bg-cover bg-center p-12">
-                    <div class="relative bg-white/30 backdrop-blur-md rounded-xl shadow-lg p-6 mx-auto  text-center">
+                    <div class="relative bg-white/30 backdrop-blur-md rounded-xl shadow-lg p-6 text-center">
                         <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
                             Ofertas de la Semana
                         </h2>
@@ -16,11 +16,10 @@
             @elseif (!is_null($banner) and $banner->position_id == 1)                              
                 <div style="background-image: url('{{ asset("uploads/banners/$banner->imagen") }}'); background-position: center top; background-size: cover;"
                     class="bg-cover bg-center p-12  shadow-lg">
-                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
         @endif
-        <div class="px-12">
-            <div id="default-carousel" class=" relative w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-                data-carousel="slide">
+        <div class="items-center justify-center">
+            <div  class=" relative max-w-[1380px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @php
                     $contador = '';
                 @endphp
@@ -42,9 +41,9 @@
                             </div>
 
                             <!-- Información del producto -->
-                            <div class="p-6">
+                            <div class="pb-6">
                                 <h2 class="text-lg font-bold text-gray-900 dark:text-gray-800 mb-2">
-                                    {{ Str::limit($oferta->nombre, 50) }}
+                                    {{ Str::limit($oferta->nombre, 40) }}
                                 </h2>                                
                                 <div class="mt-4">
                                     <p class="text-sm text-black font-semibold line-through">
@@ -64,7 +63,7 @@
                     </div>
                     @php
                         $contador++;
-                        if ($contador == 3) {
+                        if ($contador == 4) {
                             break;
                         }
                     @endphp
@@ -74,7 +73,7 @@
             <div class="pt-10 text-center">
                 @if (count($ofertas) > 3)
                     <a href="{{ route('oferta.todos') }}"
-                        class="inline-block px-16 py-3 text-black font-semibold rounded-full shadow-lg bg-white bg-opacity-20 backdrop-blur-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-opacity-30 hover:from-white hover:to-white"
+                        class="inline-block px-96 py-5 text-yellow-500 text-xl font-semibold rounded-md shadow-lg bg-white bg-opacity-20 backdrop-blur-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-opacity-30 hover:from-white hover:to-white"
                         style="background: rgba(255, 255, 255, 0.2);">
                         Ver todas las ofertas
                     </a>
