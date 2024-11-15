@@ -2,7 +2,7 @@
 
 @section('contenido')
     
-
+<x-alertas/>
 <div class="relative overflow-x-auto border border-gray-200 shadow-lg rounded-md">
     <div class="p-4">
         <form action="" method="get">

@@ -142,6 +142,7 @@ Route::middleware([Caja::class])->group(function(){
     Route::get('/caja/venta', [CajaController::class, 'venta'])->name('caja.venta');
     Route::get('/caja/venta/{indice}', [CajaController::class, 'quitar'])->name('caja.quitar');
     Route::post('/agg-cliente',[CajaController::class, 'aggCliente'])->name('caja.addcliente');
+    Route::post('/caja/crear-pedido', [CajaController::class, 'crearPedido'])->name('caja.crearpedido');
 });
 
 Route::get('/debug', function(){

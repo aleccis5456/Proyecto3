@@ -73,7 +73,7 @@ class Util
             $stats['total_conteo'] = $total_conteo;
             $stats['total_pagar'] = $total_pagar;
 
-            session(['stats' => $stats]);
+            session(['statsVentaCaja' => $stats]);
         }
 
         return $stats;

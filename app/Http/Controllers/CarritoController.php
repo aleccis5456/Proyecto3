@@ -62,7 +62,7 @@ class CarritoController extends Controller
 
         session(['carrito' => $carrito]);
         session(['contador' => $contador]);
-        return back()->with('info', 'El producto se agregó a tu carrito.');
+        return back()->with('producto_agregado', 'El producto se agregó a tu carrito.');
     }
 
     public function addCuota(Request $request, $producto_id)

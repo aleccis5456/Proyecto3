@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ventas;
+use App\Models\ListaPedido;
+use App\Models\Notificacion;
+use App\Models\Pedido;
 use App\Models\DatosEnvio;
 use App\Models\User;
 use App\Models\Producto;
 use App\Utils\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class CajaController extends Controller
 {
@@ -55,9 +61,10 @@ class CajaController extends Controller
 
     public function venta(){
         $response = DatosEnvio::all();
+        $usuarios = User::all();
         $datos = [];
         $filteredItems = [];
-    
+        
         foreach($response as $item){                        
             if(!in_array($item->ruc_ci, $datos)){
                 $datos[] = $item->ruc_ci; 
@@ -67,6 +74,7 @@ class CajaController extends Controller
     
         return view('caja.venta',[
             'users' => $filteredItems,
+            'usuarios' => $usuarios,
         ]);
     }
     
@@ -89,7 +97,7 @@ class CajaController extends Controller
         Session::forget('ventaCaja');
     }
 
-    public function aggCliente(Request $request){        
+    public function aggCliente(Request $request){          
         $request->validate([
             'nombre' => 'required|string',
             'apellido' => 'required|string',
@@ -108,4 +116,114 @@ class CajaController extends Controller
             return back()->with('error', $e->getMessage());
         }        
     }
+
+    public function crearPedido(Request $request){                    
+        $request->validate([
+            'usuario' => 'nullable|exists:users,id',
+            'cliente' => 'required|exists:datos_envio,id'
+        ]);
+
+        if ($request->metodo_envio == 'envio') {
+            $costoEnvio = 30000;
+        } else {
+            $costoEnvio = 0;
+        }                        
+
+        //dd($costoEnvio);
+        $pago = $request->metodo_pago;        
+        if ($pago == 'ef') {
+            $pago = 'Efectivo';
+        } elseif ($pago == 'tc') {
+            $pago = 'Tarjeta de Credito';
+        } elseif ($pago == 'td') {
+            $pago = 'Tarjeta de Debito';
+        } else {
+            return back()->with('warning', 'Selecciona un método de pago válido');
+        }
+        $letrasNumerosAleatorios = $this->generateRandomCode(6);
+
+        $codigo = $letrasNumerosAleatorios;
+        DB::beginTransaction();        
+        try {
+            $pedido = new Pedido;
+            $pedido->user_id = $request->usuario ?? 1;
+            $pedido->celular = 0;
+            $pedido->codigo = $codigo;
+            $pedido->departamento = "";
+            $pedido->ciudad = "";
+            $pedido->calle = "";
+            $pedido->formaEntrega = "";
+            $pedido->costoEnvio = $costoEnvio;
+            $pedido->coste = session('statsVentaCaja')['total_pagar'];
+            $pedido->estado = 'Finalizado';
+            $pedido->formaPago = $pago;
+            $pedido->registro = Carbon::now();
+            $pedido->save();
+                        
+            $datos = DatosEnvio::find($request->cliente);
+            $datos->update([
+                'pedido_id' => $pedido->id,
+            ]);      
+            
+            foreach (session('ventaCaja') as $item) {
+                $lista = ListaPedido::create([
+                    'pedido_id' => $pedido->id,
+                    'producto_id' => $item['producto_completo']['id'],
+                    'unidades' => $item['cantidad'],
+                    'precio_unitario' =>  $item['precio_oferta'] > 0 ? $item['precio_oferta'] : $item['precio'],
+                    'registro' => Carbon::now(),
+                ]);
+            }        
+            $listas = ListaPedido::where('pedido_id', $pedido->id)->get();             
+            foreach($listas as $lista){
+                $producto = Producto::findOrFail($lista->producto_id);
+                if($producto){
+                    $producto->stock_actual = $producto->stock_actual - $lista->unidades;
+                    $producto->ventas += $lista->unidades;
+                    $producto->update();
+                }
+
+                $venta = Ventas::create([
+                    'producto_id' => $lista->producto_id, 	
+                    'cantidad' => $lista->unidades, 	
+                    'fecha_venta' => Carbon::now(),
+                ]);
+            }            
+            
+            Notificacion::create([
+                'nombre' => 'pedido',
+                'mensaje' => 'se genero un nuevo pedido', 	
+                'cantiad' => 1, 	
+                'leida' => false,
+                'pedido_id' => $pedido->id
+            ]);                          
+             
+            $user_id = $requesr->usuario ?? 1;
+            $user = User::findOrFail($user_id);                        
+            $user->increment('compras');        
+
+            session()->forget('ventaCaja');
+            session()->forget('statasCajaVenta');            
+            DB::commit();
+            return redirect()->route('cajero.index')->with('venta', 'listo');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->with('error', $e->getMessage());
+        }
+
+    }
+
+    private function generateRandomCode($length)
+    {
+        $characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
+    }
+
+
 }

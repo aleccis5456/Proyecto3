@@ -25,8 +25,7 @@ class CajeroController extends Controller
             return back()->with('warnig', 'el email con coincide con ningun usuario');            
         }
 
-        if(!Hash::check($request->password, $cajero->password)){
-            dd('sas');
+        if(!Hash::check($request->password, $cajero->password)){            
             return back()->with('warnig', 'la contraseña es incorrecta');            
         }
 
