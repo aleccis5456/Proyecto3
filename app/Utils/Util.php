@@ -43,6 +43,10 @@ class Util
     {
         return \Carbon\Carbon::parse($fecha)->format('d-M-Y \a \l\a\s H:i');
     }
+    public static function soloFecha($fecha)
+    {
+        return \Carbon\Carbon::parse($fecha)->format('d-M-Y');
+    }
 
     public static function statsVentaCaja()
     {

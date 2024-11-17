@@ -51,7 +51,7 @@
                         
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                             <th scope="row" class="py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $producto->nombre }}
+                                {{ Str::limit($producto->nombre, 57) }}
                             </th>
                             <td class="px-2 py-4">
                                 {{ number_format(round($producto->precio, -2), 0, ',', '.') }} Gs.

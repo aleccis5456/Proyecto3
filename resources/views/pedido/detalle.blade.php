@@ -1,21 +1,18 @@
 @extends('layouts.adm')
 
 @section('contenidoAdm')
-    <div class="flex items-center justify-center py-12 bg-gray-100 dark:bg-gray-900">
-        <!-- Contenedor principal centrado -->
+    <div class="flex items-center justify-center py-12 bg-gray-100 dark:bg-gray-900">        
         <div
             class="w-full max-w-4xl p-8 bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <x-alertas />
-
-            <!-- Cabecera de Pedido -->
+            
             <div class="mb-8">
                 <div class="flex justify-between items-center">
                     <div>
                         <div class="text-2xl font-semibold text-gray-800 dark:text-gray-300">Pedido #{{ $pedido->codigo }}
                         </div>
                         <div class="text-sm text-gray-600 dark:text-gray-400">Pedido realizado por
-                            {{ $pedido->usuario->name }}</div>
-                        <!-- Fecha del Pedido -->
+                            {{ $pedido->usuario->name }}</div>                        
                         <div class="text-sm text-gray-500 dark:text-gray-400">Fecha del Pedido:
                             {{ App\Utils\Util::formatearFecha($pedido->registro) }}</div>
                     </div>
@@ -26,7 +23,6 @@
                 </div>
             </div>
 
-            <!-- Estado y Acciones -->
             <div class="mb-8 flex items-center gap-4">
                 <form method="POST" action="{{ route('actualizar.estado') }}" class="flex items-center">
                     @csrf
@@ -97,7 +93,9 @@
                     {{ $pedido->calle }}</p>
                 <p><strong>Total del Envío:</strong> {{ number_format($pedido->costoEnvio, 0, ',', '.') }} Gs.</p>
             </div>
-            <hr>
+            <hr>            
+            @if ($pedido->estado == 'Finalizado')                
+            @else
             <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
                 <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Asignar Repartidor</p>
             </div>
@@ -136,8 +134,8 @@
                         value="Guardar">
                 </div>
             </form>
-
+            @endif
+          
         </div>
-
     </div>
 @endsection

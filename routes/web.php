@@ -43,6 +43,7 @@ Route::get('/pedido/confirmado/{id}', [PedidoController::class, 'confirmado'])->
 
 //carrito
 Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
+
 Route::get('/carrito/add/{id}', [CarritoController::class, 'add'])->name('carrito.add');
 Route::post('/carrito/add-cuota/{producto_id}', [CarritoController::class, 'addCuota'])->name('carrito.addCuota');
 Route::get('/carrito/quitar/{indice}', [CarritoController::class, 'quitar'])->name('carrito.quitar');
@@ -143,6 +144,8 @@ Route::middleware([Caja::class])->group(function(){
     Route::get('/caja/venta/{indice}', [CajaController::class, 'quitar'])->name('caja.quitar');
     Route::post('/agg-cliente',[CajaController::class, 'aggCliente'])->name('caja.addcliente');
     Route::post('/caja/crear-pedido', [CajaController::class, 'crearPedido'])->name('caja.crearpedido');
+    Route::get('/caja/cerrar-sesion', [CajeroController::class, 'logout'])->name('cajero.logout');
+    Route::get('/caja/productos/retirar', [CajaController::class, 'retirar'])->name('caja.retirar');
 });
 
 Route::get('/debug', function(){

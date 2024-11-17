@@ -119,7 +119,7 @@ class CajaController extends Controller
 
     public function crearPedido(Request $request){                    
         $request->validate([
-            'usuario' => 'nullable|exists:users,id',
+            'usuario' => 'required|exists:users,id',
             'cliente' => 'required|exists:datos_envio,id'
         ]);
 
@@ -187,7 +187,8 @@ class CajaController extends Controller
                     'producto_id' => $lista->producto_id, 	
                     'cantidad' => $lista->unidades, 	
                     'fecha_venta' => Carbon::now(),
-                ]);
+                    'cajero_id' => session('cajero')->id,
+                ]);                
             }            
             
             Notificacion::create([
@@ -225,5 +226,26 @@ class CajaController extends Controller
         return $randomString;
     }
 
+    public function retirar(){        
+        $retirar = Pedido::where('formaEntrega', 'retiro')->where('estado', '!=', 'Finalizado')->where('estado', '!=', 'Anulado')->get();        
+        $datos = [];
+        $listaPedidos = [];
+        foreach($retirar as $lista){
+            $response = ListaPedido::where('pedido_id', $lista->id)->first();            
+            if(!$response){
+                continue;
+            }
+            $listaPedidos[] = $response;
 
+            $responseDatos = DatosEnvio::where('pedido_id', $lista->id)->first();
+            $datos[] = $responseDatos;
+        }        
+        
+        return view('caja.retirar', [
+            'retirar' => $retirar,
+            'datos' => DatosEnvio::all(),
+            'listaPedidos' => $listaPedidos,
+
+        ]);
+    }
 }

@@ -69,7 +69,7 @@ class CajeroController extends Controller
     }
 
     public function logout(){
-        Session::forget('ventaCaja');
+        Session::forget('cajero');
 
         return redirect('caja/login');
     }

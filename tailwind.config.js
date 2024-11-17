@@ -14,7 +14,9 @@ module.exports = {
     'bg-green-200', 'bg-green-300', 'bg-green-500',
     'bg-red-200', 'bg-red-300', 'bg-red-500',
     'bg-blue-100', 'bg-yellow-100', 'bg-orange-100', 'bg-green-200', 'bg-red-100',
-    'bg-blue-400', 'bg-yellow-400', 'bg-orange-400', 'bg-green-400', 'bg-red-400'
+    'bg-blue-400', 'bg-yellow-400', 'bg-orange-400', 'bg-green-400', 'bg-red-400',
+    'bg-blue-900', 'bg-yellow-900', 'bg-orange-900', 'bg-green-900', 'bg-red-900',
+    'text-orange-800', 'text-orange-600',
   ],
   theme: {
     extend: {},

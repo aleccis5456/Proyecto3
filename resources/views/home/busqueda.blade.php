@@ -1,14 +1,43 @@
 @extends('layouts.app')
-@section('titulo', 'Categorias')
+@section('titulo', 'Busqueda')
 
 @section('contenido')
     <div class="text-center px-10 py-6">
         <x-alertas />
     </div>
 
-    <div class="flex items-center justify-center ">
-        <div
-            class="w-5/6 mx-auto p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+    <!-- Contenedor principal -->
+    <div class="flex items-start justify-center gap-4">
+        <!-- Filtro de precios -->
+        <div class="w-1/4 p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            @if (isset($flag))
+                <form action="{{ route('filtro.subcategoria') }}" method="get">
+                    <input type="hidden" name="filtro" value="{{ $filtros->subCategoria_id ?? '' }}">
+            @else
+                <form action="{{ route('home.busqueda') }}" method="get">
+                    <input type="hidden" name="b" value="{{ $b }}">
+            @endif
+                    <label for="minimo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Precio mínimo: <span id="minimo-value">0</span>
+                    </label>
+                    <input id="minimo" name="precio_min" type="range" min="100000" max="20000000"
+                        value="{{ $precio_min ?? 100000 }}"
+                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+                    <label for="maximo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Precio máximo: <span id="maximo-value">0</span>
+                    </label>
+                    <input id="maximo" name="precio_max" type="range" min="100000" max="20000000"
+                        value="{{ $precio_max ?? 20000000 }}"
+                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
+
+                    <button class="mt-5 p-1 rounded bg-[#fbb321] text-semibold text-gray-800 hover:bg-yellow-100 hover:text-black"
+                        type="submit">Filtrar</button>
+                </form>
+        </div>
+
+        <!-- Resultados de productos -->
+        <div class="w-3/4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="text-center mb-6">
                 <h2 class="text-xl font-bold text-gray-900 dark:text-white">
                     @if (!isset($flag))
@@ -17,56 +46,7 @@
                     @else
                         @include('home.includes.nav')
                     @endif
-
                 </h2>
-                @if (isset($flag))
-                    <div class="w-1/5 pt-8">
-                        <form action="{{ route('filtro.subcategoria') }}" method="get">
-                            <input type="hidden" name="filtro" value="{{ $filtros->subCategoria_id ?? '' }}">
-                            <label for="minimo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Precio mínimo:
-                                <span id="minimo-value">0</span>
-                            </label>
-                            <input id="minimo" name="precio_min" type="range" min="100000" max="20000000"
-                                value="{{ $precio_min ?? 100000 }}"
-                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-                            <label for="maximo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Precio máximo:
-                                <span id="maximo-value">0</span>
-                            </label>
-                            <input id="maximo" name="precio_max" type="range" min="100000" max="20000000"
-                                value="{{ $precio_max ?? 20000000 }}"
-                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-                                <button class="mt-5 p-1 rounded bg-[#fbb321] text-semibold text-gray-800 hover:bg-yellow-100 hover:text-black" type="submit">Filtrar</button>
-                        </form>
-                    </div>
-                @else
-                    <div class="w-1/5 pt-8">
-                        <form action="{{ route('home.busqueda') }}" method="get">
-                            <input type="hidden" name="b" value="{{ $b }}">
-                            <label for="minimo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Precio mínimo:
-                                <span id="minimo-value">0</span>
-                            </label>
-                            <input id="minimo" name="precio_min" type="range" min="100000" max="20000000"
-                                value="{{ $precio_min ?? 100000 }}"
-                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-                            <label for="maximo" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                Precio máximo:
-                                <span id="maximo-value">0</span>
-                            </label>
-                            <input id="maximo" name="precio_max" type="range" min="100000" max="20000000"
-                                value="{{ $precio_max ?? 20000000 }}"
-                                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700">
-
-                            <button class="mt-5 p-1 rounded bg-[#fbb321] text-semibold text-gray-800 hover:bg-yellow-100 hover:text-black" type="submit">Filtrar</button>
-                        </form>
-                    </div>
-                @endif
-
             </div>
 
             <!-- Tabla de Productos -->
@@ -101,7 +81,6 @@
                                         {!! nl2br(e($similar->descripcion)) !!}
                                     </p>
                                 </td>
-
                                 <!-- Precio del Producto -->
                                 <td class="ml-6 py-4 w-1/6">
                                     @if ($similar->precio_oferta > 0)
@@ -136,7 +115,7 @@
             </div>
         </div>
     </div>
-    
+
     <script>
         const minimoInput = document.getElementById('minimo');
         const maximoInput = document.getElementById('maximo');

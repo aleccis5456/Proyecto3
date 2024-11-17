@@ -352,9 +352,11 @@ class ProductoController extends Controller
     public function ofertas()
     {
         $ofertas = Producto::where('oferta', 1)->get();
+        $banner = Banner::where('activo', true)->where('position_id', 1)->first();               
 
         return view('producto.ofertas', [
             'ofertas' => $ofertas,
+            'banner' => $banner
         ]);
     }
 

@@ -12,7 +12,8 @@ class Ventas extends Model
     protected $fillable = [
         'producto_id', 	
         'cantidad', 	
-        'fecha_venta'
+        'fecha_venta',
+        'cajero_id',
     ];
 
     public function productos(){

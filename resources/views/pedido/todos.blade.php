@@ -61,7 +61,7 @@
                             </button>                            
                         </form>                                                
                     </th>
-                    <th scope="col" class="px-6 py-3">
+                    <th scope="col" class="px-6 py-3 text-center">
                         <form action="" method="get">
                             <input type="hidden" name="b" value="{{ $b }}">
                             <input type="hidden" name="column" value="estado">
@@ -105,7 +105,8 @@
                         Gs.
                     </td>
                     <td class="py-4 text-center">
-                        <p class="text-black font-semibold bg-{{$color}}-400 py-2 px-1 rounded-lg">{{$pedido->estado}}</p>
+                        {{-- <p class="text-black font-semibold bg-{{$color}}-200 text-{{$color}}-800 py-2 px-1 rounded-full">{{$pedido->estado}}</p> --}}
+                        <span class="bg-{{$color}}-200 border border-{{$color}}-300 text-{{$color}}-600 py-2 px-4 rounded-full text-xs font-semibold">{{$pedido->estado}}</span>
                     </td>
             
                     <td class="px-6 py-4">
@@ -138,22 +139,3 @@
         {{ $pedidos->links() }}
     </div>
 @endsection
-
-
-{{-- 
-<form method="POST" action="{{ route('actualizar.estado') }}">
-    @csrf
-    <div class="flex">
-        <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
-        <select id="estado" name="estado"
-            class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            @foreach (['Recibido', 'Procesado', 'Enviado', 'Finalizado', 'Anulado'] as $estado)
-                <option value="{{ $estado }}" {{ $pedido->estado == $estado ? 'selected' : '' }}>
-                    {{ ucfirst($estado) }}
-                </option>
-            @endforeach
-        </select>
-        <input class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2"
-            type="submit" value="Guardar">
-    </div>
-</form> --}}

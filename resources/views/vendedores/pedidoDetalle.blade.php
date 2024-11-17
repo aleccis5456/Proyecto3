@@ -6,6 +6,9 @@
             <x-alertas />
             <div class="max-w-full flex">                
                 <span class="flex mr-10 w-full">
+                    @if ($pedido->estado == 'Finalizado')
+                        Pedido Finalizado
+                    @else
                     <form method="POST" action="{{ route('vendedores.cambiarestado') }}">
                         <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id   }}">
                         @csrf
@@ -53,6 +56,7 @@
                             
                         </div>
                     </form>
+                    @endif                    
                 </span>
                 
                 <div class="">

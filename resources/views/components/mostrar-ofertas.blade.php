@@ -8,7 +8,7 @@
                             Ofertas de la Semana
                         </h2>
                         <p class="text-gray-700 dark:text-gray-300">
-                            ¡No te pierdas nuestras mejores ofertas disponibles solo por esta semana!
+                            ¡No te pierdas nuestras mejores ofertas disponibles solo por 48Hs!
                         </p>                        
                     </div>
                     
