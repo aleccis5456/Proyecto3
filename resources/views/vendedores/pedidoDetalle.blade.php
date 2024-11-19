@@ -6,8 +6,8 @@
             <x-alertas />
             <div class="max-w-full flex">                
                 <span class="flex mr-10 w-full">
+                    <p class="text-xl font-semibold">Pedido #{{$pedido->codigo}}</p>
                     @if ($pedido->estado == 'Finalizado')
-                        Pedido Finalizado
                     @else
                     <form method="POST" action="{{ route('vendedores.cambiarestado') }}">
                         <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id   }}">

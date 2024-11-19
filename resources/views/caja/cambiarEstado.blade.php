@@ -5,7 +5,6 @@
         <div
             class="w-full max-w-4xl p-8 bg-white border border-gray-300 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <x-alertas />
-
             <div class="mb-8">
                 <div class="flex justify-between items-center">
                     <div>
@@ -19,7 +18,14 @@
                             {{ App\Utils\Util::formatearFecha($pedido->registro) }}
                         </div>
                     </div>
-
+                    <p>
+                        <strong>Retirado por:</strong>
+                        @if ($pedido->retirado_por == 'dueno')
+                            Dueño del pedido
+                        @else
+                            Un Tercero
+                        @endif
+                    </p>
                     @if ($pedido->estado == 'Finalizado' || $pedido->estado == 'Anulado')
                         @foreach (['Finalizado' => 'green', 'Anulado' => 'red'] as $estado => $color)
                             @if ($pedido->estado == $estado)

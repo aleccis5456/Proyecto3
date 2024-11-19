@@ -84,17 +84,23 @@
             <hr>
             <!-- Información del Cliente -->
             <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Información del Cliente</p>
+                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Detalles adicionales</p>
+                <p class="mb-2 text-sm underline">Datos de entrega y facturacion:</p>
                 <p><strong>Nombre:</strong> {{ $datos->nombre }} {{ $datos->apellido }}</p>
                 <p><strong>RUC o CI:</strong> {{ $datos->ruc_ci }}</p>
                 <p><strong>Celular:</strong> {{ $pedido->celular }}</p>
                 <p><strong>Email:</strong> {{ $pedido->usuario->email ?? 'Invitado' }}</p>
-                <p><strong>Dirección de Envío:</strong> {{ $pedido->departamento }}, {{ $pedido->ciudad }},
+                @if ($pedido->costoEnvio == 0)
+                <p><strong>Dirección de Envío:</strong> Retiro en tienda   
+                @else
+                <p><strong>Dirección de Envío:</strong> {{ $pedido->departamento }}, {{ $pedido->ciudad }}
                     {{ $pedido->calle }}</p>
-                <p><strong>Total del Envío:</strong> {{ number_format($pedido->costoEnvio, 0, ',', '.') }} Gs.</p>
+                <p><strong>Total del Envío:</strong> {{ number_format($pedido->costoEnvio, 0, ',', '.') }} Gs.</p>    
+                @endif
+                
             </div>
             <hr>            
-            @if ($pedido->estado == 'Finalizado')                
+            @if ($pedido->estado == 'Finalizado' or $pedido->costoEnvio == 0)                
             @else
             <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
                 <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Asignar Repartidor</p>
@@ -114,7 +120,7 @@
                                         ->where('vendedor_id', $vendedor->id)
                                         ->where('pedido_id', $pedido->id)
                                         ->first();
-                                    $cantidad = $ventasAsignadas->where('vendedor_id', $vendedor->id)->count();
+                                    $cantidad = $ventasAsignadas->where('vendedor_id', $vendedor->id)->where('activo', true)->count();
                                 @endphp
                                 @if ($asignado)
                                     <option value="{{ $vendedor->id }}" selected>

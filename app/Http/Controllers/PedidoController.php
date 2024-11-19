@@ -143,9 +143,8 @@ class PedidoController extends Controller
                 'nombre' => $request->terceroNombre ?? null,
                 'telefono' => $request->terceroTelefono ?? null,
             ]);
-
-        
-            if($entregaTerceros->pedido_id == null){
+            
+            if($entregaTerceros->cedula == null and $entregaTerceros->nombre == null){
                 EntregaTerceros::destroy($entregaTerceros->id);
             }            
             Notificacion::create([
@@ -155,7 +154,6 @@ class PedidoController extends Controller
                 'leida' => false,
                 'pedido_id' => $pedido->id
             ]);              
-                    
             
             $email = Mail::to($pedido->email)->send(new pedidoConfirm($pedido,$datos, $listas));            
             if(!$email){
