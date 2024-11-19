@@ -43,7 +43,7 @@
                                 <div class="flex-col">
                                     <div>
                                         <br>
-                                        <a class="text-sm text-blue-500">
+                                        <a href="{{ route('producto', ['id' => $item['id_producto']]) }}" class="text-sm text-blue-500">
                                             {{-- {{ strlen($item['nombre']) > 50 ? substr($item['nombre'], 0, 50) . '...' : $item['nombre'] }} --}}
                                             {{ $item['nombre'] }}
                                         </a>

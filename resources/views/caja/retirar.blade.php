@@ -3,6 +3,7 @@
 @section('contenido')
     <div class="container mx-auto px-4 py-6">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Pedidos a Retirar</h2>
+        <x-alertas/>
         <div class="overflow-x-auto">
             <table class="min-w-full bg-white rounded-lg shadow-md overflow-hidden">
                 <thead>
@@ -53,11 +54,12 @@
                             <td class="py-3 px-3 text-center max-w-[90px]">
                                 {{ App\Utils\Util::soloFecha($pedido->registro) }}</td>
                             <td class="py-3 px-3 text-center">
-                                @if ($pedido->pedido != 'Finalizado')
-                                    <span
-                                        class="font-semibold bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">Pendiente</span>
-                                @else
+                                @if ($pedido->estado != 'Finalizado' and $pedido->estado != 'Anulado')
+                                    <span class="font-semibold bg-yellow-200 text-yellow-600 py-1 px-3 rounded-full text-xs">Pendiente</span>
+                                @elseif($pedido->estado == 'Finalizado')
                                     <span class="bg-green-200 text-green-600 py-1 px-3 rounded-full text-xs">Retirado</span>
+                                @elseif($pedido->estado == 'Anulado')
+                                    <span class="bg-red-200 text-red-600 py-1 px-3 rounded-full text-xs">Anulado</span>
                                 @endif
                             </td>                          
                             <td class="py-3 px-3 text-center min-w-[134px]">

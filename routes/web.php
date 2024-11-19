@@ -147,6 +147,8 @@ Route::middleware([Caja::class])->group(function(){
     Route::get('/caja/cerrar-sesion', [CajeroController::class, 'logout'])->name('cajero.logout');
     Route::get('/caja/productos/retirar', [CajaController::class, 'retirar'])->name('caja.retirar');
     Route::get('/caja/cambiarEstado/{id}', [CajaController::class, 'cambiarEstado'])->name('caja.cambiarestado');
+    Route::post('/caja/retiro', [CajaController::class, 'retiro'])->name('caja.retiro');
+
 });
 
 Route::get('/debug', function(){
@@ -163,7 +165,10 @@ Route::get('/debug/2', function(){
 });
 
 Route::get('/prueba', function(){
-    return view('pruebas.prueba');
+    return view('email.pedido');
 });
 
 route::get('/indexdos', [ProductoController::class, 'indexdos']);
+
+
+route::get('/emailPedido', [PedidoController::class, 'prueba']);

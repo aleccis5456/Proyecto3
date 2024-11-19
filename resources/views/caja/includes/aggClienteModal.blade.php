@@ -1,4 +1,3 @@
-
 <div id="modalUser" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
     <div class="bg-white w-96 rounded-lg shadow-lg p-6">
         <!-- Título y botón de cerrar -->

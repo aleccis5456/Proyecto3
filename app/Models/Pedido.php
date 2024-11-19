@@ -24,7 +24,8 @@ class Pedido extends Model
         'costoEnvio', 	
         'formaPago', 	
         'registro', 	
-        'email'
+        'email',
+        'retirado_por'
     ];
 
     public function usuario(){

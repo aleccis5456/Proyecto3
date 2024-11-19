@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EntregaTerceros;
 use App\Models\User;
 use App\Models\Pedido;
 use App\Models\Ventas;
@@ -12,13 +11,17 @@ use App\Models\DatosEnvio;
 use App\Models\ListaPedido;
 use App\Models\Departamento;
 use App\Models\Notificacion;
+use App\Models\VentasAsignada;
+use App\Models\EntregaTerceros;
+use App\Mail\PedidoConfirm;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\VentasAsignada;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+
 
 class PedidoController extends Controller
 {
@@ -99,8 +102,8 @@ class PedidoController extends Controller
             $pedido->formaPago = $pago;
             $pedido->email = $request->email;
             $pedido->registro = Carbon::now();
-            $pedido->save();
-            
+            $pedido->save();                        
+
             $datos = DatosEnvio::create([
                 'pedido_id' => $pedido->id,
                 'nombre' => $request->nombre,
@@ -132,20 +135,19 @@ class PedidoController extends Controller
                     'cantidad' => $lista->unidades, 	
                     'fecha_venta' => Carbon::now(),
                 ]);
-            }            
-            if($request->confirmarTercero == 'true' and $request->terceroNombre != null){
-                EntregaTerceros::create([
-                    'pedido_id' => $pedido->id,
-                    'cedula' => $request->terceroCedula,
-                    'nombre' => $request->terceroNombre,
-                    'telefono' => $request->terceroTelefono ?? null,
-                ]);
-            }else{
-                DB::rollBack();
-                return back()->with('warnig', 'confirmaste entrega a terceros, pero no se registro un tercero');
-            }
+            }                        
             
+            $entregaTerceros = EntregaTerceros::create([
+                'pedido_id' => $pedido->id,
+                'cedula' => $request->terceroCedula ?? null,
+                'nombre' => $request->terceroNombre ?? null,
+                'telefono' => $request->terceroTelefono ?? null,
+            ]);
 
+        
+            if($entregaTerceros->pedido_id == null){
+                EntregaTerceros::destroy($entregaTerceros->id);
+            }            
             Notificacion::create([
                 'nombre' => 'pedido',
                 'mensaje' => 'se genero un nuevo pedido', 	
@@ -153,7 +155,14 @@ class PedidoController extends Controller
                 'leida' => false,
                 'pedido_id' => $pedido->id
             ]);              
-
+                    
+            
+            $email = Mail::to($pedido->email)->send(new pedidoConfirm($pedido,$datos, $listas));            
+            if(!$email){
+               DB::rollBack();
+                return back()->with('error', 'Hubo un error al procesar el pedido.');
+            }
+            
             $user = Auth::user() ?? User::findOrFail(1);            
             $user->increment('compras');        
 
@@ -161,7 +170,7 @@ class PedidoController extends Controller
             return redirect()->route('pedido.confirmado', ['id' => $pedido->id]);
         } catch (\Exception $e) {
             DB::rollBack();
-            return back()->with('error', 'Hubo un error al procesar el pedido.');
+            return back()->with('error', $e->getMessage());
         }
     }
 
@@ -339,4 +348,15 @@ class PedidoController extends Controller
             'b' => $b ?? '',
         ]);
     }
+
+
+
+    public function prueba(){
+        return view('email.pedido', [
+            'datos' => DatosEnvio::where('pedido_id', 2)->first(),
+            'listaPedido' => ListaPedido::where('pedido_id', 2)->get(),
+            'pedido' => Pedido::find(2),
+        ]);
+    }
+    
 }

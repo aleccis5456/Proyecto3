@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EntregaTerceros;
 use App\Models\Ventas;
 use App\Models\ListaPedido;
 use App\Models\Notificacion;
@@ -227,7 +228,7 @@ class CajaController extends Controller
     }
 
     public function retirar(){        
-        $retirar = Pedido::where('formaEntrega', 'retiro')->where('estado', '!=', 'Finalizado')->where('estado', '!=', 'Anulado')->get();        
+        $retirar = Pedido::where('formaEntrega', 'retiro')->orderByDesc('estado')->get();        
         $datos = [];
         $listaPedidos = ListaPedido::all();
         // $listaPedidos = [];        
@@ -249,6 +250,31 @@ class CajaController extends Controller
             'productos' => ListaPedido::where('pedido_id', $id)->get(),
             'pedido' => Pedido::find($id),
             'datos' => DatosEnvio::where('pedido_id', $id)->first(),
+            'tercero' => EntregaTerceros::where('pedido_id', $id)->first(),
         ]);
+    }
+
+    public function retiro(Request $request){              
+        $request->validate([
+            'pedido_id' => 'required|exists:pedidos,id'
+        ]);
+
+        $pedido = Pedido::find($request->pedido_id);
+        if(!$pedido){
+            return back()->with('error', 'hubo un error al procesar el pedido');
+        }
+
+        try{            
+            $pedido->update([
+                'estado' => $request->estado,
+                'retirado_por' => $request->retirado_por,
+            ]);
+            return redirect('caja/productos/retirar')->with('info', 'Pedido Completado');
+            
+        }catch(\Exception $e){
+            return back()->with('error', 'hubo un error al procesar el pedido');
+        }
+        
+
     }
 }
