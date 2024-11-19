@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EntregaTerceros;
 use App\Models\User;
 use App\Models\Pedido;
 use App\Models\Ventas;
@@ -18,7 +19,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Database\Eloquent\Builder;
 
 class PedidoController extends Controller
 {
@@ -50,7 +50,7 @@ class PedidoController extends Controller
         }
     }
 
-    public function checkoutSave(Request $request){              
+    public function checkoutSave(Request $request){            
         $request->validate([
             'ruc' => 'required',
             'celular' => 'required',
@@ -97,6 +97,7 @@ class PedidoController extends Controller
             $pedido->coste = session('stats')['total_pagar'];
             $pedido->estado = 'Recibido';
             $pedido->formaPago = $pago;
+            $pedido->email = $request->email;
             $pedido->registro = Carbon::now();
             $pedido->save();
             
@@ -132,7 +133,19 @@ class PedidoController extends Controller
                     'fecha_venta' => Carbon::now(),
                 ]);
             }            
+            if($request->confirmarTercero == 'true' and $request->terceroNombre != null){
+                EntregaTerceros::create([
+                    'pedido_id' => $pedido->id,
+                    'cedula' => $request->terceroCedula,
+                    'nombre' => $request->terceroNombre,
+                    'telefono' => $request->terceroTelefono ?? null,
+                ]);
+            }else{
+                DB::rollBack();
+                return back()->with('warnig', 'confirmaste entrega a terceros, pero no se registro un tercero');
+            }
             
+
             Notificacion::create([
                 'nombre' => 'pedido',
                 'mensaje' => 'se genero un nuevo pedido', 	

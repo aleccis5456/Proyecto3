@@ -146,6 +146,7 @@ Route::middleware([Caja::class])->group(function(){
     Route::post('/caja/crear-pedido', [CajaController::class, 'crearPedido'])->name('caja.crearpedido');
     Route::get('/caja/cerrar-sesion', [CajeroController::class, 'logout'])->name('cajero.logout');
     Route::get('/caja/productos/retirar', [CajaController::class, 'retirar'])->name('caja.retirar');
+    Route::get('/caja/cambiarEstado/{id}', [CajaController::class, 'cambiarEstado'])->name('caja.cambiarestado');
 });
 
 Route::get('/debug', function(){

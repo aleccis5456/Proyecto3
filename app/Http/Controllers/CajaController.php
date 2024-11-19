@@ -229,23 +229,26 @@ class CajaController extends Controller
     public function retirar(){        
         $retirar = Pedido::where('formaEntrega', 'retiro')->where('estado', '!=', 'Finalizado')->where('estado', '!=', 'Anulado')->get();        
         $datos = [];
-        $listaPedidos = [];
+        $listaPedidos = ListaPedido::all();
+        // $listaPedidos = [];        
         foreach($retirar as $lista){
-            $response = ListaPedido::where('pedido_id', $lista->id)->first();            
-            if(!$response){
-                continue;
-            }
-            $listaPedidos[] = $response;
-
             $responseDatos = DatosEnvio::where('pedido_id', $lista->id)->first();
             $datos[] = $responseDatos;
-        }        
-        
+        }                
+
         return view('caja.retirar', [
             'retirar' => $retirar,
             'datos' => DatosEnvio::all(),
-            'listaPedidos' => $listaPedidos,
+            'listaPedidos' => $listaPedidos,            
 
+        ]);
+    }
+
+    public function cambiarEstado($id){        
+        return view('caja.cambiarEstado', [
+            'productos' => ListaPedido::where('pedido_id', $id)->get(),
+            'pedido' => Pedido::find($id),
+            'datos' => DatosEnvio::where('pedido_id', $id)->first(),
         ]);
     }
 }

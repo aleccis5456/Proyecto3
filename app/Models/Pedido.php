@@ -11,6 +11,22 @@ class Pedido extends Model
     public $timestamps = false;
     protected $table = 'pedidos';
 
+    protected $fillable = [
+        'codigo',	
+        'user_id', 	
+        'celular', 	
+        'departamento', 	
+        'ciudad', 	
+        'calle', 	
+        'coste', 	
+        'estado', 	
+        'formaEntrega', 	
+        'costoEnvio', 	
+        'formaPago', 	
+        'registro', 	
+        'email'
+    ];
+
     public function usuario(){
         return $this->belongsTo(User::class, 'user_id');
     }
@@ -20,5 +36,9 @@ class Pedido extends Model
     }    
     public function ventaAsignada(){
         return $this->hasMany(VentasAsignada::class);
+    }
+
+    public function entregas(){
+        return $this->hasMany(EntregaTerceros::class, 'pedido_id');
     }
 }
