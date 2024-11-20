@@ -68,7 +68,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     codigo
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-3 max-w-[40px]">
                                     nombre
                                 </th>
                                 <th scope="col" class="px-6 py-3">
@@ -89,7 +89,7 @@
                                         </button>
                                     </form>
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                {{-- <th scope="col" class="px-6 py-3">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
                                         <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
@@ -105,9 +105,8 @@
                                             </span>
 
                                         </button>
-                                    </form>
-                                    
-                                </th>
+                                    </form>                                    
+                                </th> --}}
                                 <th scope="col" class="px-6 py-3">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
                                         <input type="hidden" name="b" value="{{ $b }}">
@@ -173,16 +172,16 @@
                         </thead>
                         <tbody>
                             @foreach ($productos as $item)
-                                <tr
-                                    class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                                <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         #{{ $item->codigo }}
                                     </th>
-                                    <th class="px-6 py-4">
-                                        <a href=" {{ route('producto.detalle', ['id' => $item->id]) }}"
+                                    <th class="px-6 py-4 flex text-grap">
+                                        <a class="flex" href=" {{ route('producto.detalle', ['id' => $item->id]) }}"
                                             class="hover:text-blue-600">
-                                            {{ Str::limit($item->nombre, 37) }}
+                                            <img class="mr-2 w-12 h-12" src="{{ asset("uploads/productos/$item->imagen") }}" alt="" srcset="">
+                                            {{ Str::limit($item->nombre, 50) }}
                                         </a>
                                     </th>
                                     <td
@@ -190,9 +189,9 @@
                                         <b>{{ $item->precio_oferta > 0 ? 'SI' : 'NO' }}</b>
                                         </d>
 
-                                    <td class="px-6 py-4">
+                                    {{-- <td class="px-6 py-4">
                                         {{ $item->subcategoria->nombre }}
-                                    </td>
+                                    </td> --}}
                                     <td class="px-6 py-4">
                                         {{ number_format(round($item->precio, -2), 0, ',', '.') }} Gs.
                                     </td>
