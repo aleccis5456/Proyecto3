@@ -1,0 +1,47 @@
+ <form method="POST" action="{{ route('vendedores.cambiarestado') }}" class="mt-4">
+                        <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id   }}">
+                        @csrf
+                        <div class="flex">
+                            <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
+                            <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id }}">
+                            <select id="estado" name="estado"
+                                class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                @if ($pedido->estado == 'Recibido')
+                                    <option class="text-blue-500 font-bold" selected value="Recibido">Recibido</option>
+                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
+                                    <option class="text-orange-500" value="Enviado">Enviado</option>
+                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                    <option class="text-red-500" value="Anulado">Anulado</option>
+                                @elseif($pedido->estado == 'Procesado')
+                                    <option class="text-blue-500" value="Recibido">Recibido</option>
+                                    <option class="text-yellow-500" value="Procesado" selected>Procesado</option>
+                                    <option class="text-orange-500 font-bold" value="Enviado">Enviado</option>
+                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                    <option class="text-red-500" value="Anulado">Anulado</option>
+                                @elseif($pedido->estado == 'Enviado')
+                                    <option class="text-blue-500" value="Recibido">Recibido</option>
+                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
+                                    <option class="text-orange-500" value="Enviado" selected>Enviado</option>
+                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                    <option class="text-red-500" value="Anulado">Anulado</option>
+                                @elseif($pedido->estado == 'Finalizado')
+                                    <option class="text-blue-500" value="Recibido">Recibido</option>
+                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
+                                    <option class="text-orange-500" value="Enviado">Enviado</option>
+                                    <option class="text-green-500 font-bold" selected value="Finalizado">Finalizado</option>
+                                    <option class="text-red-500" value="Anulado">Anulado</option>
+                                @elseif($pedido->estado == 'Anulado')
+                                    <option class="text-blue-500" value="Recibido">Recibido</option>
+                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
+                                    <option class="text-orange-500" value="Enviado">Enviado</option>
+                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
+                                    <option class="text-red-500 font-bold" selected value="Anulado">Anulado</option>
+                                @endif
+                            </select>
+                            <div class="pl-3">
+                                <button class="border border-gray-800 px-2 py-1 rounded-lg hover:underline"
+                                type="submit">Guardar</button>
+                            </div>
+                            
+                        </div>
+                    </form>

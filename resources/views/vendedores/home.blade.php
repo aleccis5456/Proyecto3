@@ -65,8 +65,7 @@
                             {{-- {{ number_format(round($pedido->coste, -2), 0, ',', '.') }} Gs. --}}
                             {{ $venta->pedido->costoEnvio > 0 ? number_format($venta->pedido->costoEnvio + $venta->pedido->coste, 0, '.', '.') : number_format(round($venta->pedido->coste, -2), 0, ',', '.') }}
                             Gs.
-                        </td>                     
-                        
+                        </td>                                             
 
                         <td class="px-6 py-4">
                             <a class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2"

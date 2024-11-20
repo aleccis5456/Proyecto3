@@ -1,6 +1,5 @@
-<div >    
-    <div id="drawer-navigation"
-        class="fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-1/4 dark:bg-gray-800"
+<div class="">        
+    <div id="drawer-navigation" class="mt-[60px] fixed top-0 left-0 z-40 h-screen p-4 overflow-y-auto transition-transform -translate-x-full bg-white w-1/4 dark:bg-gray-800"
         tabindex="-1" aria-labelledby="drawer-navigation-label">
         <h5 id="drawer-navigation-label" class="text-xl font-semibold text-gray-900 uppercase dark:text-gray-400">Todas
             las categorias</h5>

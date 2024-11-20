@@ -53,6 +53,7 @@
             <!-- Detalles del Pedido -->
             <div class="border-t border-gray-300 pt-6 mb-8">
                 <p class="font-medium text-gray-700 dark:text-gray-300 mb-1">Resumen del Pedido</p>
+                <p><strong class="text-gray-800 dark:text-gray-100">Total:</strong> {{$pedido->formaPago}}
                 <p><strong class="text-gray-800 dark:text-gray-100">Total:</strong>
                     {{ number_format($pedido->costoEnvio + $pedido->coste, 0, ',', '.') }} Gs.</p>
                 <p><strong class="text-gray-800 dark:text-gray-100">Productos:</strong> {{ $cantidad }}</p>

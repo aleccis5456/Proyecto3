@@ -5,88 +5,30 @@
         <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <x-alertas />
             <div class="max-w-full flex">                
-                <span class="flex mr-10 w-full">
-                    <p class="text-xl font-semibold">Pedido #{{$pedido->codigo}}</p>
+                <div class="mr-10">
+                    <p class="text-xl font-semibold">Pedido #{{$pedido->codigo}}</p>                    
                     @if ($pedido->estado == 'Finalizado')
                     @else
-                    <form method="POST" action="{{ route('vendedores.cambiarestado') }}">
-                        <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id   }}">
-                        @csrf
-                        <div class="flex">
+                    <div class="my-2 flex items-center gap-4">
+                        <form method="POST" action="{{ route('vendedores.cambiarestado') }}" class="flex items-center">
+                            @csrf
                             <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
                             <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id }}">
-                            <select id="estado" name="estado"
-                                class="w-auto bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                @if ($pedido->estado == 'Recibido')
-                                    <option class="text-blue-500 font-bold" selected value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
-                                    <option class="text-orange-500" value="Enviado">Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Procesado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado" selected>Procesado</option>
-                                    <option class="text-orange-500 font-bold" value="Enviado">Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Enviado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
-                                    <option class="text-orange-500" value="Enviado" selected>Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Finalizado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
-                                    <option class="text-orange-500" value="Enviado">Enviado</option>
-                                    <option class="text-green-500 font-bold" selected value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500" value="Anulado">Anulado</option>
-                                @elseif($pedido->estado == 'Anulado')
-                                    <option class="text-blue-500" value="Recibido">Recibido</option>
-                                    <option class="text-yellow-500" value="Procesado">Procesado</option>
-                                    <option class="text-orange-500" value="Enviado">Enviado</option>
-                                    <option class="text-green-500" value="Finalizado">Finalizado</option>
-                                    <option class="text-red-500 font-bold" selected value="Anulado">Anulado</option>
-                                @endif
+                            <select id="estado" name="estado" class="py-1 px-4 rounded-lg border border-none font-semibold {{ $pedido->estado == 'Recibido' ? 'bg-blue-200 text-blue-600 focus:ring-blue-600' : '' }} {{ $pedido->estado == 'Procesado' ? 'bg-yellow-200 text-yellow-600 focus:ring-yellow-600' : '' }} {{ $pedido->estado == 'Enviado' ? 'bg-orange-200 text-orange-600 focus:ring-orange-600' : '' }} {{ $pedido->estado == 'Finalizado' ? 'bg-green-200 text-green-600 focus:ring-green-600' : '' }} {{ $pedido->estado == 'Anulado' ? 'bg-red-200 text-red-600 focus:ring-red-600' : '' }}">
+                                @foreach (['Recibido', 'Procesado', 'Enviado', 'Finalizado', 'Anulado'] as $estado)
+                                    <option value="{{ $estado }}" {{ $pedido->estado == $estado ? 'selected' : '' }}>
+                                        <p>{{ ucfirst($estado) }}</p>
+                                    </option>
+                                @endforeach
                             </select>
-                            <div class="pl-3">
-                                <button class="border border-gray-800 px-2 py-1 rounded-lg hover:underline"
-                                type="submit">Guardar</button>
-                            </div>
-                            
-                        </div>
-                    </form>
+                            <button type="submit"
+                                class="ml-2 bg-gray-800 hover:bg-gray-600 text-white font-medium rounded-lg px-4 py-1 transition duration-150">
+                                Guardar
+                            </button>
+                        </form>                              
+                    </div>
                     @endif                    
-                </span>
-                
-                <div class="">
-                    @if ($pedido->estado == 'Recibido')
-                        <button
-                            class="focus:outline-none text-white bg-blue-500 hover:bg-blue-800  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Recibido
-                        </button>
-                    @elseif ($pedido->estado == 'Enviado')
-                        <button
-                            class="focus:outline-none text-white bg-orange-500 hover:bg-orange-600  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Enviado
-                        </button>
-                    @elseif($pedido->estado == 'Procesado')
-                        <button
-                            class="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Procesado
-                        </button>
-                    @elseif($pedido->estado == 'Finalizado')
-                        <button
-                            class="focus:outline-none text-white bg-green-500 hover:bg-green-800  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Finalizado
-                        </button>
-                    @elseif($pedido->estado == 'Anulado')
-                        <button
-                            class="focus:outline-none text-white bg-red-600 hover:bg-red-800  font-medium rounded-lg text-sm px-5 py-1 me-2 mb-2 ">
-                            Anulado
-                        </button>
-                    @endif
-                </div>                
+                </div>
             </div>
             <div class="max-w-full flex">
                 <div class="w-4/5">

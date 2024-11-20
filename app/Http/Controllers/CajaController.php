@@ -241,7 +241,6 @@ class CajaController extends Controller
                 })
                 ->orderByDesc('estado')
                 ->get();
-
         $datos = [];
         $listaPedidos = ListaPedido::all();
         // $listaPedidos = [];        

@@ -131,8 +131,12 @@
                                             ->first();
                                     @endphp
                                     @if ($asignado && $asignado->pedido_id == $pedido->id)
-                                        <p class="bg-gray-700 text-gray-200 px-2 py-1 rounded-full">Envio | {{ $vendedor->nombre }}</p>
-                                    @endif
+                                        <p class="bg-gray-700 text-gray-200 px-2 py-1 rounded-full">Envio | {{ $vendedor->nombre }}</p>                                    
+                                        @break
+                                    @else
+                                    <p class="bg-gray-700 text-gray-200 px-2 py-1 rounded-full">Envio</p>                                    
+                                    @break
+                                    @endif                                                                    
                                 @endif
                             @endforeach
                         @endif
@@ -140,7 +144,7 @@
                     </td>
 
                     <td class="px-6 py-4">
-                        <a class="border border-gray-800 text-gray-800 rounded-lg hover:underline py-2 ml-2 px-2"
+                        <a class="bg-gray-800 text-white text-sm font-semibold rounded-lg hover:bg-gray-600 py-1 px-2 ml-2 "
                             href="{{ route('pedido.detalle', ['id' => $pedido->id]) }}">
                             Ver
                         </a>
