@@ -234,8 +234,7 @@
 
 
     @if (session('producto_agregado'))
-        <div id="alerta-modal" tabindex="-1"
-            class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+        <div id="alerta-modal" tabindex="-1" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
             <div class="relative p-4 w-full max-w-md">
                 <div class="relative bg-yellow-50 rounded-lg shadow dark:bg-gray-700">
                     <button type="button"

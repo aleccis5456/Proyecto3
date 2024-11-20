@@ -39,12 +39,26 @@
             </thead>
             <tbody>                
                 @foreach ($ventas as $venta)
+                    @php
+                        $colores = [
+                            'Recibido' => 'blue',
+                            'Procesado' => 'yellow',
+                            'Enviado' => 'orange',
+                            'Finalizado' => 'green',
+                            'Anulado' => 'red',
+                        ];
+                        $color = $colores[$venta->pedido->estado] ?? 'white';
+                    @endphp
                 
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             #{{ $venta->pedido->codigo }}
                         </th>
-                        <td class="px-6 py-4 {{ $venta->pedido->estado == 'Finalizado' ? 'text-red-500 font-semibold': '' }}">{{ $venta->pedido->estado }}</td>
+                        <td class="py-4 text-center">
+                            {{-- <p class="text-black font-semibold bg-{{$color}}-200 text-{{$color}}-800 py-2 px-1 rounded-full">{{$pedido->estado}}</p> --}}
+                            <span
+                                class="bg-{{ $color }}-200 text-{{ $color }}-600 py-2 px-4 rounded-full text-xs font-semibold">{{ $venta->pedido->estado }}</span>
+                        </td>
                         <td class="px-6 py-4">{{ $venta->pedido->usuario->name }}</td>
                         <td class="px-6 py-4">{{ $venta->pedido->registro }}</td>
                         <td class="px-6 py-4">

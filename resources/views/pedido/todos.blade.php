@@ -96,8 +96,7 @@
                     @if (is_null($notificacion))
                         <tr class=" border-b dark:bg-gray-800 dark:border-gray-700">
                         @else
-                        <tr
-                            class="{{ $pedido->id == $notificacion->pedido_id ? 'border-b-4 border-[#fbb321]' : 'bg-white' }} border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr class="{{ $pedido->id == $notificacion->pedido_id ? 'border-b-4 border-[#fbb321]' : 'bg-white' }} border-b dark:bg-gray-800 dark:border-gray-700">
                     @endif
 
                     <!-- Contenido de la fila -->
