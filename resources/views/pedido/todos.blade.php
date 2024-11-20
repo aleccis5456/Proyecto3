@@ -117,8 +117,10 @@
                     </td>
 
                     <td class="px-2 py-1 font-semibold text-center">
-                        @if ($pedido->costoEnvio == 0)
+                        @if ($pedido->costoEnvio == 0 and $pedido->formaEntrega == 'retiro')
                             <p class="bg-gray-200 text-gray-700 px-2 py-1 rounded-full">Retiro en tienda</p>
+                        @elseif($pedido->costoEnvio == 0 and $pedido->formaEntrega == 'venta_caja')
+                            <p class="bg-black text-white px-2 py-1 rounded-full">Venta en caja</p>
                         @else
                             @foreach ($vendedores as $vendedor)
                                 @if (ucfirst($vendedor->departamento) == ucfirst($pedido->departamento) ||
@@ -130,7 +132,7 @@
                                             ->first();
                                     @endphp
                                     @if ($asignado && $asignado->pedido_id == $pedido->id)
-                                        <p class="bg-gray-700 text-gray-200 px-2 py-1 rounded-full">{{ $vendedor->nombre }}</p>
+                                        <p class="bg-gray-700 text-gray-200 px-2 py-1 rounded-full">Envio | {{ $vendedor->nombre }}</p>
                                     @endif
                                 @endif
                             @endforeach

@@ -315,7 +315,8 @@ class PedidoController extends Controller
         $unidades = ListaPedido::where('pedido_id', $id)->pluck('unidades');
         $datos = DatosEnvio::where('pedido_id', $id)->first();
         $vendedores = Vendedor::all();
-        $ventasAsignadas = VentasAsignada::all();     
+        $ventasAsignadas = VentasAsignada::all();
+        $tercero =  EntregaTerceros::where('pedido_id', $id)->first();
 
         return view('pedido.detalle', [
             'pedido' => $pedido,
@@ -325,6 +326,7 @@ class PedidoController extends Controller
             'datos' => $datos,
             'vendedores' => $vendedores,
             'ventasAsignadas' => $ventasAsignadas,
+            'tercero' => $tercero
         ]);
     }
 

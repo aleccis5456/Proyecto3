@@ -19,12 +19,15 @@
                         </div>
                     </div>
                     <p>
-                        <strong>Retirado por:</strong>
-                        @if ($pedido->retirado_por == 'dueno')
-                            Dueño del pedido
-                        @else
-                            Un Tercero
+                        @if ($pedido->retirado_por != null)
+                            <strong>Retirado por:</strong>
+                            @if ($pedido->retirado_por == 'dueno')
+                                Dueño del pedido
+                            @else
+                                Un Tercero
+                            @endif                                                        
                         @endif
+                        
                     </p>
                     @if ($pedido->estado == 'Finalizado' || $pedido->estado == 'Anulado')
                         @foreach (['Finalizado' => 'green', 'Anulado' => 'red'] as $estado => $color)

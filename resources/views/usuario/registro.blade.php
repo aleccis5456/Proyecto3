@@ -65,7 +65,7 @@
         </div>
 
         <button type="submit"
-            class="text-white bg-[#fbb321] hover:bg-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center transition-all duration-200">Registrarme</button>
+            class="text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center transition-all duration-200">Registrarme</button>
     </form>
 </div>
 

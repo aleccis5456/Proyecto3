@@ -30,7 +30,7 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full text-white bg-[#fbb321] hover:bg-[#d19b1f] focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-md text-sm px-5 py-2.5 text-center transition-all duration-200">
+                    class="w-full text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-md text-sm px-5 py-2.5 text-center transition-all duration-200">
                     Ingresar
                 </button>
 

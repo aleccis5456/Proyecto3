@@ -27,10 +27,10 @@
                 <form method="POST" action="{{ route('actualizar.estado') }}" class="flex items-center">
                     @csrf
                     <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
-                    <select id="estado" name="estado" class="bg-gray-50 border border-gray-300 rounded-lg px-2 py-1">
+                    <select id="estado" name="estado" class="py-1 px-4 rounded-lg border border-none font-semibold {{ $pedido->estado == 'Recibido' ? 'bg-blue-200 text-blue-600 focus:ring-blue-600' : '' }} {{ $pedido->estado == 'Procesado' ? 'bg-yellow-200 text-yellow-600 focus:ring-yellow-600' : '' }} {{ $pedido->estado == 'Enviado' ? 'bg-orange-200 text-orange-600 focus:ring-orange-600' : '' }} {{ $pedido->estado == 'Finalizado' ? 'bg-green-200 text-green-600 focus:ring-green-600' : '' }} {{ $pedido->estado == 'Anulado' ? 'bg-red-200 text-red-600 focus:ring-red-600' : '' }}">
                         @foreach (['Recibido', 'Procesado', 'Enviado', 'Finalizado', 'Anulado'] as $estado)
                             <option value="{{ $estado }}" {{ $pedido->estado == $estado ? 'selected' : '' }}>
-                                {{ ucfirst($estado) }}
+                                <p>{{ ucfirst($estado) }}</p>
                             </option>
                         @endforeach
                     </select>
@@ -41,10 +41,13 @@
                 </form>
 
                 <!-- Estado Actual del Pedido -->
-                <span
-                    class="px-3 py-1 rounded-lg text-white {{ $pedido->estado == 'Recibido' ? 'bg-blue-500' : '' }} {{ $pedido->estado == 'Procesado' ? 'bg-yellow-400' : '' }} {{ $pedido->estado == 'Enviado' ? 'bg-orange-500' : '' }} {{ $pedido->estado == 'Finalizado' ? 'bg-green-500' : '' }} {{ $pedido->estado == 'Anulado' ? 'bg-red-600' : '' }}">
+                {{-- <span
+                    class="py-1 px-4 rounded-full font-semibold {{ $pedido->estado == 'Recibido' ? 'bg-blue-200 text-blue-600' : '' }} {{ $pedido->estado == 'Procesado' ? 'bg-yellow-200 text-yellow-600' : '' }} {{ $pedido->estado == 'Enviado' ? 'bg-orange-200 text-yellow-600' : '' }} {{ $pedido->estado == 'Finalizado' ? 'bg-green-200 text-green-600' : '' }} {{ $pedido->estado == 'Anulado' ? 'bg-red-200 text-red-600' : '' }}">
                     {{ ucfirst($pedido->estado) }}
-                </span>
+                </span> --}}
+
+                {{-- <span
+                            class="bg-{{ $color }}-200 text-{{ $color }}-600 py-2 px-4 rounded-full text-xs font-semibold">{{ $pedido->estado }}</span> --}}
             </div>
 
             <!-- Detalles del Pedido -->
@@ -91,11 +94,18 @@
                 <p><strong>Celular:</strong> {{ $pedido->celular }}</p>
                 <p><strong>Email:</strong> {{ $pedido->usuario->email ?? 'Invitado' }}</p>
                 @if ($pedido->costoEnvio == 0)
-                <p><strong>Dirección de Envío:</strong> Retiro en tienda   
+                    <p><strong>Dirección de Envío:</strong> Retiro en tienda   
+                    <p class="mb-2 mt-5 text-sm underline">Asignado a tercero:</p>
+                    @if (!empty($tercero))
+                        <p><strong>Nombre:</strong> {{ $tercero->nombre }} </p>
+                        <p><strong>RUC o CI:</strong> {{ $tercero->cedula }}</p>
+                        <p><strong>Celular:</strong> {{ $tercero->telefono ?? 'No se agrego un numero' }}</p>    
+                    @endif
+                        <p><strong>No asignado</strong></p>
                 @else
-                <p><strong>Dirección de Envío:</strong> {{ $pedido->departamento }}, {{ $pedido->ciudad }}
-                    {{ $pedido->calle }}</p>
-                <p><strong>Total del Envío:</strong> {{ number_format($pedido->costoEnvio, 0, ',', '.') }} Gs.</p>    
+                    <p><strong>Dirección de Envío:</strong> {{ $pedido->departamento }}, {{ $pedido->ciudad }},
+                        {{ $pedido->calle }}</p>
+                    <p><strong>Total del Envío:</strong> {{ number_format($pedido->costoEnvio, 0, ',', '.') }} Gs.</p>    
                 @endif
                 
             </div>

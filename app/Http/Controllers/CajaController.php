@@ -153,12 +153,13 @@ class CajaController extends Controller
             $pedido->departamento = "";
             $pedido->ciudad = "";
             $pedido->calle = "";
-            $pedido->formaEntrega = "";
+            $pedido->formaEntrega = "venta_caja";
             $pedido->costoEnvio = $costoEnvio;
             $pedido->coste = session('statsVentaCaja')['total_pagar'];
             $pedido->estado = 'Finalizado';
             $pedido->formaPago = $pago;
             $pedido->registro = Carbon::now();
+            $pedido->email = 'ocasional@ocasional.com';
             $pedido->save();
                         
             $datos = DatosEnvio::find($request->cliente);
@@ -227,8 +228,20 @@ class CajaController extends Controller
         return $randomString;
     }
 
-    public function retirar(){        
-        $retirar = Pedido::where('formaEntrega', 'retiro')->orderByDesc('estado')->get();        
+    public function retirar(){       
+        // $retirar = Pedido::where('formaEntrega', 'retiro')
+        //                 ->orderByDesc('estado')
+        //                 ->get();        
+ 
+        $retirar = Pedido::where('formaEntrega', 'retiro')
+                ->where(function ($query) {
+                    $query->where('estado', 'Procesado')
+                          ->orWhere('estado', 'Finalizado')
+                          ->orWhere('estado', 'Anulado'); 
+                })
+                ->orderByDesc('estado')
+                ->get();
+
         $datos = [];
         $listaPedidos = ListaPedido::all();
         // $listaPedidos = [];        
