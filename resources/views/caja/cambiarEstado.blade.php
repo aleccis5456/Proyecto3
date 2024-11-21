@@ -18,17 +18,24 @@
                             {{ App\Utils\Util::formatearFecha($pedido->registro) }}
                         </div>
                     </div>
-                    <p>
-                        @if ($pedido->retirado_por != null)
-                            <strong>Retirado por:</strong>
-                            @if ($pedido->retirado_por == 'dueno')
-                                Dueño del pedido
-                            @else
-                                Un Tercero
-                            @endif                                                        
-                        @endif
-                        
-                    </p>
+                    <div class="flex flex-col">
+                        <p>
+                            @if ($pedido->retirado_por != null)
+                                <strong>Retirado por:</strong>
+                                @if ($pedido->retirado_por == 'dueno')
+                                    Dueño del pedido
+                                @else
+                                    Un Tercero
+                                @endif                                                        
+                            @endif                        
+                        </p>
+                        <p>
+                            @if ($pedido->retirado_por != null)
+                                <strong>Cajero:</strong> {{ session('cajero')->nombre }} {{ session('apellido') }}
+                            @endif                        
+                        </p>
+                    </div>
+                    
                     @if ($pedido->estado == 'Finalizado' || $pedido->estado == 'Anulado')
                         @foreach (['Finalizado' => 'green', 'Anulado' => 'red'] as $estado => $color)
                             @if ($pedido->estado == $estado)
