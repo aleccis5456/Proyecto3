@@ -62,8 +62,8 @@
 
             <div class="flex justify-center items-center text-center pt-10 max-w-full">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     codigo
@@ -164,7 +164,7 @@
                                 <th scope="col" class="px-6 py-3">
                                     Detalle
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-3 min-w-[170px] text-center">
                                     Acciones
                                 </th>
 
@@ -184,14 +184,8 @@
                                             {{ Str::limit($item->nombre, 50) }}
                                         </a>
                                     </th>
-                                    <td
-                                        class="px-6 py-4 {{ $item->precio_oferta > 0 ? 'text-green-500' : 'text-red-500' }}">
-                                        <b>{{ $item->precio_oferta > 0 ? 'SI' : 'NO' }}</b>
-                                        </d>
-
-                                    {{-- <td class="px-6 py-4">
-                                        {{ $item->subcategoria->nombre }}
-                                    </td> --}}
+                                    <td class="text-center">
+                                        <span class="font-semibold {{ $item->oferta == true ? 'bg-green-300 text-green-800' : 'bg-gray-200 text-gray-900' }} py-1 px-3 rounded-full text-xs"> {{ $item->oferta == true ?  'En oferta' : 'Inactivo'}}</span>                                  
                                     <td class="px-6 py-4">
                                         {{ number_format(round($item->precio, -2), 0, ',', '.') }} Gs.
                                     </td>
@@ -204,21 +198,19 @@
 
                                     <td class="px-6 py-4">
                                         <a href=" {{ route('producto.detalle', ['id' => $item->id]) }} "
-                                            class="hover:text-blue-700 rounded-lg hover:bg-gray-200 px-1
-                                    py-1">
+                                            class="px-1.5 py-1 bg-gray-800 text-white rounded-md hover:bg-gray-600">
                                             Ver
                                         </a>
                                     </td>
                                     <td class="px-6 py-4">
-                                        <button class="open-modal hover:text-red-500 rounded-lg hover:bg-gray-200 px-1 py-1"
+                                        <button class="open-modal px-1.5 py-1 bg-gray-800 text-white rounded-md hover:bg-gray-600 focus:bg-red-700"
                                             data-modal-target="popup-modal-pro" data-modal-toggle="popup-modal-pro"
                                             data-producto-id="{{ $item->id }}">
                                             Eliminar
                                         </button>
 
                                         <a href=" {{ route('producto.editar', ['id' => $item->id]) }} "
-                                            class="hover:text-yellow-300 rounded-lg hover:bg-gray-200 px-1
-                                         py-1">
+                                            class="px-1.5 py-1 bg-gray-600 text-white rounded-md hover:bg-gray-400 focus:bg-yellow-400">
                                             Editar
                                         </a>
                                     </td>

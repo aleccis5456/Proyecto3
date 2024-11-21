@@ -8,7 +8,7 @@
             @php
                 $cantidad = $banners->where('position_id', 8)->where('activo', 1)->count();
             @endphp
-            <div class="flex pt-1 px-20 mx-auto items-stretch"> <!-- Cambiar items-center a items-stretch -->
+            <div class="ml-2 flex pt-1 pl-20 mr-[75px] mx-auto items-stretch"> <!-- Cambiar items-center a items-stretch -->
                 @if ($cantidad >= 2)
                     <div id="controls-carousel" class="relative w-full h-64 flex-[4]" data-carousel="static">
                         <!-- Carousel wrapper -->
@@ -123,7 +123,7 @@
 
 
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 p-10 mx-12">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 px-10 pb-10 mx-12">
     @php $contador = 0; @endphp
     @foreach ($porCategoria['elec'] as $producto)
         <div
@@ -144,7 +144,7 @@
             <!-- Detalles del producto -->
             <div class="p-6 text-center">
                 <h3 class="text-sm font-semibold text-gray-900 dark:text-white">
-                    {{ Str::limit($producto->nombre, 38) }}
+                    {{ Str::limit($producto->nombre, 32) }}
                     <div class="mt-4">
                         <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
                             class="flex items-center justify-between text-gray-600 rounded-lg py-2.5 hover:px-1 hover:bg-yellow-100 hover:text-black focus:outline-none focus:ring-4 focus:ring-yellow-300">

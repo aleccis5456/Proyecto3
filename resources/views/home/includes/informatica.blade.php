@@ -8,7 +8,7 @@
             @php
                 $cantidad = $banners->where('position_id', 29)->where('activo', 1)->count();
             @endphp
-            <div class="flex pt-1 px-20 mx-auto items-stretch"> <!-- Cambiar items-center a items-stretch -->
+            <div class="ml-2 flex pt-1 pl-20 mr-[75px] mx-auto items-stretch"> <!-- Cambiar items-center a items-stretch -->    
                 @if ($cantidad >= 2)
                     <div id="controls-carousel" class="relative w-full h-64 flex-[4]" data-carousel="static">
                         <!-- Carousel wrapper -->
@@ -24,9 +24,7 @@
                                         @else
                                             <img src="{{ asset("uploads/banners/$banner->imagen") }}"
                                                 class="w-full h-full object-cover" alt="...">
-                                        @endif
-
-                                        
+                                        @endif                                        
                                     </div>
                                 @endif
                             @endforeach
@@ -125,7 +123,7 @@
 
 
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 p-10 mx-12">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-2 px-10 pb-10 mx-12">
     @php $contador = 0; @endphp
     @foreach ($porCategoria['info'] as $producto)
         <div
