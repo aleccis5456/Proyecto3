@@ -49,19 +49,18 @@
                     </a>
                 </div>
 
-            </div>
-            <div class="mt-10 text-center text-xl">
-                @if (isset($b))
-                    Resultados para: <b>{{ $b }}</b> <span
-                        class="text-gray-500 text-sm">({{ count($productos) }})</span>
-                @else
-                    <b>Lista de todos los productos </b>({{ $cantidad ?? '' }})
-                @endif
-
-            </div>
+            </div>            
 
             <div class="flex justify-center items-center text-center pt-10 max-w-full">
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full">
+                    <div class="py-5 bg-gray-300 text-center text-xl">
+                        @if (isset($b))
+                            Resultados para: <b>{{ $b }}</b> <span
+                                class="text-gray-500 text-sm">({{ count($productos) }})</span>
+                        @else
+                            <b>Lista de todos los productos </b>({{ $cantidad ?? '' }})
+                        @endif                        
+                    </div>
                     <table class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -107,7 +106,7 @@
                                         </button>
                                     </form>                                    
                                 </th> --}}
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-3 min-w-[150px] text-center">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
                                         <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
@@ -125,7 +124,7 @@
                                         </button>
                                     </form>
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="px-6 py-3 max-w-24 text-center">
                                     <form action="{{ route('producto.amdIndex') }}" method="get">
                                         <input type="hidden" name="b" value="{{ $b }}">
                                         <input type="hidden" name="orderBy"
@@ -181,11 +180,11 @@
                                         <a class="flex" href=" {{ route('producto.detalle', ['id' => $item->id]) }}"
                                             class="hover:text-blue-600">
                                             <img class="mr-2 w-12 h-12" src="{{ asset("uploads/productos/$item->imagen") }}" alt="" srcset="">
-                                            {{ Str::limit($item->nombre, 50) }}
+                                            <p class="hover:underline">{{ Str::limit($item->nombre, 50) }}</p>
                                         </a>
                                     </th>
                                     <td class="text-center">
-                                        <span class="font-semibold {{ $item->oferta == true ? 'bg-green-300 text-green-800' : 'bg-gray-200 text-gray-900' }} py-1 px-3 rounded-full text-xs"> {{ $item->oferta == true ?  'En oferta' : 'Inactivo'}}</span>                                  
+                                        <span class="font-semibold {{ $item->oferta == true ? 'bg-green-300 text-green-800' : 'bg-gray-200 text-gray-900' }} py-1 px-3 rounded-full text-xs"> {{ $item->oferta == true ?  'En oferta' : 'Sin oferta'}}</span>                                  
                                     <td class="px-6 py-4">
                                         {{ number_format(round($item->precio, -2), 0, ',', '.') }} Gs.
                                     </td>

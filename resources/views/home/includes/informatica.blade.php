@@ -75,7 +75,7 @@
                 <div class="flex-[1] p-2 rounded-lg text-gray-600 flex flex-col"> <!-- Agregar flex flex-col -->
                     @foreach ($porCategoria['info']->reverse() as $producto)
                         <div
-                            class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex-1">
+                            class="bg-white dark:bg-gray-800 rounded-md shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex-1">
                             <!-- Agregar flex-1 -->
                             <!-- Imagen del producto -->
                             <a href="{{ route('producto', ['id' => $producto->id, 'slug' => $producto->slug]) }}" class="block relative group">

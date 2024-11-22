@@ -17,15 +17,15 @@
             <x-alertas />
             <div id="default-carousel" class="relative w-full" data-carousel="active">
                 <div class="relative h-full overflow-hidden rounded-lg md:h-96">
-                    <div class="hidden duration-1700 " data-carousel-item>
-                        <img src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}" width="400"
-                            class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                    <div class=" hidden duration-1700 " data-carousel-item>
+                        <img src="{{ asset('uploads/productos') }}/{{ $producto->imagen }}"
+                            class="w-[400px] h-auto absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                     </div>
 
                     @foreach ($fotos as $foto)
                         <div class="hidden duration-1700" data-carousel-item>
                             <img src="{{ asset('uploads/productos') }}/{{ $foto->nombre }}" width="500"
-                                class="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
+                                class=" absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="...">
                         </div>
                     @endforeach
 

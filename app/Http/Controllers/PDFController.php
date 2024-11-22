@@ -38,8 +38,8 @@ class PDFController extends Controller
             'fecha' => Carbon::now(),
             'ventas' => $ventas,
         ];        
-        $pdf = PDF::loadView('report.reportes', $data);
-        
+        $pdf = PDF::loadView('report.reportes', $data);    
+            
         return $pdf->download('reporte_ventas.pdf');
     }
 

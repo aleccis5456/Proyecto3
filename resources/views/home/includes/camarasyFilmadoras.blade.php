@@ -10,7 +10,7 @@
             @endphp
             <div class="ml-2 flex pt-1 pl-20 mr-[75px] mx-auto items-stretch"> <!-- Cambiar items-center a items-stretch -->
                 @if ($cantidad >= 2)
-                    <div id="controls-carousel" class="relative w-full h-64 flex-[4]" data-carousel="static">
+                    <div id="controls-carousel" class="shadow-lg relative w-full h-64 flex-[4]" data-carousel="static">
                         <!-- Carousel wrapper -->
                         <div class="relative h-full overflow-hidden">
                             @foreach ($banners as $index => $banner)
@@ -77,7 +77,7 @@
                 <div class="flex-[1] p-2 rounded-lg text-gray-600 flex flex-col"> <!-- Agregar flex flex-col -->
                     @foreach ($porCategoria['fotoyfil']->reverse() as $producto)
                         <div
-                            class="bg-white dark:bg-gray-800 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex-1">
+                            class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex-1">
                             <!-- Agregar flex-1 -->
                             <!-- Imagen del producto -->
                             <a href="{{ route('producto', ['id' => $producto->id, 'slug' => $producto->slug]) }}" class="block relative group">
