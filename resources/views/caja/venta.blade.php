@@ -5,7 +5,7 @@
         <x-alertas />
     </div>    
     {{-- @dd(session('statsVentaCaja'))     --}}
-    <div class="flex flex col">
+    <div class="flex flexcol">
         <div class="w-1/2">
             <div class="relative overflow-x-auto">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 border">
@@ -30,7 +30,7 @@
                         @foreach (session('ventaCaja') as $indice => $item)
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                 <td class="px-6 py-4">
-                                    <img class="min-w-[45px] min-h-[45px] max-w-[50px] max-w-[50px]"
+                                    <img class="min-w-[45px] min-h-[45px] max-w-[50px]"
                                         src="{{ asset('uploads/productos') }}/{{ $item['producto_completo']['imagen'] }}"
                                         alt="" srcset="">
                                 </td>
@@ -74,7 +74,7 @@
                     <label for=""
                         class="block text-sm font-medium text-gray-900 dark:text-white mb-1">Seleccionar cliente registrado:</label>
                     <div class="flex items-center">
-                        <select class="border rounded-md flex-1 p-2" name="usuario" id="usuario">
+                        <select class="select1 border rounded-md flex-1 p-2" name="usuario" id="usuario">
                             <option value="">-Selecciona un cliente-</option>
                             @foreach ($usuarios as $usuario)
                                 <option value="{{ $usuario->id }}">{{ $usuario->name }} {{ $usuario->apellido }} | Nº:
@@ -133,10 +133,11 @@
                 <input type="hidden" name="total" value="{{ App\Utils\Util::statsVentaCaja()['total_pagar'] }}">
                 <!-- Botones de acción -->
                 <div class="flex justify-end space-x-4">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                    <button onclick="openVentaModal(event)" type="button" class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
                         Confirmar
                     </button>
                 </div>
+                @include('caja.includes.modalConfirmarVenta')
             </form>
         </div>
 
@@ -144,6 +145,14 @@
 
     @include('caja.includes.aggClienteModal')   
 
+
+
+
+
+
+    {{-- @if (!session('venta')) --}}
+      
+    {{-- @endif --}}
 
     
 @endsection

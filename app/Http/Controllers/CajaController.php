@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use PDF;
 
 class CajaController extends Controller
 {
@@ -205,8 +206,17 @@ class CajaController extends Controller
             $user = User::findOrFail($user_id);                        
             $user->increment('compras');        
 
+
+            $lista = ListaPedido::where('pedido_id', $pedido->id)->get();
+            $pdf = PDF::loadView('ticket.ticket', [
+            'lista' => $lista
+            ]);
+                
+            return $pdf->download("ticket.pdf");            
+
             session()->forget('ventaCaja');
-            session()->forget('statasCajaVenta');            
+            session()->forget('statasCajaVenta');                        
+            
             DB::commit();
             return redirect()->route('cajero.index')->with('venta', 'listo');
         } catch (\Exception $e) {

@@ -55,5 +55,12 @@
                 allowClear: true
             });
         });
+
+        $(document).ready(function() {
+            $('.select1').select2({ // Referencia por ID
+                placeholder: "Selecciona un cliente",
+                allowClear: true
+            });
+        });
     </script>
     

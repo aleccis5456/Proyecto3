@@ -150,6 +150,7 @@ Route::middleware([Caja::class])->group(function(){
     Route::post('/caja/retiro', [CajaController::class, 'retiro'])->name('caja.retiro');
 
 });
+Route::get('/ticket/{pedidoId}', [PDFController::class, 'ticket'])->name('pdf.ticket');
 
 Route::get('/debug', function(){
     echo count(session('carrito'));    
@@ -172,3 +173,7 @@ route::get('/indexdos', [ProductoController::class, 'indexdos']);
 
 
 route::get('/emailPedido', [PedidoController::class, 'prueba']);
+
+route::get('/ticket', function(){
+    return view('ticket.ticket');
+});

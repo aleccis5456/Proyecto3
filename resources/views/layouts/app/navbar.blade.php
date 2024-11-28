@@ -1,5 +1,5 @@
     <div class=" flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-1">
-        <button href="" class="pr-10" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"
+        <button href="" class="pr-20" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation"
             aria-controls="drawer-navigation">
             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -7,10 +7,20 @@
             </svg>
         </button>
 
-        <a href="{{ route('home') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="{{ asset('src/imgs/logo2.webp') }}" class="h-8" alt="Flowbite Logo" />
-            <span class="self-center text-2xl text-gray-600 font-semibold whitespace-nowrap dark:text-white">Proyecto</span>
-        </a>
+        <div class="flex items-center space-x-2 group">
+            <a href="{{ route('home') }}"
+                class="flex items-center space-x-1 transform transition duration-300 hover:scale-105">
+                <span
+                    class="self-center text-2xl font-bold bg-[#fbb321] text-white px-2 rounded-md group-hover:bg-[#fbb321] transition duration-300">
+                    Electro
+                </span>
+                <span
+                    class="self-center text-2xl font-bold text-[#fbb321] group-hover:text-[#fbb321] transition duration-300">
+                    Max
+                </span>
+            </a>
+        </div>
+
 
         <div class="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
             <!-- carrito -->
@@ -42,7 +52,7 @@
                     </svg>
                 </button>
             @endif
-            
+
             @include('layouts.app.carrito')
             {{-- <x-carrito /> --}}
 

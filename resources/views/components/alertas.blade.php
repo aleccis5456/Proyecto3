@@ -185,7 +185,7 @@
     @if (session('venta'))
         <div id="alerta-modal" tabindex="-1"
             class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
-            <div class="relative p-4 w-full max-w-md">
+            <div class="relative p-4 w-full max-w-lg">
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <button type="button"
                         class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -204,11 +204,29 @@
                                 d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6" />
                         </svg>
 
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Venta completada</h3>
-                        <button onclick="closeAlert()" type="button"
-                            class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-green-800">
-                            Cerrar
-                        </button>
+                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirmar Venta</h3>
+                        <div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 20px;">
+                            <!-- Botón de cerrar -->
+                            <button onclick="closeAlert()" type="button"
+                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center gap-2 dark:focus:ring-green-800">
+                                Cancelar
+                            </button>
+                            <a href="{{ route('pdf.ticket', ['pedidoId' => 1]) }}" type="button"
+                                class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center gap-2 dark:focus:ring-green-800">                               
+                                Sin Ticket
+                            </a>
+                            <!-- Botón de imprimir -->
+                            <a href="{{ route('pdf.ticket', ['pedidoId' => 1]) }}" type="button"
+                                class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2.5 flex items-center justify-center gap-2 dark:focus:ring-green-800">
+                                <svg class="w-6 h-4 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M18.5 12A2.5 2.5 0 0 1 21 9.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2.5a2.5 2.5 0 0 1 0 5V17a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+                                </svg>
+                                Con Ticket
+                            </a>
+                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -217,15 +235,11 @@
         <script>
             function closeAlert() {
                 const modal = document.getElementById('alerta-modal');
-                if (modal) {
-                    modal.style.transition = 'opacity 0.5s';
-                    modal.style.opacity = '0';
-                    setTimeout(() => modal.remove(), 500); // Remueve el elemento después de la transición
+                if (modal) {                    
+                    modal.style.opacity = '0';        
                 }
             }
 
-            // Cierra automáticamente después de 5 segundos
-            setTimeout(() => closeAlert(), 3000);
         </script>
     @endif
 

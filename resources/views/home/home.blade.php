@@ -31,7 +31,7 @@
                             class="absolute inset-0 bg-yellow-100 opacity-0 group-hover:opacity-50 transition-opacity duration-300">
                         </div>
                         <div
-                            class="font-bold text-yellow-400 absolute bottom-0 left-0 right-0 text-center bg-gray-300 text-white py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            class="font-bold text-yellow-400 absolute bottom-0 left-0 right-0 text-center bg-gray-300 py-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             Ver producto
                         </div>
                     </a>

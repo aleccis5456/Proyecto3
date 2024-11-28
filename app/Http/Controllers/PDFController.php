@@ -93,4 +93,13 @@ class PDFController extends Controller
 
         return $pdf->download('reporte_' . Carbon::now()->format('Ymd_His') . '.pdf');
     }
+
+    public function ticket($pedidoId){
+        $lista = ListaPedido::where('pedido_id', $pedidoId)->get();
+        $pdf = PDF::loadView('ticket.ticket', [
+            'lista' => $lista
+        ]);
+        
+        return $pdf->stream("ticket.pdf");
+    }
 }

@@ -29,7 +29,7 @@
                     @if (!session('ventaCaja'))
                     @else
                         <span
-                            class="font-semibold inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ App\Utils\Util::statsVentaCaja()['total_conteo'] }}</span>
+                            class="inline-flex items-center justify-center w-3 h-3 p-3 ms-3 text-sm font-medium text-blue-800 bg-blue-200 rounded-full dark:bg-blue-900 dark:text-blue-300">{{ App\Utils\Util::statsVentaCaja()['total_conteo'] }}</span>
                     @endif
                 </a>
             @endif
@@ -57,7 +57,21 @@
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Salir</span>
             </a>
-        </li>
-        
+        </li>        
     </ul>
+
+    <div class="fixed bottom-0 left-0 p-2 group">
+        <a href="" class="relative">
+          <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+          </svg>
+          <!-- Tooltip -->
+          <span class="absolute left-8 bottom-0 transform -translate-y-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+            Ayuda   
+          </span>
+        </a>
+      </div>
+      
+      
+      
 </div>

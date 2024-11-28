@@ -54,9 +54,9 @@
                 <td class="px-6 py-4">
                     {{ $producto->stock_actual }}
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4" >
                     @if ($producto->precio_oferta != 0)
-                        <p class="text-green-500">{{ number_format(round($producto->precio_oferta, -2), 0, ',', '.') }} Gs    </p>
+                        <p class="text-green-500">{{ number_format(round($producto->precio_oferta, -2), 0, ',', '.') }} Gs </p>
                         {{ number_format(round($producto->precio, -2), 0, ',', '.') }} Gs    
                     @else
                         {{ number_format(round($producto->precio, -2), 0, ',', '.') }} Gs    
@@ -65,8 +65,8 @@
                 </td>
                 <td class="px-6 py-4">                      
                     @php
-                    $ventaCaja = collect(session('ventaCaja'));
-                @endphp
+                        $ventaCaja = collect(session('ventaCaja'));
+                    @endphp
                 
                 @if ($ventaCaja->contains('id_producto', $producto->id))
                     <!-- Ícono de producto agregado -->
