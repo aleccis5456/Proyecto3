@@ -63,6 +63,8 @@ Route::post('/recuperar-contraseña', [UsuarioController::class, 'recuperar'])->
 Route::get('/cambiar-contraseña/{id}', [UsuarioController::class, 'cambiar'])->name('cambiar.pass');
 Route::post('/cambiar/Save', [UsuarioController::class, 'cambiarSave'])->name('cambiarSave');
 Route::post('/cancelar-pedido', [UsuarioController::class, 'actualizarEstado'])->name('cancelar.pedido');
+Route::get('/buscar-pedido', [UsuarioController::class, 'buscarPedidoForm'])->name('buscar.pedido');
+Route::get('/mi-pedido', [UsuarioController::class, 'buscarPedido'])->name('buscar.pedidoget');
 
 //administracion
 Route::get('/adm/login', [AdmController::class, 'login'])->name('adm.login');

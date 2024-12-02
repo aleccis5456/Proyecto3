@@ -50,9 +50,12 @@
                             @endforeach
                         </ul>
                     @endforeach
-                </li>                
+                </li>                                
                 <!--  /categorias --->
             </ul>
+            {{-- <a href="{{ route('descargar.manual.adm') }}" class="fixed bottom-0 left-0 p-2 group">                
+                <span class="font-semibold bg-white">Buscar mi pedido</span>
+            </a>     --}}
         </div>
     </div>
 </div>

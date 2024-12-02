@@ -239,6 +239,23 @@ class UsuarioController extends Controller
         
         return back()->with('success', 'Estado del pedido cambiado');
     }
+
+    public function buscarPedidoForm(){
+        return view('usuario.buscarPedido');
+    }
+
+    public function buscarPedido(Request $request){
+        $pedido = Pedido::where('codigo', $request->codigo)->first();
+        if(!$pedido){
+            return back()->with('pedidoNotFound', 'Pedido: '.$request->codigo);
+        }
+        $tercero = EntregaTerceros::where('pedido_id', $pedido->id)->first();
+
+        return view('usuario.miPedido', [
+            'pedido' => $pedido, 
+            'tercero' => $tercero            
+        ]);
+    }
 }
 
 
