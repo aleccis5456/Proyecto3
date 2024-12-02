@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <title>Logon Administración</title>
+    <title>Registro Administración</title>
 </head>
 
 <body>
@@ -19,7 +19,7 @@
     </header>
 
     <body>
-        <form action=" {{ route('adm.login') }} " method="GET">
+        {{-- <form action=" {{ route('adm.login') }} " method="GET">
             <div class="max-w-sm mx-auto ">                
                 <button type="submit" class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-600 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                     <svg class="w-6 h-6 text-gray-100 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -28,10 +28,7 @@
                       
                 </button>
             </div>
-        </form>
-        
-
-
+        </form> --}}        
         <form method="POST" action=" {{ route('adm.registroSave') }} "
             class="max-w-sm mx-auto p-6 bg-gray-100 border border-gray-300 rounded-lg shadow-md backdrop-blur-sm bg-opacity-80">
             @csrf
@@ -65,7 +62,7 @@
             </button>                
             
             <a href="{{ route('vendedores.showRegister') }}" class="pl-12 text-sm text-gray-600  hover:text-gray-600 hover:underline  hover:font-bold">Registrar un repartidor</a>
-            <a href="{{ route('cajero.loginform') }}" class="pl-[152px] text-sm text-gray-600  hover:text-gray-600 hover:underline  hover:font-bold ">Registrar un cajero</a>
+            <a href="{{ route('cajero.registerform') }}" class="pl-[152px] text-sm text-gray-600  hover:text-gray-600 hover:underline  hover:font-bold ">Registrar un cajero</a>
             
         </form>
 

@@ -43,7 +43,7 @@
                             @endif
                         @endforeach
                     @else
-                        <form action="{{ route('caja.retiro') }}" method="POST"
+                        <form onclick="return confirm('¿Estás seguro de anular?')" action="{{ route('caja.retiro') }}" method="POST"
                             class="ml-32 text-sm max-w-[120px] text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg px-4 py-2 transition duration-150">
                             @csrf
                             <input type="hidden" name="estado" value="Anulado">

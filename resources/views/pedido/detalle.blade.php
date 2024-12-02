@@ -96,18 +96,20 @@
                 <p><strong>Email:</strong> {{ $pedido->usuario->email ?? 'Invitado' }}</p>
                 @if ($pedido->costoEnvio == 0)
                     <p><strong>Dirección de Envío:</strong> Retiro en tienda   
-                    <p class="mb-2 mt-5 text-sm underline">Asignado a tercero:</p>
-                    @if (!empty($tercero))
-                        <p><strong>Nombre:</strong> {{ $tercero->nombre }} </p>
-                        <p><strong>RUC o CI:</strong> {{ $tercero->cedula }}</p>
-                        <p><strong>Celular:</strong> {{ $tercero->telefono ?? 'No se agrego un numero' }}</p>    
-                    @endif
-                        <p><strong>No asignado</strong></p>
+                                                        
                 @else
                     <p><strong>Dirección de Envío:</strong> {{ $pedido->departamento }}, {{ $pedido->ciudad }},
                         {{ $pedido->calle }}</p>
                     <p><strong>Total del Envío:</strong> {{ number_format($pedido->costoEnvio, 0, ',', '.') }} Gs.</p>    
                 @endif
+
+                @if (!empty($tercero))
+                    <p class="mb-2 mt-5 text-sm underline">Asignado a tercero:</p>    
+                    <p><strong>Nombre:</strong> {{ $tercero->nombre }} </p>
+                    <p><strong>RUC o CI:</strong> {{ $tercero->cedula }}</p>
+                    <p><strong>Celular:</strong> {{ $tercero->telefono ?? 'No se agrego un numero' }}</p>       
+                @endif
+                        
                 
             </div>
             <hr>            

@@ -7,12 +7,12 @@
         <x-alertas />
         <form action="{{ route('banner.edit') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Subir Banner</h2>
+            <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Editar Banner</h2>
             <input type="hidden" name="banner_id" value="{{ $banner->id }}">
-            <div class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 p-4 mb-4 rounded">
+            {{-- <div class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 p-4 mb-4 rounded">
                 <p class="text-sm">* Sugerencia: se recomienda una imagen con relación de aspecto 9:10 para mejor
                     visualización.</p>
-            </div>
+            </div> --}}
             <div class="mb-6">
                 <label class="block text-gray-800 dark:text-white font-medium mb-2" for="banner_image">Titulo</label>
                 <input value="{{ $banner->titulo == '' ? 'Sin titulo' : $banner->titulo }}" name="titulo" type="text"

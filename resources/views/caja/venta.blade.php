@@ -145,11 +145,6 @@
 
     @include('caja.includes.aggClienteModal')   
 
-
-
-
-
-
     {{-- @if (!session('venta')) --}}
       
     {{-- @endif --}}

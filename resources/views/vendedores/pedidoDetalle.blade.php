@@ -4,30 +4,33 @@
     <div class=" flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900"> <!-- Contenedor principal centrado -->
         <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <x-alertas />
-            <div class="max-w-full flex">                
+            <div class="max-w-full flex">
                 <div class="mr-10">
-                    <p class="text-xl font-semibold">Pedido #{{$pedido->codigo}}</p>                    
+                    <p class="text-xl font-semibold">Pedido #{{ $pedido->codigo }}</p>
                     @if ($pedido->estado == 'Finalizado')
                     @else
-                    <div class="my-2 flex items-center gap-4">
-                        <form method="POST" action="{{ route('vendedores.cambiarestado') }}" class="flex items-center">
-                            @csrf
-                            <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
-                            <input type="hidden" name="vendedor_id" value="{{ Auth::guard('vendedores')->user()->id }}">
-                            <select id="estado" name="estado" class="py-1 px-4 rounded-lg border border-none font-semibold {{ $pedido->estado == 'Recibido' ? 'bg-blue-200 text-blue-600 focus:ring-blue-600' : '' }} {{ $pedido->estado == 'Procesado' ? 'bg-yellow-200 text-yellow-600 focus:ring-yellow-600' : '' }} {{ $pedido->estado == 'Enviado' ? 'bg-orange-200 text-orange-600 focus:ring-orange-600' : '' }} {{ $pedido->estado == 'Finalizado' ? 'bg-green-200 text-green-600 focus:ring-green-600' : '' }} {{ $pedido->estado == 'Anulado' ? 'bg-red-200 text-red-600 focus:ring-red-600' : '' }}">
-                                @foreach (['Recibido', 'Procesado', 'Enviado', 'Finalizado', 'Anulado'] as $estado)
-                                    <option value="{{ $estado }}" {{ $pedido->estado == $estado ? 'selected' : '' }}>
-                                        <p>{{ ucfirst($estado) }}</p>
-                                    </option>
-                                @endforeach
-                            </select>
-                            <button type="submit"
-                                class="ml-2 bg-gray-800 hover:bg-gray-600 text-white font-medium rounded-lg px-4 py-1 transition duration-150">
-                                Guardar
-                            </button>
-                        </form>                              
-                    </div>
-                    @endif                    
+                        <div class="my-2 flex items-center gap-4">
+                            <form method="POST" action="{{ route('vendedores.cambiarestado') }}" class="flex items-center">
+                                @csrf
+                                <input type="hidden" name="pedido_id" value="{{ $pedido->id }}">
+                                <input type="hidden" name="vendedor_id"
+                                    value="{{ Auth::guard('vendedores')->user()->id }}">
+                                <select id="estado" name="estado"
+                                    class="py-1 px-4 rounded-lg border border-none font-semibold {{ $pedido->estado == 'Recibido' ? 'bg-blue-200 text-blue-600 focus:ring-blue-600' : '' }} {{ $pedido->estado == 'Procesado' ? 'bg-yellow-200 text-yellow-600 focus:ring-yellow-600' : '' }} {{ $pedido->estado == 'Enviado' ? 'bg-orange-200 text-orange-600 focus:ring-orange-600' : '' }} {{ $pedido->estado == 'Finalizado' ? 'bg-green-200 text-green-600 focus:ring-green-600' : '' }} {{ $pedido->estado == 'Anulado' ? 'bg-red-200 text-red-600 focus:ring-red-600' : '' }}">
+                                    @foreach (['Recibido', 'Procesado', 'Enviado', 'Finalizado', 'Anulado'] as $estado)
+                                        <option value="{{ $estado }}"
+                                            {{ $pedido->estado == $estado ? 'selected' : '' }}>
+                                            <p>{{ ucfirst($estado) }}</p>
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <button type="submit"
+                                    class="ml-2 bg-gray-800 hover:bg-gray-600 text-white font-medium rounded-lg px-4 py-1 transition duration-150">
+                                    Guardar
+                                </button>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div class="max-w-full flex">
@@ -103,8 +106,7 @@
 
     <div class="flex items-center justify-center pt-10 bg-gray-100 dark:bg-gray-900">
         <!-- Contenedor principal centrado -->
-        <div
-            class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+        <div class="max-w-full p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <div class="max-w-full flex justify-between">
                 <div class="flex justify-center items-center text-center pt-10 max-w-full">
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg max-w-full">
@@ -150,7 +152,16 @@
                                         <br><br>
                                         <span class="font-bold">email:</span> {{ $pedido->usuario->email ?? 'invitado' }}
                                         <br><br>
-                                        <span class="font-bold">cantidad de pedidos:</span> {{$pedido->usuario->compras}}
+                                        <span class="font-bold">cantidad de pedidos:</span> {{ $pedido->usuario->compras }}
+
+                                        @if (!empty($tercero))
+                                            <p class="mb-2 mt-5 text-gray-800 font-bold">Asignado a tercero:</p>
+                                            <p><strong>Nombre:</strong> {{ $tercero->nombre }} </p>
+                                            <p><strong>RUC o CI:</strong> {{ $tercero->cedula }}</p>
+                                            <p><strong>Celular:</strong>
+                                                {{ $tercero->telefono ?? 'No se agrego un numero' }}</p>
+                                        @endif
+
                                     </td>
                                     <td></td>
                                     <td></td>

@@ -15,8 +15,8 @@ class PDFController extends Controller
 {
     public function generarPDF(Request $request)
     {        
-        $desde = $request->fecha_desde;
-        $hasta = $request->fecha_hasta;        
+        $desde = $request->fecha_desde ?? Carbon::today()->startOfDay();
+        $hasta = $request->fecha_hasta ?? Carbon::today()->endOfDay();
         $ventas = Ventas::where('fecha_venta', '>', $desde)->where('fecha_venta', '<', $hasta)->get();
         $productos = [];
         foreach($ventas as $venta){            

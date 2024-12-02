@@ -59,15 +59,14 @@
                                     <!-- Botón para mostrar el modal -->
                                     <button data-modal-target="popup-modal-cat" data-modal-toggle="popup-modal-cat"
                                         data-categoria-id="{{ $categoria->id }}"
-                                        class="hover:text-red-500 hover:font-bold open-modal">
+                                        class="open-modal px-1.5 py-1 bg-gray-800 text-white rounded-md hover:bg-gray-600 focus:bg-red-700">
                                         Eliminar
                                     </button>
                                     <a href="{{ route('categoria.editar', ['id' => $categoria->id]) }}"
-                                        class="hover:text-yellow-300 hover:font-bold">Editar</a>
+                                        class="px-1.5 py-1 bg-gray-600 text-white rounded-md hover:bg-gray-400 focus:bg-yellow-400">Editar</a>
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>

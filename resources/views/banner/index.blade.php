@@ -10,8 +10,8 @@
             <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-6">Subir Banner</h2>
 
             <div class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 p-4 mb-4 rounded">
-                <p class="text-sm">* Sugerencia: se recomienda una imagen con relación de aspecto 9:10 para mejor
-                    visualización.</p>
+                <p class="text-sm">* Sugerencia: Para el Banner de ofertas se recomienda una imagen con relacion de aspecto 9/10
+                    .</p>
             </div>
             <div class="mb-6">
                 <label class="block text-gray-800 dark:text-white font-medium mb-2" for="banner_image">Titulo</label>
@@ -103,21 +103,21 @@
                             <img src="{{ asset("uploads/banners/$banner->imagen") }}" alt="{{ $banner->titulo }}"
                                 class="w-32 h-auto rounded-lg">
                         </td>
-                        <td class="px-6 py-4 {{ $banner->activo == true ? 'text-green-500 font-bold' : 'text-red-500 font-bold' }}">
+                        <td >
                             @if ($banner->activo)
-                                Sí
+                                <span class="bg-green-300 px-2 py-1 rounded-lg font-semibold text-green-800">Sí</span>
                             @else
-                                No
+                            <span class="bg-red-300 px-2 py-1 rounded-lg font-semibold text-red-800">No</span>
                             @endif
                         </td>
                         <td>
                             {{ $banner->position->category }} - {{ $banner->position->position }}
                         </td>
-                        <td>
-                            <a class="hover:font-bold hover:text-gray-600" href="{{ route('banner.showFormEdit', ['id' => $banner->id]) }}">
+                        <td class="text-white">
+                            <a class="bg-gray-800 px-2 py-1 rounded-lg mr-1 hover:bg-gray-600" href="{{ route('banner.showFormEdit', ['id' => $banner->id]) }}">
                                 Editar
                             </a>
-                            <a onclick="return confirm('Estas seguto de eliminar este banner?')" class="hover:font-bold hover:text-gray-600" href="{{ route('banner.delete', ['id' => $banner->id]) }}">
+                            <a onclick="return confirm('Estas seguto de eliminar este banner?')" class="bg-gray-800 px-2 py-1 rounded-lg mr-1 hover:bg-gray-600" href="{{ route('banner.delete', ['id' => $banner->id]) }}">
                                 Eliminar
                             </a>
                         </td>

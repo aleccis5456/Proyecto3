@@ -82,6 +82,13 @@ class PedidoController extends Controller
         } else {
             return back()->with('warning', 'Selecciona un método de pago válido');
         }
+        foreach (session('carrito') as $item) {
+            $producto = Producto::findOrFail($item['producto_completo']['id']);
+            
+            if ($item['cantidad'] > $producto->stock_actual) {
+                return back()->with('sinStock', 'La cantidad seleccionada excede el stock disponible para: ' . $producto->nombre);
+            }
+        }
         $letrasNumerosAleatorios = $this->generateRandomCode(6);
 
         $codigo = $letrasNumerosAleatorios;
@@ -102,7 +109,7 @@ class PedidoController extends Controller
             $pedido->formaPago = $pago;
             $pedido->email = $request->email;
             $pedido->registro = Carbon::now();
-            $pedido->save();                        
+            $pedido->save();                                    
 
             $datos = DatosEnvio::create([
                 'pedido_id' => $pedido->id,
@@ -111,8 +118,10 @@ class PedidoController extends Controller
                 'ruc_ci' => $request->ruc,
                 'nro_factura' => '001 001'
             ]);  
+
+           
             
-            foreach (session('carrito') as $item) {
+            foreach (session('carrito') as $item) {                
                 $lista = ListaPedido::create([
                     'pedido_id' => $pedido->id,
                     'producto_id' => $item['producto_completo']['id'],
@@ -121,6 +130,8 @@ class PedidoController extends Controller
                     'registro' => Carbon::now(),
                 ]);
             }        
+           
+            
             $listas = ListaPedido::where('pedido_id', $pedido->id)->get();        
             foreach($listas as $lista){
                 $producto = Producto::findOrFail($lista->producto_id);

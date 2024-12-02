@@ -180,131 +180,123 @@
         </script>
     </div>
 
+    <div>
+        @if (session('producto_agregado'))
+            <div id="alerta" tabindex="-1"
+                class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+                <div class="relative p-4 w-full max-w-md">
+                    <div class="relative bg-yellow-50 rounded-lg shadow dark:bg-gray-700">
+                        <button type="button"
+                            class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            onclick="closeAlert()">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Cerrar</span>
+                        </button>
+                        <div class="p-4 md:p-5 text-center">
+                            <svg class="mx-auto mb-4 text-[#fbb321] w-12 h-12 dark:text-green-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25">
+                                <circle cx="12.5" cy="12.5" r="11" stroke="currentColor" stroke-width="2" />
+                                <path d="M9.5 12.5l2.5 2.5 5-5" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
 
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¡Producto agregado al
+                                carrito!</h3>
+                            <form action="{{ route('carrito.index') }}" method="get">
+                                <button type="submit"
+                                    class="text-gray-800 bg-[#fbb321] hover:bg-yellow-200 hover:text-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-green-800">
+                                    <div class="flex">
+                                        <p class="mt-0.5 font-semibold">Ver carrito</p>
+                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="none" viewBox="0 2 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </form>
 
-    @if (session('venta'))
-        <div id="alerta-modal" tabindex="-1"
-            class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
-            <div class="relative p-4 w-full max-w-lg">
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <button type="button"
-                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        onclick="closeAlert()">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Cerrar</span>
-                    </button>
-                    <div class="p-4 md:p-5 text-center">
-                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 21a9 9 0 1 1 0-18c1.052 0 2.062.18 3 .512M7 9.577l3.923 3.923 8.5-8.5M17 14v6m-3-3h6" />
-                        </svg>
-
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirmar Venta</h3>
-                        <div style="display: flex; gap: 10px; justify-content: center; align-items: center; margin-top: 20px;">
-                            <!-- Botón de cerrar -->
-                            <button onclick="closeAlert()" type="button"
-                                class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center gap-2 dark:focus:ring-green-800">
-                                Cancelar
-                            </button>
-                            <a href="{{ route('pdf.ticket', ['pedidoId' => 1]) }}" type="button"
-                                class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 flex items-center justify-center gap-2 dark:focus:ring-green-800">                               
-                                Sin Ticket
-                            </a>
-                            <!-- Botón de imprimir -->
-                            <a href="{{ route('pdf.ticket', ['pedidoId' => 1]) }}" type="button"
-                                class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2.5 flex items-center justify-center gap-2 dark:focus:ring-green-800">
-                                <svg class="w-6 h-4 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M18.5 12A2.5 2.5 0 0 1 21 9.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2.5a2.5 2.5 0 0 1 0 5V17a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2.5a2.5 2.5 0 0 1-2.5-2.5Z" />
-                                </svg>
-                                Con Ticket
-                            </a>
                         </div>
-                        
                     </div>
                 </div>
             </div>
-        </div>
 
-        <script>
-            function closeAlert() {
-                const modal = document.getElementById('alerta-modal');
-                if (modal) {                    
-                    modal.style.opacity = '0';        
+            <script>
+                function closeAlert() {
+                    const modal = document.getElementById('alerta');
+                    if (modal) {
+                        modal.style.transition = 'opacity 0.5s';
+                        modal.style.opacity = '0';
+                        setTimeout(() => modal.remove(), 500); // Remueve el elemento después de la transición
+                    }
                 }
-            }
 
-        </script>
-    @endif
+                // Cierra automáticamente después de 3 segundos
+                setTimeout(() => closeAlert(), 2000);
+            </script>
+        @endif
+    </div>
 
-
-
-
-
-    @if (session('producto_agregado'))
-        <div id="alerta-modal" tabindex="-1" class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
-            <div class="relative p-4 w-full max-w-md">
-                <div class="relative bg-yellow-50 rounded-lg shadow dark:bg-gray-700">
-                    <button type="button"
-                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        onclick="closeAlert()">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                            viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                        </svg>
-                        <span class="sr-only">Cerrar</span>
-                    </button>
-                    <div class="p-4 md:p-5 text-center">
-                        <svg class="mx-auto mb-4 text-[#fbb321] w-12 h-12 dark:text-green-400" aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 25 25">
-                            <circle cx="12.5" cy="12.5" r="11" stroke="currentColor" stroke-width="2" />
-                            <path d="M9.5 12.5l2.5 2.5 5-5" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">¡Producto agregado al
-                            carrito!</h3>
-                        <form action="{{ route('carrito.index') }}" method="get">
-                            <button type="submit"
-                                class="text-gray-800 bg-[#fbb321] hover:bg-yellow-200 hover:text-yellow-600 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:focus:ring-green-800">
-                                <div class="flex">
-                                    <p class="mt-0.5 font-semibold">Ver carrito</p>                                    
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                                        fill="none" viewBox="0 2 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.25L19 7H7.312" />
-                                    </svg>
-                                </div>
+    <div>
+        @if (session('sinStock'))
+            <div id="alerta" tabindex="-1"
+                class="fixed top-0 right-0 left-0 z-50 flex justify-center items-center w-full h-full bg-black bg-opacity-50">
+                <div class="relative p-4 w-full max-w-md">
+                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                        <!-- Botón para cerrar -->
+                        <button type="button"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            onclick="closeAlert()">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                            </svg>
+                            <span class="sr-only">Cerrar</span>
+                        </button>
+                        <!-- Contenido -->
+                        <div class="p-5 text-center">
+                            <svg class="mx-auto mb-4 text-red-500 w-12 h-12 dark:text-red-400" aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                viewBox="0 0 24 24">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                                    d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                            <h3 class="mb-5 text-lg font-semibold text-gray-800 dark:text-gray-200">
+                                ¡Stock insuficiente!
+                            </h3>
+                            <p class="mb-5 text-sm text-gray-600 dark:text-gray-400">
+                                {{ session('sinStock') }}
+                            </p>
+                            <button onclick="closeAlert()"
+                                class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                                Aceptar
                             </button>
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <script>
-            function closeAlert() {
-                const modal = document.getElementById('alerta-modal');
-                if (modal) {
-                    modal.style.transition = 'opacity 0.5s';
-                    modal.style.opacity = '0';
-                    setTimeout(() => modal.remove(), 500); // Remueve el elemento después de la transición
+            <script>
+                function closeAlert() {
+                    const modal = document.getElementById('alerta');
+                    if (modal) {
+                        modal.style.transition = 'opacity 0.5s';
+                        modal.style.opacity = '0';
+                        setTimeout(() => modal.remove(), 500); // Remueve el elemento después de la transición
+                    }
                 }
-            }
 
-            // Cierra automáticamente después de 3 segundos
-            setTimeout(() => closeAlert(), 2000);
-        </script>
-    @endif
+                // Cierra automáticamente después de 3 segundos
+                setTimeout(() => closeAlert(), 5000);
+            </script>
+        @endif
 
+    </div>
 </div>

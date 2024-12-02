@@ -37,13 +37,15 @@
 
         <li>
             <a href="{{ route('caja.retirar') }}"
-                class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                <svg class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                class="flex items-center p-2 {{ Route::is('caja.retirar') ? 'bg-gray-800 rounded-md text-white font-semibold' : 'bg-gray-200 hover:bg-gray-100 rounded-lg' }} group">
+                <svg class="w-5 h-5  {{ Route::is('caja.retirar') ? 'text-white' : 'text-gray-500' }}  transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+                    <svg
+                    class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M10 21v-9m3-4H7.5a2.5 2.5 0 1 1 0-5c1.5 0 2.875 1.25 3.875 2.5M14 21v-9m-9 0h14v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8ZM4 8h16a1 1 0 0 1 1 1v3H3V9a1 1 0 0 1 1-1Zm12.155-5c-3 0-5.5 5-5.5 5h5.5a2.5 2.5 0 0 0 0-5Z" />
                 </svg>
-                <span class="flex-1 ms-3 whitespace-nowrap">Productos a retirar</span>                
+                <span class="flex-1 ms-3 whitespace-nowrap">Productos a retirar</span>
             </a>
         </li>
 
@@ -57,21 +59,18 @@
                 </svg>
                 <span class="flex-1 ms-3 whitespace-nowrap">Salir</span>
             </a>
-        </li>        
+        </li>
     </ul>
 
-    <div class="fixed bottom-0 left-0 p-2 group">
-        <a href="" class="relative">
-          <svg class="w-6 h-6 text-gray-800 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-          </svg>
-          <!-- Tooltip -->
-          <span class="absolute left-8 bottom-0 transform -translate-y-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
-            Ayuda   
-          </span>
-        </a>
-      </div>
-      
-      
-      
+    <a onclick="return confirm('Descargar Manual de usuario?')" href="{{ route('descargar.manual.caja') }}" class="fixed bottom-0 left-0 p-2 group">
+        <svg class="w-10 h-10 px-1 py-2 text-gray-800 dark:text-white hover:text-gray-200 hover:bg-gray-800 hover:px-1 hover:py-2 rounded-full" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>       
+    </a>    
 </div>
+
+
+
+

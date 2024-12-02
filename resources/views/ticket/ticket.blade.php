@@ -75,7 +75,8 @@
             <p>Teléfono: 123-456-789</p>
             <p>Fecha de compra: 2024-11-27</p>
             <br>
-            <p>Cliente: </p>
+            <p>Cliente: {{$cliente->nombre}}  {{$cliente->apellido}}</p>
+            <p>RUC o CI: {{$cliente->ruc_ci}}</p>
         </div>
 
         <!-- Detalle de productos -->

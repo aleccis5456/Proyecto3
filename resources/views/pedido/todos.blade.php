@@ -77,7 +77,7 @@
                             </button>
                         </form>
                     </th>
-                    <th scope="col" class="px-6 py-3 text-center">Repartidor</th>
+                    <th scope="col" class="px-6 py-3 text-center"></th>
                     <th scope="col" class="px-6 py-3">Detalle</th>
                 </tr>
             </thead>

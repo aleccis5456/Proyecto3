@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EntregaTerceros;
 use App\Models\Pedido;
 use App\Models\Vendedor;
 use App\Models\Departamento;
@@ -9,7 +10,7 @@ use App\Models\VentasAsignada;
 use Illuminate\Http\Request;
 use App\Models\ListaPedido;
 use App\Models\DatosEnvio;
-use app\Models\Producto;
+use App\Models\Producto;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
@@ -148,12 +149,14 @@ class VendedoresController extends Controller
         $producto = ListaPedido::where('pedido_id', $pedido_id)->get();
         $unidades = ListaPedido::where('pedido_id', $pedido_id)->pluck('unidades');
         $datos = DatosEnvio::where('pedido_id', $pedido_id)->first();
+        $tercero = EntregaTerceros::where('pedido_id', $pedido_id)->first();
         return view('vendedores.pedidoDetalle', [
             'pedido' => $pedido,
             'cantidad' => $cantidad,
             'producto' => $producto,
             'unidades' => $unidades,
             'datos' => $datos,
+            'tercero' => $tercero
         ]);
     }
 
@@ -174,9 +177,21 @@ class VendedoresController extends Controller
 
         if($request->estado == "Finalizado"){            
             $vendedor = Vendedor::findOrFail($request->vendedor_id);
+            $ventaAsignada = VentasAsignada::where('pedido_id', $pedido->id)->first();
+            $ventaAsignada->activo = false;
             $vendedor->ventas_completadas += 1;
             $vendedor->save();
             $pedido->estado = $request->estado;
+            $ventaAsignada->save();
+            $pedido->save();
+
+            return back()->with('success', 'Estado del pedido cambiado');
+        }        
+        if($request->estado == "Anulado"){            
+            $ventaAsignada = VentasAsignada::where('pedido_id', $pedido->id)->first();
+            $ventaAsignada->activo = false;                        
+            $pedido->estado = $request->estado;
+            $ventaAsignada->save();
             $pedido->save();
 
             return back()->with('success', 'Estado del pedido cambiado');
@@ -188,6 +203,7 @@ class VendedoresController extends Controller
                 return back()->with('error', 'Pedido Anulado');                
             } else {
                 foreach ($listas as $lista) {
+                    // $producto = Producto::find($lista->producto_id);
                     $producto = Producto::find($lista->producto_id);
                     if ($producto) {
                         $producto->stock_actual += $lista->unidades;

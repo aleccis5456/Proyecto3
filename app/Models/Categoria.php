@@ -13,6 +13,6 @@ class Categoria extends Model
     protected $fillable = ['nombre', 'registro', 'imagen'];
 
     public function subcategoria(){
-        return $this->hasMany(SubCategoria::class);
+        return $this->hasMany(SubCategoria::class, 'categoria_id');
     }
 }

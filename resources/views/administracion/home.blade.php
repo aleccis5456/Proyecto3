@@ -79,7 +79,8 @@
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             #{{ $producto->codigo }}
                                         </th>
-                                        <th class="px-6 py-4">
+                                        <th class="px-6 py-4 flex">
+                                            <img class="w-7 h-7 pr-1" src="{{ asset("uploads/productos/$producto->imagen") }}" alt="">
                                             <a class="hover:text-blue-600"
                                                 href="{{ route('producto.detalle', ['id' => $producto->id]) }}">
                                                 {{ $producto->nombre }}

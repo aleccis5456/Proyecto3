@@ -12,8 +12,9 @@
         
         <!-- Columna del formulario de inicio de sesión -->
         <div class="w-1/2 p-8">
-            <form method="POST" action="{{ route('adm.loginSave') }}"
+            <form method="POST" action="{{ route('adm.loginSave') }}"            
                 class="p-6 bg-gray-100 border border-gray-300 rounded-lg shadow-md backdrop-blur-sm bg-opacity-80">            
+                <x-alertas/>
                 @csrf
                 <div class="mb-6 text-center">
                     <b class="text-2xl text-gray-900 dark:text-white">Login de Administradores</b>

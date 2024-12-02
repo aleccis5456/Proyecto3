@@ -23,16 +23,24 @@ class CategoriaController extends Controller
     {
         $request->validate(
             [
-                'categoria' => 'required'
+                'categoria' => 'required',
+                'imagen' => 'nullable|image'
             ],
             [
-                'categoria.required' => 'El compo no puede quedar vacio'
+                'categoria.required' => 'El compo no puede quedar vacio',
+                'imagen.*' => 'error al cargar la imagen'
             ]
-        );
-
+        );        
+        if($request->hasFile('imagen')){
+            $image_path = $request->file('imagen');
+            $imageName = time() . '.' . $image_path->getClientOriginalExtension();
+            $destinationPath = public_path('uploads/categorias');
+            $image_path->move($destinationPath, $imageName);
+        }
         $categoria = new Categoria;
 
         $categoria->nombre = $request->categoria;
+        $categoria->imagen = $imageName;
         $categoria->reg_por_adm_id = session('adm')->id;
         $categoria->registro = Carbon::now();
 

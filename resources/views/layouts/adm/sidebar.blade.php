@@ -102,7 +102,14 @@
                     </div>
                 </a>
             </li>
-
         </ul>
+
+    <a onclick="return confirm('Descargar Manual de usuario?')" href="{{ route('descargar.manual.adm') }}" class="fixed bottom-0 left-0 p-2 group">
+        <svg class="w-10 h-10 px-1 py-2 text-gray-800 dark:text-white hover:text-gray-200 hover:bg-gray-800 hover:px-1 hover:py-2 rounded-full" xmlns="http://www.w3.org/2000/svg" fill="none"
+            viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M9.529 9.988a2.502 2.502 0 1 1 5 .191A2.441 2.441 0 0 1 12 12.582V14m-.01 3.008H12M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+        </svg>       
+    </a>    
     </div>
 </div>

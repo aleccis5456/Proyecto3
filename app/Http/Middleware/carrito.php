@@ -15,8 +15,8 @@ class carrito
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!session('carrito')){
-            return redirect('/');
+        if(!session('ventaCaja')){
+            return redirect('/caja');
         }
         return $next($request);
     }

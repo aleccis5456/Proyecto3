@@ -59,18 +59,25 @@
                             <span
                                 class="bg-{{ $color }}-200 text-{{ $color }}-600 py-2 px-4 rounded-full text-xs font-semibold">{{ $venta->pedido->estado }}</span>
                         </td>
-                        <td class="px-6 py-4">{{ $venta->pedido->usuario->name }}</td>
+                        <td class="px-6 py-4 font-semibold">
+                            @if ($venta->pedido->usuario->name == "invitado")
+                                <span class="bg-gray-200 px-2 py-1 rounded-full text-gray-800">{{ $venta->pedido->usuario->name }}</span>
+                            @else
+                            <span class="bg-yellow-200 px-2 py-1 rounded-full text-yellow-800">{{ $venta->pedido->usuario->name }}</span>
+                            @endif
+                            
+                        </td>
                         <td class="px-6 py-4">{{ $venta->pedido->registro }}</td>
-                        <td class="px-6 py-4">
-                            {{-- {{ number_format(round($pedido->coste, -2), 0, ',', '.') }} Gs. --}}
-                            {{ $venta->pedido->costoEnvio > 0 ? number_format($venta->pedido->costoEnvio + $venta->pedido->coste, 0, '.', '.') : number_format(round($venta->pedido->coste, -2), 0, ',', '.') }}
-                            Gs.
+                        <td class="px-6 py-4 font-semibold">                            
+                            <span class="bg-gray-800 px-2 py-1 text-white rounded-full">{{ $venta->pedido->costoEnvio > 0 ? number_format($venta->pedido->costoEnvio + $venta->pedido->coste, 0, '.', '.') : number_format(round($venta->pedido->coste, -2), 0, ',', '.') }}
+                                Gs.</span>
+                            
                         </td>                                             
 
                         <td class="px-6 py-4">
-                            <a class="hover:text-blue-700 rounded-lg hover:bg-gray-200 py-2 ml-2 px-2"
+                            <a class=""
                                 href="{{ route('vendedores.pedidodetalle', ['pedido' => $venta->pedido->id]) }}">
-                                Ver
+                                <span class="bg-gray-800 text-white px-2 py-1 rounded-lg hover:bg-gray-600">Ver</span>
                             </a>
                         </td>
                     </tr>

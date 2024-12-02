@@ -203,22 +203,22 @@ class CajaController extends Controller
             ]);                          
              
             $user_id = $requesr->usuario ?? 1;
-            $user = User::findOrFail($user_id);                        
+            $user = User::findOrFail($user_id);                         
             $user->increment('compras');        
 
 
             $lista = ListaPedido::where('pedido_id', $pedido->id)->get();
+            $cliente = DatosEnvio::where('pedido_id', $pedido->id)->first();
             $pdf = PDF::loadView('ticket.ticket', [
-            'lista' => $lista
-            ]);
-                
-            return $pdf->download("ticket.pdf");            
-
+                'lista' => $lista,
+                'cliente' => $cliente
+            ]);            
+            $pdf->setPaper([35,-35, 214.01, 300]);
             session()->forget('ventaCaja');
-            session()->forget('statasCajaVenta');                        
+            session()->forget('statasCajaVenta');    
             
             DB::commit();
-            return redirect()->route('cajero.index')->with('venta', 'listo');
+            return $pdf->download("ticket.pdf");                                                                    
         } catch (\Exception $e) {
             DB::rollBack();
             return back()->with('error', $e->getMessage());

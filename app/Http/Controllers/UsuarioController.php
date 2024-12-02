@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EntregaTerceros;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Pedido;
 use App\Models\ListaPedido;
+use App\Models\Producto;
+use App\Models\Ventas;
 use App\Models\Administracion;
 use App\Mail\ForgotPass;
 use Carbon\Carbon;
@@ -14,6 +17,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\DB;
 
 class UsuarioController extends Controller
 {
@@ -117,10 +121,11 @@ class UsuarioController extends Controller
     public function Ajustes($id){
         $user = User::findOrFail($id);
         $pedidos = Pedido::where('user_id', $id)->orderByDesc('id')->get();
-             
+        $terceros = EntregaTerceros::all();        
         return view('usuario.ajuste', [
             'user' => $user,
             'pedidos' => $pedidos,
+            'terceros' => $terceros
         ]);
     }
 
@@ -200,4 +205,40 @@ class UsuarioController extends Controller
 
         return redirect()->route('login')->with('info', 'Haz cambiado tu contraseña');
     }
+
+    public function actualizarEstado(Request $request)
+    {                
+        $request->validate([
+            'estado' => 'required|string',
+            'pedido_id' => 'required|integer',
+        ]);
+
+        $pedido = Pedido::find($request->pedido_id);
+        if (!$pedido) {
+            return back()->with('warning', 'Pedido no encontrado');
+        }
+
+        $listas = ListaPedido::where('pedido_id', $request->pedido_id)->get();
+
+        if ($request->estado == 'Anulado') {
+            foreach ($listas as $lista) {
+                $producto = Producto::find($lista->producto_id);
+                if ($producto) {
+                    $producto->stock_actual += $lista->unidades;
+                    $producto->save();
+                    DB::update("update productos set ventas = 0 where id = ?", [$lista->producto_id]);
+                }
+                $venta = Ventas::where('producto_id', $producto->id)->first();
+                if($venta){
+                    $venta->delete();                                
+                }                
+            }
+        }        
+        $pedido->estado = $request->estado;
+        $pedido->save();
+        
+        return back()->with('success', 'Estado del pedido cambiado');
+    }
 }
+
+

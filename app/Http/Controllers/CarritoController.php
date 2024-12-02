@@ -38,12 +38,12 @@ class CarritoController extends Controller
         }
 
         foreach ($carrito as &$item) {
-            if ($item['id_producto'] == $producto->id) {
+            if ($item['id_producto'] == $producto->id and $producto->stock_actual > 1) {
                 if ($item['producto_completo']['precio'] == $item['precio']) {
                     $contador++;
                     $item['cantidad']++;
                 } else {
-                    return back();
+                    return back()->with('info', 'No se pudo agregar el producto');
                 }
             }
         }

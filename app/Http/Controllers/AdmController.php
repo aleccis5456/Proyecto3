@@ -130,6 +130,51 @@ class AdmController extends Controller
         return view('administracion.users', [
             'users' => $users,
         ]);
-
     }
+
+    public function editForm(){
+        return view('administracion.edit');
+    }
+
+    public function edit(Request $request)
+    {
+        // Validar los datos enviados
+        $validatedData = $request->validate([
+            'nombre' => 'sometimes|string|max:255',
+            'correo' => 'sometimes|email|max:255',
+            'password' => 'nullable|string|min:8',
+        ]);
+    
+        // Buscar el registro
+        $registro = Administrador::findOrFail($request->admId);
+    
+        try {
+            // Preparar los datos para la actualización
+            $dataToUpdate = [];
+            
+            if ($request->filled('nombre')) {
+                $dataToUpdate['nombre'] = $request->nombre;
+            }
+            if ($request->filled('correo')) {
+                $dataToUpdate['correo'] = $request->correo;
+            }
+            if ($request->filled('password')) {
+                $dataToUpdate['password'] = Hash::make($request->password);
+            }
+    
+            // Actualizar solo si hay cambios
+            if (!empty($dataToUpdate)) {
+                $registro->update($dataToUpdate);
+                return back()->with('info', 'Haz cambiado tus datos');
+            }
+    
+            return back()->with('info', 'No se realizaron cambios.');
+    
+        } catch (\Exception $e) {
+            return back()->with('warning', 'Error: ' . $e->getMessage());
+        }
+    }
+    
+
+
 }

@@ -13,16 +13,7 @@
                 <a href=" {{ route('producto.editar', ['id' => $item->id]) }} "
                     class="focus:outline-none text-white bg-gray-600 hover:bg-gray-800 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-yellow-300 dark:hover:bg-yellow-700 dark:focus:ring-yellow-500">
                     Editar
-                </a>
-                <a href=" {{ url()->previous() }} "
-                    class="focus:outline-none text-white bg-gray-800 hover:bg-gray-600 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                        width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M5 12h14M5 12l4-4m-4 4 4 4" />
-                    </svg>
-
-                </a>
+                </a>                
             </div>
 
             <div class="flex justify-center items-start text-center pt-10 max-w-full">

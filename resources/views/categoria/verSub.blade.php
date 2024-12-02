@@ -59,13 +59,12 @@
                                 <td class="px-6 py-4">
                                     <button data-modal-target="popup-modal-subcat" data-modal-toggle="popup-modal-subcat"
                                         data-subcategoria-id="{{ $subcategoria->id }}"
-                                        class="open-modal hover:text-red-500 rounded-lg hover:bg-gray-200 px-1 py-1">
+                                        class="open-modal px-1.5 py-1 bg-gray-800 text-white rounded-md hover:bg-gray-600 focus:bg-red-700">
                                         Eliminar
                                     </button>
 
                                     <a href="{{ route('sub.editar', ['id' => $subcategoria->id]) }}"
-                                        class="hover:text-yellow-300 rounded-lg hover:bg-gray-200 px-1
-                                         py-1">Editar</a>
+                                        class="px-1.5 py-1 bg-gray-600 text-white rounded-md hover:bg-gray-400 focus:bg-yellow-400">Editar</a>
                                 </td>
                             </tr>
                         @endforeach

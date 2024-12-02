@@ -35,8 +35,7 @@
     @include('layouts.app.cerrarsesion')<!-- confirmar cerrar sesion -->
     
     <div class="max-w-[1380px] mx-auto">
-        <br><br>
-        
+        <br><br>        
         @yield('contenido')<!-- contenido -->
     </div>    
 
