@@ -142,6 +142,14 @@ Route::middleware([Vendedor::class])->group(function () {
     Route::get('/vend/logout', [VendedoresController::class, 'logout'])->name('vendedores.logout');
     Route::get('/vend/pedido/{pedido}/detalle', [VendedoresController::class, 'pedidoDetalle'])->name('vendedores.pedidodetalle');
     Route::post('/vend/pedido/estado', [VendedoresController::class, 'cambiarEstado'])->name('vendedores.cambiarestado');
+
+
+    Route::get('/manual-repartidor', function () {
+        $path = public_path('src/docs/manuales/manualRepartidor.pdf');
+        $filename = 'manual.pdf';
+
+        return response()->download($path, $filename);
+    })->name('descargar.manual.repartidor');
 });
 
 //caja

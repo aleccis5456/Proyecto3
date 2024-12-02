@@ -42,7 +42,7 @@
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
     @include('layouts.app.footer')<!-- footer --->
 
-    @vite('resources/js/app.js');
+    @vite('resources/js/app.js')
     <script src="{{ asset('js/funciones.js') }}"></script>
 </body>
 <x-mostrar-menu-categorias />

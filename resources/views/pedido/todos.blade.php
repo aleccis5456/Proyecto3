@@ -103,9 +103,16 @@
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         #{{ $pedido->codigo }}
                     </th>
-                    <td class="px-6 py-4">{{ $pedido->usuario->name }}</td>
-                    <td class="px-6 py-4">{{ $pedido->registro }}</td>
                     <td class="px-6 py-4">
+                        @if ($pedido->usuario->name == "invitado")
+                            <span class="bg-gray-200 text-gray-800 px-2 py-1 rounded-full font-semibold">{{ $pedido->usuario->name }}</span>
+                        @else
+                            <span class="bg-yellow-200 text-yellow-800 px-2 py-1 rounded-full font-semibold">{{ $pedido->usuario->name }}</span>
+                        @endif
+                        
+                    </td>
+                    <td class="px-6 py-4">{{ $pedido->registro }}</td>
+                    <td class="px-6 py-4 font-semibold">
                         {{ $pedido->costoEnvio > 0 ? number_format($pedido->costoEnvio + $pedido->coste, 0, '.', '.') : number_format(round($pedido->coste, -2), 0, ',', '.') }}
                         Gs.
                     </td>
