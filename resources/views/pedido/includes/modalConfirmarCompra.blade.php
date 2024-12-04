@@ -64,12 +64,12 @@
         <!-- Botones -->
         <div class="flex justify-end gap-4 mt-6">
             <span onclick="closeModalVenta()"
-                class="cursor-pointer bg-gray-200 text-gray-800 hover:bg-gray-300 font-medium rounded-lg text-sm px-4 py-2">
+                class="cursor-pointer bg-gray-200 text-gray-800 hover:bg-red-600 font-semibold hover:text-gray-200 rounded-lg text-sm px-4 py-2">
                 Cancelar
             </span>
             
                 <button type="submit" onclick="openProcessingModal()"
-                    class="bg-[#fbb321] hover:bg-yellow-400 text-white font-medium rounded-lg text-sm px-4 py-2 shadow-md">
+                    class="bg-[#fbb321] text-gray-800 hover:bg-yellow-200 hover:text-black font-semibold rounded-lg text-sm px-4 py-2 shadow-md">
                     Confirmar
                 </button>            
         </div>

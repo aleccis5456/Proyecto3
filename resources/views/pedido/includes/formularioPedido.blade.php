@@ -83,17 +83,17 @@
                 </label>
             </div>
 
-                        
+
 
             <div class="relative z-0 w-full mb-5 group">
                 <label for="pago"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-
+                    class=" text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                    Elegir Forma de pago
                 </label>
                 <select id="pago" name="pago"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 
-                    <option value="null">Forma de pago</option>
+                    <option value="null">-Seleccionar-</option>
                     <option value="ef">Efectivo</option>
                     <option value="tc">Tarjeta Credito</option>
                     <option value="td">Tarjeta Debito</option>
@@ -137,15 +137,15 @@
                 Gs </b>
         </div>
 
-        <button type="submit"
+        {{-- <button type="submit"
             class="mt-1 text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Confirmar
             Compra
-        </button>
+        </button> --}}
 
-        <button type="button" onclick="openModal()" 
-    class="mt-1 text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
-    Confirmar Compra 2
-</button>
+        <button type="button" onclick="openModal()"
+            class="mt-1 text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+            Confirmar Compra
+        </button>
         <p class="text-sm text-gray-500 pt-1">*Por el momento, solo aceptamos pagos en efectivo o con tarjeta
             al
             momento de la entrega</p>
@@ -169,12 +169,12 @@
     <div class="bg-white rounded-lg shadow-lg w-11/12 sm:w-1/3 p-6 text-center">
         <!-- Título -->
         <h2 class="text-lg font-bold text-gray-800 mb-4">Estamos procesando tu pedido</h2>
-        
+
         <!-- Icono de carga -->
         <div class="flex justify-center items-center mb-4">
             <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-[#fbb321] border-opacity-75"></div>
         </div>
-        
+
         <!-- Mensaje -->
         <p class="text-gray-600 text-sm">Esto puede tardar unos segundos. Por favor, no cierres esta ventana.</p>
     </div>
@@ -185,16 +185,16 @@
 
 <script>
     function openProcessingModal() {
-    document.getElementById('processingModal').classList.remove('hidden');
-}
+        document.getElementById('processingModal').classList.remove('hidden');
+    }
 
     function openModal() {
-    document.getElementById('confirmationModal').classList.remove('hidden');
-}
+        document.getElementById('confirmationModal').classList.remove('hidden');
+    }
 
-function closeModalVenta() {
-    document.getElementById('confirmationModal').classList.add('hidden');
-}
+    function closeModalVenta() {
+        document.getElementById('confirmationModal').classList.add('hidden');
+    }
 
 
 
@@ -209,7 +209,7 @@ function closeModalVenta() {
         // Limpiar los selectores al cargar la página
         $('#departamentos').val('').trigger('change'); // Restablecer el departamento
         $('#ciudad').empty().append('<option value="">Seleccione una ciudad</option>').trigger(
-        'change'); // Limpiar las ciudades
+            'change'); // Limpiar las ciudades
 
         // Manejar el cambio en el departamento
         $('#departamentos').on('change', function() {
@@ -218,7 +218,7 @@ function closeModalVenta() {
 
             ciudadSelect.empty(); // Limpiar las ciudades anteriores
             ciudadSelect.append(
-            '<option value="">Seleccione una ciudad</option>'); // Opción por defecto
+                '<option value="">Seleccione una ciudad</option>'); // Opción por defecto
 
             if (ciudades) {
                 ciudades.forEach(function(ciudad) {
@@ -239,12 +239,11 @@ function closeModalVenta() {
     }
 
     function toggleText(element) {
-    const textElement = document.getElementById('toggleText');
-    if (element.checked) {
-        textElement.textContent = 'Confirmado';
-    } else {
-        textElement.textContent = 'Confirmar?';
+        const textElement = document.getElementById('toggleText');
+        if (element.checked) {
+            textElement.textContent = 'Confirmado';
+        } else {
+            textElement.textContent = 'Confirmar?';
+        }
     }
-}
-
 </script>

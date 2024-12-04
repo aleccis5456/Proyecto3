@@ -317,7 +317,7 @@ class ProductoController extends Controller
         if ($request->has('precio_max')) {
             $query->where('precio', '<=', $request->query('precio_max'));
         }
-        $productos = $query->get();
+        $productos = $query->where('visible', 'si')->get();
         $item = $query->first();
 
         return view('home.busqueda', [

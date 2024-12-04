@@ -4,13 +4,17 @@
 @section('contenido')
     <!-- linea de progreso -->
     @include('pedido.includes.lineaProgreso')
+    <div class="max-w-sm flex text-center max-auto" >
+        
+    </div>
     <!-- /linea de progreso -->    
     <div class="flex  pt-5">                 
-        <div class="w-2/3">
-            <x-alertas/>
+        <div class="w-2/3">    
+            <x-alertas/>        
             <p class="text-2xl px-10 font-bold text-center">Finalizar el pedido</p>
-            @if (!Auth::user())
+            @if (!Auth::user())            
                 <form class="max-w-sm mx-auto pt-5" method="POST" action=" {{ route('check.login') }} ">
+                    
                     <p class="text-sm text-gray-500 py-2">¿Tienes cuenta? Inicia sesión o continúa como invitado.</p>
                     @csrf                    
                     <div class="mb-5">

@@ -100,7 +100,9 @@
                 
             </div>
             <div class="text-sm bg-red-200 text-red-800 px-2 py-1 rounded-lg mb-6 mt-2">
-                <span >Las url relacionales solo funcionan en las siguientes posiciones: general-mid, general-bottom, general-footer</span>
+                <span ><p class="mb-3">NOTA: Las url relacionales solo funcionan en las siguientes posiciones: general-mid, general-bottom, general-footer.</p>
+                    Para eliminar relaciones con productos o URL, es necesario eliminar el banner. Lamentamos cualquier inconveniente
+                </span>
             </div>
 
             

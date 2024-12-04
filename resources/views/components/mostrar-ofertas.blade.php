@@ -71,7 +71,7 @@
             </div>
             <!-- Botón para ver todas las ofertas -->
             <div class="pt-10 text-center">
-                @if (count($ofertas) > 3)
+                @if (count($ofertas) > 4)
                     <a href="{{ route('oferta.todos') }}"
                         class="inline-block px-96 py-5 text-yellow-500 text-xl font-semibold rounded-md shadow-lg bg-white bg-opacity-20 backdrop-blur-md hover:shadow-xl transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-opacity-30 hover:from-white hover:to-white"
                         style="background: rgba(255, 255, 255, 0.2);">

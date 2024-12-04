@@ -15,7 +15,13 @@
                             <a href="{{ $banner->url_relation }}">
                                 <img src="{{ asset("uploads/banners/$banner->imagen") }}"
                                     class="w-full h-full object-cover" alt="...">
-                            </a>           
+                            </a>    
+                        @elseif ($banner->producto_id != null)     
+                            <a href="{{ route('producto', ['id' => $banner->producto_id]) }}">
+                                <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                    class="w-full h-full object-cover" alt="...">    
+                            </a>                    
+                        {{-- @endif        --}}
                         @else
                             <img src="{{ asset("uploads/banners/$banner->imagen") }}"
                             class="w-full h-full object-cover" alt="...">

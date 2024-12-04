@@ -56,14 +56,26 @@ class PedidoController extends Controller
     public function checkoutSave(Request $request){            
         $request->validate([
             'ruc' => 'required',
-            'celular' => 'required',
+            'celular' => 'required|numeric|regex:/^0\d{9}$/',
             'nombre' => 'required',
             'apellido' => 'required',
             'depa' => 'required',
             'ciudad' => 'required',
             'direccion' => 'required',
             'pago' => 'required',
+        ], [
+            'ruc.required' => 'El campo RUC es obligatorio.',
+            'celular.required' => 'El campo celular es obligatorio.',
+            'celular.numeric' => 'El campo celular debe contener solo números.',
+            'celular.regex' => 'El celular debe tener exactamente 10 dígitos y comenzar con 0.',
+            'nombre.required' => 'El campo nombre es obligatorio.',
+            'apellido.required' => 'El campo apellido es obligatorio.',
+            'depa.required' => 'El campo departamento es obligatorio.',
+            'ciudad.required' => 'El campo ciudad es obligatorio.',
+            'direccion.required' => 'El campo dirección es obligatorio.',
+            'pago.required' => 'El campo de pago es obligatorio.',
         ]);
+        
 
         if ($request->metodo_envio == 'envio') {
             $costoEnvio = 30000;

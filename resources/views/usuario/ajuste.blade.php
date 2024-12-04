@@ -97,6 +97,7 @@
                     <!-- Detalles del pedido -->
                     <div class="grid grid-cols-2 gap-6 mb-6">
                         <div class="text-sm text-gray-600 dark:text-gray-300">
+                            <b>Registro:</b> {{$pedido->registro}}<br>
                             @if ($pedido->formaEntrega == "retiro")
                                 <b class=" ">Retiro en tienda</b><br>
                             @elseif($pedido->formaEntrega == "venta_caja")

@@ -34,7 +34,7 @@ class UsuarioController extends Controller
                 'apellido' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6|confirmed',
-                'celular' => 'required|numeric|unique:users,celular',
+                'celular' => 'required|numeric|regex:/^0\d{9}$/|unique:users,celular',
             ],
             [
                 'nombre.required' => 'El nombre es obligatorio.',
@@ -48,6 +48,7 @@ class UsuarioController extends Controller
                 'celular.required' => 'El numero de celular es obligatorio',
                 'celular.numeric' => 'Ingrese un numero de telefono',
                 'celular.unique' => 'Este numero de celular ya esta registrado',
+                'celular.regex' => 'Ingrese correctamente el numero de celular'
             ]
         );
 

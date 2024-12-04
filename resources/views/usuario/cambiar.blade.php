@@ -29,12 +29,12 @@
                     <input type="password" id="password_confirmation" name="password_confirmation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         required />
-                    <button type="button" onclick="togglePasswordVisibility('password_confirm')"
+                    {{-- <button type="button" onclick="togglePasswordVisibility('password_confirm')"
                         class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm text-gray-600 dark:text-gray-400">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M10 3C5.5 3 2 7 2 10s3.5 7 8 7 8-4 8-7-3.5-7-8-7zM10 5c2.8 0 5.5 2.2 6.7 5-1.2 2.8-3.9 5-6.7 5-2.8 0-5.5-2.2-6.7-5C4.5 7.2 7.2 5 10 5zM10 7a3 3 0 0 0 0 6c1.7 0 3-1.3 3-3s-1.3-3-3-3z"/>
                         </svg>
-                    </button>
+                    </button> --}}
                 </div>
             </div>           
             <button type="submit"

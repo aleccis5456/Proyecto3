@@ -16,10 +16,12 @@ class OfertaController extends Controller
     }
 
     public function quitarTodos(Request $request) {
-        Producto::where('oferta', 1)->update([
+        
+        $response = Producto::where('oferta', 1)->update([
             'oferta' => 0,
             'precio_oferta' => 0
         ]);
+        
         $productos = Producto::where('oferta', 1)->get();        
         if(!$productos){
             return view('oferta.index', [
