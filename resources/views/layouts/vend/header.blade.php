@@ -10,7 +10,7 @@
             </a>    
 
             <div>
-                <a href="{{ route('vendedores.index') }}" class="text-white text-center">Pagina de vendedores</a>
+                <a href="{{ route('vendedores.index') }}" class="text-white text-center">Pagina de Repartidores</a>
             </div>
 
 

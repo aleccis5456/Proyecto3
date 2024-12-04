@@ -17,8 +17,8 @@
                                     class="w-full h-full object-cover" alt="...">
                             </a>           
                         @else
-                        <img src="{{ asset("uploads/banners/$banner->imagen") }}"
-                        class="w-full h-full object-cover" alt="...">
+                            <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                            class="w-full h-full object-cover" alt="...">
                         @endif
                                         
                     </div>                

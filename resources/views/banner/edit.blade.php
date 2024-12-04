@@ -93,11 +93,18 @@
                 </select>
             </div>
 
-            <div class="mb-6">
+            <div>
                 <label class="block text-gray-800 dark:text-white font-medium mb-2" for="url">Asociar a una url (busqueda)</label>
                 <input name="url" type="text" id="default-input"
                 placeholder="{{ $banner->url_relation }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                
             </div>
+            <div class="text-sm bg-red-200 text-red-800 px-2 py-1 rounded-lg mb-6 mt-2">
+                <span >Las url relacionales solo funcionan en las siguientes posiciones: general-mid, general-bottom, general-footer</span>
+            </div>
+
+            
+            
             
             {{-- value="{{ $banner->url ?? null }}" placeholder="{{$banner->url ?? 'Sin url asociada'}}" --}}
             <button type="submit"

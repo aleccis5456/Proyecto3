@@ -35,7 +35,7 @@
 
             <div class="pt-6 pb-6">
                 <hr>
-                <p class="text-sm text-gray-600 text-center">Datos para la fatura</p>
+                <p class="text-xl font-semibold pt-2 text-gray-600 text-center">Datos para la fatura</p>
             </div>
 
             <!-- formulario para el pedido -->
@@ -44,7 +44,7 @@
         </div>
 
         <div class="px-10 pt-12">
-            <table class="">
+            <table class="bg-gray-100 p-8 rounded-lg">
                 <thead>
                     <tr>
                         <th></th>
@@ -55,10 +55,12 @@
                 <tbody>
                     @foreach (session('carrito') as $indice => $item)
                         <tr class="">
-                            <td>
-                                <img src="{{ asset('uploads/productos') }}/{{ $item['producto_completo']['imagen'] }}"
-                                    width="150" alt="">
+                            <td class="rounded-md">
+                                <img class="p-2 rounded-md" 
+                                     src="{{ asset('uploads/productos') }}/{{ $item['producto_completo']['imagen'] }}" 
+                                     width="150" alt="">
                             </td>
+                            
                             <td class="flex mx-6">
                                 <div class="flex-col">
                                     <div>

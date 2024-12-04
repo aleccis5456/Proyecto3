@@ -17,10 +17,19 @@
                                 @if ($banner->activo == 1 and $banner->position_id == 4)
                                     <div class="{{ $index === 0 ? '' : 'hidden' }} duration-700 ease-in-out" data-carousel-item>
                                         @if ($banner->producto_id != null or $banner->producto_id != 0)
-                                            <a href="{{ route("producto", ['id' => $banner->producto_id]) }}">
-                                                <img src="{{ asset("uploads/banners/$banner->imagen") }}"
-                                                class="w-full h-full object-cover" alt="...">
-                                            </a>                                            
+                                        @if ($banner->url_relation != null)
+                                        <a href="{{ $banner->url_relation }}">
+                                            <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                                 class="w-full h-full object-cover" alt="...">
+                                        </a>
+                                    @else
+                                        <a href="{{ route("producto", ['id' => $banner->producto_id]) }}">
+                                            <img src="{{ asset("uploads/banners/$banner->imagen") }}"
+                                                 class="w-full h-full object-cover" alt="...">
+                                        </a>
+                                    @endif
+                                    
+                                            
                                         @else
                                             <img src="{{ asset("uploads/banners/$banner->imagen") }}"
                                                 class="w-full h-full object-cover" alt="...">

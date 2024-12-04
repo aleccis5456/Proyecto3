@@ -55,9 +55,12 @@
                     @endforeach
                 </select>
                 
-            </div>            
+            </div>        
+            <div class="mx-2 bg-gray-200 rounded-lg p-2 mb-4">
+                <span class="text-sm">Para agregar relaciones con productos o busqueda URL, primero hay que crear y luego editar el Banner</span>
+            </div>    
 
-            <div class="pb-5">
+            {{-- <div class="pb-5">
                 <label for="subcategoria" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Relacionar con un prodcuto</label>
                 <select id="subcategoria" name="producto_id"
                     class="select2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -74,9 +77,9 @@
                 <label class="block text-gray-800 dark:text-white font-medium mb-2" for="urls">Asociar a una url (busqueda)</label>
                 <input name="url" type="text" id="default-input"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            </div>
+            </div> --}}
             
-            <button type="submit"
+            <button type="submit mt-3"
                 class="w-full bg-gray-800 text-white hover:bg-gray-700 p-2.5 rounded-lg font-semibold transition">
                 Subir Banner
             </button>
@@ -107,7 +110,7 @@
                             @if ($banner->activo)
                                 <span class="bg-green-300 px-2 py-1 rounded-lg font-semibold text-green-800">Sí</span>
                             @else
-                            <span class="bg-red-300 px-2 py-1 rounded-lg font-semibold text-red-800">No</span>
+                                <span class="bg-red-300 px-2 py-1 rounded-lg font-semibold text-red-800">No</span>
                             @endif
                         </td>
                         <td>

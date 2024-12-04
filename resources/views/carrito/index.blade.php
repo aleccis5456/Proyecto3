@@ -9,17 +9,17 @@
     <div class="flex items-center justify-center pt-10 ">
         <div class="w-5/6 ">
             <div class="flex items-center justify-center px-2 pt-2 ">
-                <div class="w-full mx-auto p-3 bg-white ">
+                <div class="w-full mx-auto p-3 bg-yellow-50 ">
                     <div class="flex justify-between items-center mb-4">
                         <div>
                             <b>Articulo/s</b>
                         </div>
                     </div>
-                    <hr>
+                    
                     <!-- Tabla -->
-                    <div class="relative overflow-x-auto ">
+                    <div class="relative overflow-x-auto rounded-lg">
                         <table class="w-full text-sm text-left rtl:text-right text-black dark:text-white">
-                            <thead class="text-xs text-black uppercase bg-white dark:bg-white dark:text-black">
+                            <thead class="text-xs text-black  uppercase bg-gray-100 dark:bg-white dark:text-black">
                                 <tr>
                                     <th scope="col" class="px-6 py-3 text-sm text-center align-middle">
                                         Producto
@@ -107,11 +107,11 @@
         </div>
 
 
-        <div class="flex-col w-1/3 bg-gray-100 dark:bg-gray-900">
+        <div class="flex-col w-1/3 bg-gray-100 dark:bg-gray-900 rounded-lg p-4">
             <div>
                 <p class="text-xl font-bold text-center">Resumen</p>
             </div>
-            <hr>
+            
             <div>
                 <b class="text-xl"> Total:</b> <span
                     class="text-xl">{{ number_format(round(App\Utils\Util::stats()['total_pagar'], -2), 0, ',', '.') }}
@@ -119,7 +119,7 @@
             </div>
             <div class="pt-5">
                 <a href=" {{ route('checkout') }} "
-                    class=" items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                    class=" items-center px-4 py-2 text-sm text-center text-gray-800 font-semibold bg-[#fbb321] rounded-lg hover:bg-yellow-200 hover:text-black focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                     Finalizar compra</a>
             </div>
 

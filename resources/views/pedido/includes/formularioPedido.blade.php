@@ -1,4 +1,4 @@
-<div>
+<div class="">
     <form class="max-w-md mx-auto" method="POST" action="{{ route('checkoutSave') }}">
         @csrf
         <div class="grid md:grid-cols-2 md:gap-6">
@@ -138,21 +138,67 @@
         </div>
 
         <button type="submit"
-            class="mt-1 text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirmar
-            Compra</button>
+            class="mt-1 text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Confirmar
+            Compra
+        </button>
+
+        <button type="button" onclick="openModal()" 
+    class="mt-1 text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+    Confirmar Compra 2
+</button>
         <p class="text-sm text-gray-500 pt-1">*Por el momento, solo aceptamos pagos en efectivo o con tarjeta
             al
             momento de la entrega</p>
         <p class="text-sm text-gray-500 pt-1">*Puede cancelar su pedido de forma gratuita en cualquier momento
             antes de que sea procesado.</p>
         @include('pedido.includes.tercero')
+        @include('pedido.includes.modalConfirmarCompra')
 
     </form>
 </div>
 
 
+<!-- Botón para abrir el modal (puedes usarlo al confirmar el pedido) -->
+{{-- <button onclick="openProcessingModal()" 
+    class="mt-1 text-gray-800 font-semibold bg-[#fbb321] hover:bg-yellow-100 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">
+    Confirmar Pedido
+</button> --}}
+
+<!-- Modal -->
+<div id="processingModal" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50">
+    <div class="bg-white rounded-lg shadow-lg w-11/12 sm:w-1/3 p-6 text-center">
+        <!-- Título -->
+        <h2 class="text-lg font-bold text-gray-800 mb-4">Estamos procesando tu pedido</h2>
+        
+        <!-- Icono de carga -->
+        <div class="flex justify-center items-center mb-4">
+            <div class="animate-spin rounded-full h-10 w-10 border-t-4 border-[#fbb321] border-opacity-75"></div>
+        </div>
+        
+        <!-- Mensaje -->
+        <p class="text-gray-600 text-sm">Esto puede tardar unos segundos. Por favor, no cierres esta ventana.</p>
+    </div>
+</div>
+
+
+
 
 <script>
+    function openProcessingModal() {
+    document.getElementById('processingModal').classList.remove('hidden');
+}
+
+    function openModal() {
+    document.getElementById('confirmationModal').classList.remove('hidden');
+}
+
+function closeModalVenta() {
+    document.getElementById('confirmationModal').classList.add('hidden');
+}
+
+
+
+
     $(document).ready(function() {
         // Inicializa select2
         $('.select2').select2({

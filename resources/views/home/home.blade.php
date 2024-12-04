@@ -65,8 +65,9 @@
         @include('home.includes.electronica')
         @include('home.includes.informatica')
         {{-- imagen antes del footer --}}
-        <div class="px-20">
+        @include('home.includes.bannerFooter')
+        {{-- <div class="px-20">
             <img class="rounded-lg" src="{{asset('uploads/images/banner-bancos.webp')}}" alt="">
-        </div>  
+        </div>   --}}
     </div>
 @endsection

@@ -142,6 +142,14 @@ class CajaController extends Controller
         } else {
             return back()->with('warning', 'Selecciona un método de pago válido');
         }
+
+        foreach (session('ventaCaja') as $item) {
+            $producto = Producto::findOrFail($item['producto_completo']['id']);
+            
+            if ($item['cantidad'] > $producto->stock_actual) {
+                return back()->with('sinStock', 'La cantidad seleccionada excede el stock disponible para: ' . $producto->nombre);
+            }
+        }
         $letrasNumerosAleatorios = $this->generateRandomCode(6);
 
         $codigo = $letrasNumerosAleatorios;
