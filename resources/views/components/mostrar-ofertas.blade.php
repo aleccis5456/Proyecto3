@@ -1,8 +1,8 @@
 <div class="items-center justify-center">
     @if ($ofertas->isNotEmpty())
         @if (is_null($banner))            
-                <div style="background-image: url('{{ asset("src/imgs/bannerA2.webp") }}'); background-position: center top; background-size: cover;"
-                    class="bg-cover bg-center p-12">
+                <div style="background-image: url('{{ asset("src/imgs/bannerA2.webp") }}'); background-position: center top; background-size: cover; width: 100vw;"
+                    class="bg-cover bg-center p-12 w-screen">
                     <div class="relative bg-white/30 backdrop-blur-md rounded-xl shadow-lg p-6 text-center">
                         <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-2">
                             Ofertas de la Semana

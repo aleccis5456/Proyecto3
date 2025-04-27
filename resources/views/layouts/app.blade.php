@@ -27,17 +27,14 @@
 </head>
 
 <body class="bg-[#FFFAF0]">
-
-    
-    <nav class="navbar bg-white border-gray-200 dark:bg-gray-900">
-        @include('layouts.app.navbar')<!-- nav-->    
-    </nav>        
+    <header class="relative" id='header'>
+        @include('layouts.app.navbar')<!-- nav-->
+    </header>
     @include('layouts.app.cerrarsesion')<!-- confirmar cerrar sesion -->
-    
-    <div class="max-w-[1380px] mx-auto">
-        <br><br>        
+
+    <div class="max-w-screen mx-auto">        
         @yield('contenido')<!-- contenido -->
-    </div>    
+    </div>
 
     <hr class="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
     @include('layouts.app.footer')<!-- footer --->

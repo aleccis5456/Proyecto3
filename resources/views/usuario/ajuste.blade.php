@@ -16,7 +16,7 @@
                     <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                     <input type="email" id="email" name="email"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="{{ $user->email }}" required />
+                        placeholder="{{ $user->email }}" />
                 </div>
 
                 <div class="mb-5">
@@ -24,7 +24,7 @@
                         Nombre</label>
                     <input type="text" id="nombre" name="nombre"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="{{ $user->name }}" required />
+                        placeholder="{{ $user->name }}" />
                 </div>
 
                 <div class="mb-5">
@@ -32,7 +32,7 @@
                         Apellido</label>
                     <input type="text" id="apellido" name="apellido"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="{{ $user->apellido }}" required />
+                        placeholder="{{ $user->apellido }}" />
                 </div>
 
                 <div class="mb-5">
@@ -40,12 +40,14 @@
                         Celular</label>
                     <input type="tel" id="celular" name="celular"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value="{{ $user->celular }}" required />
+                        placeholder="{{ $user->celular }}" />
                 </div>
 
                 <div class="py-4">
                     <hr>
                 </div>
+
+
 
                 <div class="mb-5">
                     <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cambiar
@@ -53,6 +55,16 @@
                     <input type="text" id="password" name="password" placeholder="Ingrese una nueva contraseña"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                 </div>
+                <div class="mb-5">
+                    <label for="password_confirmation" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Confirmar Contraseña
+                    </label>
+                    <input type="password" id="password_confirmation" name="password_confirmation"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 
+        f0ocus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 
+        dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                </div>
+
 
                 <button type="submit"
                     class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -60,7 +72,6 @@
                 </button>
             </form>
         </div>
-
         {{-- pedidos --}}
         <div class="justify-between w-2/3 text-xl flex flex-col">
             @foreach ($pedidos as $pedido)

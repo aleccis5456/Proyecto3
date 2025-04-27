@@ -12,7 +12,7 @@ class Util
             'total_pagar' => 0,
         ];
 
-        if (session('carrito')) {
+        if (session('carrito')) {   
             $stats['conteo'] = count(session('carrito'));
 
             $total_conteo = 0;

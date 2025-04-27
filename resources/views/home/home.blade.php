@@ -2,13 +2,15 @@
 @section('titulo', 'Home')
 
 @section('contenido')
-    <div class="text-center items-center justify-center">
-        <x-mostrar-ofertas/>
-    </div>
+{{-- banner top --}}
+<div class="text-center items-center justify-center">
+    <x-mostrar-ofertas/>
+</div>
 
-    {{-- banner mid --}}
-    @include('home.includes.bannerMid')
-    
+{{-- banner mid --}}
+@include('home.includes.bannerMid')
+
+<div class="container mx-auto mt-10">
     <div class="mx-10">
         <div class="text-center items-center justify-center px-10 py-5">
             <x-alertas />
@@ -41,7 +43,8 @@
                         <h3 class="text-sm font-semibold text-gray-900 dark:text-white">                            
                             {{Str::limit($producto->nombre, 54)}}
                         <div class="mt-4">
-                            <a href="{{ route('carrito.add', ['id' => $producto->id]) }}"
+
+                            <button id="btnAddToCart" data-id="{{ $producto->id }}"
                                 class="flex items-center justify-between text-gray-600 rounded-lg py-2.5 hover:px-1 hover:bg-yellow-100 focus:outline-none focus:ring-4 focus:ring-yellow-300 hover:text-black">
                                 <span
                                     class="text-xl font-bold hover:text-black">{{ number_format(round($producto->precio, -2), 0, ',', '.') }}
@@ -52,7 +55,7 @@
                                         stroke-width="2"
                                         d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6" />
                                 </svg>
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -65,9 +68,35 @@
         @include('home.includes.electronica')
         @include('home.includes.informatica')
         {{-- imagen antes del footer --}}
-        @include('home.includes.bannerFooter')
-        {{-- <div class="px-20">
-            <img class="rounded-lg" src="{{asset('uploads/images/banner-bancos.webp')}}" alt="">
-        </div>   --}}
+        @include('home.includes.bannerFooter')        
     </div>
+</div>
+
+<script>
+    document.querySelectorAll('[id^="btnAddToCart"]').forEach(button => {
+        button.addEventListener('click', function () {
+            const productoId = this.getAttribute('data-id');
+            console.log(productoId);
+
+            fetch(`/carrito/add/${productoId}`, {
+                method: 'GET',
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Error al agregar el producto al carrito.');
+                }
+            })
+            .then(data => {
+                alert('Producto agregado al carrito exitosamente.');
+                // Aquí puedes actualizar el carrito en la interfaz si es necesario
+            })
+            .catch(error => {
+                console.error(error);
+                alert('Hubo un problema al agregar el producto al carrito.');
+            });
+        });
+    });
+</script>
 @endsection

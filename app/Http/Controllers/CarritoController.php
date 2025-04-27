@@ -24,8 +24,7 @@ class CarritoController extends Controller
     }
 
 
-    public function add(Request $request, $id)
-    {        
+    public function add(Request $request, $id) {        
         $carrito = session('carrito', []);
         $producto = Producto::findOrFail($id);
 

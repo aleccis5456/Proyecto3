@@ -150,9 +150,8 @@ class CajaController extends Controller
                 return back()->with('sinStock', 'La cantidad seleccionada excede el stock disponible para: ' . $producto->nombre);
             }
         }
-        $letrasNumerosAleatorios = $this->generateRandomCode(6);
-
-        $codigo = $letrasNumerosAleatorios;
+        $codigo = $this->generateRandomCode(6);
+        
         DB::beginTransaction();        
         try {
             $pedido = new Pedido;

@@ -179,6 +179,7 @@ Route::middleware([Caja::class])->group(function () {
         return response()->download($path, $filename);
     })->name('descargar.manual.caja');
 });
+
 Route::get('/ticket/{pedidoId}', [PDFController::class, 'ticket'])->name('pdf.ticket');
 
 Route::get('/debug', function () {

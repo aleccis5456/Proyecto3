@@ -19,6 +19,7 @@ class PDFController extends Controller
         $hasta = $request->fecha_hasta ?? Carbon::today()->endOfDay();
         $ventas = Ventas::where('fecha_venta', '>', $desde)->where('fecha_venta', '<', $hasta)->get();
         $productos = [];
+        
         foreach($ventas as $venta){            
             $producto = Producto::where('id', $venta->producto_id)->first();                        
             $productos[] = $producto;

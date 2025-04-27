@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('titulo', 'productos')
 @section('contenido')
-    <div class="flex items-center justify-center p-10 ">
+    <div class="flex items-center justify-center px-16 mt-24">
         <div class="w-2/3 px-10">
             <div class=" text-2xl">
                 @if ($producto->precio_oferta > 0)

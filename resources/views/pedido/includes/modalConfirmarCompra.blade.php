@@ -57,7 +57,27 @@
                         </tbody>
                     </table>
                 </div>
-                
+                <div class="pt-2">                                        
+                    <div>
+                        @php
+                            $total = 0;
+                        @endphp
+    
+                        @foreach (session('carrito') as $item)                     
+                            @if ($item['precio_oferta'] > 0)
+                                @php $total += $item['precio_oferta'] * $item['cantidad'] @endphp
+                            @else
+                                @php $total += $item['precio'] * $item['cantidad'] @endphp
+                            @endif
+                        @endforeach
+    
+                        <b class="text-xl"> Total:</b> <span
+                            class="text-xl">{{ number_format(round($total, -2), 0, ',', '.') }}
+                            Gs.</span>
+    
+    
+                    </div>
+                </div>
             </ul>
         </div>
 

@@ -28,7 +28,7 @@
                             class="w-full text-blue-700 text-sm text-center">
                             Enviar correo de Recuperación</button>
                         <p class="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-                            Ya te acuerdas de tu contrasea? 
+                            Ya te acuerdas de tu contraseña? 
                                 <a href=" {{ route('login') }} "
                                 class="font-medium text-primary-600 hover:underline hover:text-blue-600 dark:text-primary-500">Vuelve al
                                 login</a>

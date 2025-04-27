@@ -115,7 +115,7 @@
             <hr>
             <!-- Información del Cliente -->
             <div class="bg-gray-50 dark:bg-gray-700 p-6 rounded-lg">
-                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Datos de adicionales</p>
+                <p class="font-medium text-lg text-gray-800 dark:text-gray-100 mb-4">Datos adicionales</p>
                 <p class="text-sm underline">Datos de factura:</p>
                 <p><strong>Razon Social:</strong> {{ $datos->nombre }} {{ $datos->apellido }}</p>
                 <p><strong>RUC o CI:</strong> {{ $datos->ruc_ci }}</p>

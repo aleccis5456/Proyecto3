@@ -26,8 +26,7 @@ class UsuarioController extends Controller
         return view('usuario.registro');
     }
 
-    public function registroSave(Request $request)
-    {
+    public function registroSave(Request $request) {
         $request->validate(
             [
                 'nombre' => 'required',
@@ -65,7 +64,7 @@ class UsuarioController extends Controller
         return redirect()->route('usuario.registro')->with('success', 'El registro se ha completado, ahora puedes iniciar sesion');
     }
     public function showLoginForm(Request $request)
-    {        
+    {
         $request->session()->put('url.intended', url()->previous());
         return view('auth.login');
     }
@@ -119,49 +118,61 @@ class UsuarioController extends Controller
         return redirect()->route('home');
     }
 
-    public function Ajustes($id){
+    public function Ajustes($id)
+    {
         $user = User::findOrFail($id);
         $pedidos = Pedido::where('user_id', $id)->orderByDesc('id')->get();
-        $terceros = EntregaTerceros::all();        
+        $terceros = EntregaTerceros::all();
         return view('usuario.ajuste', [
             'user' => $user,
             'pedidos' => $pedidos,
             'terceros' => $terceros
         ]);
     }
+    public function AjusteSave(Request $request)
+    {
+        $request->validate([
+            'email' => 'nullable|email',
+            'nombre' => 'nullable|string|max:255',
+            'apellido' => 'nullable|string|max:255',
+            'celular' => 'nullable|string|max:20',
+            'password' => 'nullable|string|min:6|confirmed',
+        ]);
 
-    public function AjusteSave(Request $request){
-        $request->validate([            
-            'email' => 'nullable',
-            'nombre' => 'nullable',
-            'apellido' => 'nullable',
-            'celular' => 'nullable',
-            'password' => 'nullable',
-        ]);        
-  
-        $user = User::findOrFail(Auth::user()->id);
-        $email_duplicado = User::where('email', $user->email)->count();
+        $user = Auth::user();
 
-        if($email_duplicado < 1){
-            $user->email = $request->email ?? $user->email;    
-            $user->name = $request->nombre ?? $user->name;
-            $user->apellido = $request->apellido ?? $user->apellido;        
-            $user->celular = $request->celular ?? $user->celular;
-            $user->password = Hash::make($request->password) ?? $user->password;
+        // Verificar si el correo está duplicado, excluyendo al usuario actual
+        $emailDuplicado = User::where('email', $request->email)
+            ->where('id', '!=', $user->id)
+            ->exists();
 
-            $user->update();
+        if ($emailDuplicado) {
+            return back()->with('warning', 'El correo ya está registrado.');
+        }
 
-            return back();
-        }else{
-            return back()->with('warning', 'EL correo ya esta registrado');
-        }        
+        // Actualizar solo los campos enviados en la solicitud
+        $user->email = $request->email ?? $user->email;
+        $user->name = $request->nombre ?? $user->name;
+        $user->apellido = $request->apellido ?? $user->apellido;
+        $user->celular = $request->celular ?? $user->celular;
+
+        // Si hay una nueva contraseña, actualizarla
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return back()->with('success', 'Tus datos han sido actualizados correctamente.');
     }
 
-    public function forgot(){
+    public function forgot()
+    {
         return view('email.recuperar');
     }
 
-    public function recuperar(Request $request){
+    public function recuperar(Request $request)
+    {
         $request->validate([
             'email' => 'required|email'
         ], [
@@ -170,34 +181,36 @@ class UsuarioController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if(!$user){
+        if (!$user) {
             return back()->with('warning', 'El correo no esta registrado');
-        }else{
+        } else {
             Mail::to($user->email)->send(new ForgotPass($user));
 
             return back()->with('info', 'Te hemos enviado un correo');
         }
     }
-    
-    public function cambiar($id_encriptado){
+
+    public function cambiar($id_encriptado)
+    {
 
         $id = Crypt::decrypt($id_encriptado);
         $user = User::findOrFail($id);
-        
+
         return view('usuario.cambiar', [
             'user' => $user,
         ]);
     }
 
-    public function cambiarSave(Request $request){        
+    public function cambiarSave(Request $request)
+    {
         $request->validate([
             'password' => 'required|min:6|confirmed',
-        ],[
+        ], [
             'password.required' => 'La contraseña es obligatoria.',
             'password.min' => 'La contraseña debe tener al menos 6 caracteres.',
             'password.confirmed' => 'Las contraseñas no coinciden.',
         ]);
-        
+
         $user = User::findOrFail($request->user_id);
 
         $user->password = Hash::make($request->password);
@@ -208,7 +221,7 @@ class UsuarioController extends Controller
     }
 
     public function actualizarEstado(Request $request)
-    {                
+    {
         $request->validate([
             'estado' => 'required|string',
             'pedido_id' => 'required|integer',
@@ -230,33 +243,33 @@ class UsuarioController extends Controller
                     DB::update("update productos set ventas = 0 where id = ?", [$lista->producto_id]);
                 }
                 $venta = Ventas::where('producto_id', $producto->id)->first();
-                if($venta){
-                    $venta->delete();                                
-                }                
+                if ($venta) {
+                    $venta->delete();
+                }
             }
-        }        
+        }
         $pedido->estado = $request->estado;
         $pedido->save();
-        
+
         return back()->with('success', 'Estado del pedido cambiado');
     }
 
-    public function buscarPedidoForm(){
+    public function buscarPedidoForm()
+    {
         return view('usuario.buscarPedido');
     }
 
-    public function buscarPedido(Request $request){
+    public function buscarPedido(Request $request)
+    {
         $pedido = Pedido::where('codigo', $request->codigo)->first();
-        if(!$pedido){
-            return back()->with('pedidoNotFound', 'Pedido: '.$request->codigo);
+        if (!$pedido) {
+            return back()->with('pedidoNotFound', 'Pedido: ' . $request->codigo);
         }
         $tercero = EntregaTerceros::where('pedido_id', $pedido->id)->first();
 
         return view('usuario.miPedido', [
-            'pedido' => $pedido, 
-            'tercero' => $tercero            
+            'pedido' => $pedido,
+            'tercero' => $tercero
         ]);
     }
 }
-
-

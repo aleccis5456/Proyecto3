@@ -5,7 +5,7 @@
                 class="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
                 @if (!Auth::user())
                 <li>
-                    <a href="{{ route('buscar.pedido') }}" class="hover:underline me-4 md:me-6">Buscar me pedido</a>
+                    <a href="{{ route('buscar.pedido') }}" class="hover:underline me-4 md:me-6">Buscar mi pedido</a>
                 </li>                                        
                 @endif
                 
